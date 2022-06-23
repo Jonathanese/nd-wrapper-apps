@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 using HomeAssistantGenerated;
 using NetDaemon.HassModel.Entities;
 
-namespace NDManagers
+namespace NDWrapper.Lighting
 {
-    internal static class LightManager
+    [NetDaemonApp]
+    internal class LightManager
     {
         public static List<MLight> mLights = new List<MLight>();
-        public static readonly IHaContext ha;
 
-        public static void BuildList(IHaContext ha)
+        public LightManager(IHaContext _ha, ILogger<LightManager> _logger)
+        {
+            _logger.LogInformation("Build Light List");
+            BuildList(_ha);
+        }
+
+        private void BuildList(IHaContext ha)
         {
             mLights.Clear();
             var entitylist = ha.GetAllEntities();

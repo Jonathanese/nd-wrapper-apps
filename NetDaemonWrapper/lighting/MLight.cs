@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Drawing;
 using HomeAssistantGenerated;
 using NetDaemon.HassModel.Entities;
-using NDExtensions;
+using NDWrapper;
 
-namespace NDManagers
+namespace NDWrapper.Lighting
 {
     using static LightExtensions;
 
@@ -83,19 +83,12 @@ namespace NDManagers
 
         private MLightLayer getShowState()
         {
-            int top = 0;
-            int bottom = Layers.Count - 1;
-            for (int i = 0; i < Layers.Count; i++)
+            foreach (MLightLayer layer in Layers.Reverse<MLightLayer>())
             {
-                if (Layers[i].isActive)
-                {
-                    top = i;
-                    if (Layers[i].color.A == 255)
-                    {
-                        bottom = i;
-                    }
-                }
+                if (layer.isActive)
+                    return layer;
             }
+            return Base;
         }
     }
 

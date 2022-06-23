@@ -3,7 +3,7 @@ using NetDaemon.HassModel;
 using HomeAssistantGenerated;
 using System.Drawing;
 
-namespace NDExtensions
+namespace NDWrapper.Lighting
 {
     public static class LightExtensions
     {
