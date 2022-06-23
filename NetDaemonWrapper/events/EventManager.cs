@@ -19,7 +19,6 @@ namespace NetDaemonWrapper.Events
         public EventManager(IHaContext _ha)
         {
             _ha.Events.Where(e => e.EventType == "call_service").Subscribe(e => { CallServiceHandler(e); });
-            var scene = new HomeAssistantGenerated.SceneEntity(_ha, "scene.this");
 
             SceneSetEvent += PostEvent;
         }
