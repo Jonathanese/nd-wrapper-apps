@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
 using HomeAssistantGenerated;
 using NetDaemon.HassModel.Entities;
-using NDWrapper;
+using NetDaemonWrapper;
 
-namespace NDWrapper.Lighting
+namespace NetDaemonWrapper.Lighting
 {
-    using static LightExtensions;
-
     internal class MLight
     {
         public LightEntity entity;
@@ -20,6 +17,9 @@ namespace NDWrapper.Lighting
         public MLightLayer Custom = new MLightLayer();
         public MLightLayer Anim = new MLightLayer();
         public List<MLightLayer> Layers;
+
+        private ColorBright currentState = new ColorBright();
+        private bool isChanged = false;
 
         public MLight(LightEntity _entity)
         {
@@ -33,62 +33,109 @@ namespace NDWrapper.Lighting
             };
         }
 
-        private void Show()
+        /// <summary>
+        /// If changes are present, display updated value on final light.
+        /// </summary>
+        public void Show()
         {
-            Console.WriteLine("Show " + entity.EntityId);
-            SetLightEntity(getShowState());
+            if (isChanged)
+            {
+                entity.Set(currentState);
+            }
         }
 
-        public void Set(Layer layer, Color color, int brightness)
+        private bool isEqual(ColorBright s)
         {
-            var oldstate = new MLightLayer(getShowState()); //Must create copy
+            bool same = true;
+            same &= currentState.r == s.r;
+            same &= currentState.g == s.g;
+            same &= currentState.b == s.b;
+            same &= currentState.brightness == s.brightness;
+            return same;
+        }
 
-            switch (layer)
+        /// <summary>
+        /// Blends and flattens layers into a final state ready to display. Designed to run in parallel.
+        /// </summary>
+        public void ProcessState()
+        {
+            ColorBright newState = Flatten();
+            if (isEqual(newState)) //Avoid unnecessary reassertions. Remove this if lights fail to update.
+            {
+                isChanged = false;
+                return;
+            }
+            isChanged = true;
+            currentState = newState;
+        }
+
+        public void Set(Layer _layer, FullColor _color)
+        {
+            switch (_layer)
             {
                 case Layer.Anim:
-                    Anim.color = color;
-                    Anim.brightness = brightness;
+                    Anim.color = _color;
                     Anim.isActive = true;
                     break;
 
                 case Layer.Custom:
-                    Custom.color = color;
-                    Custom.brightness = brightness;
+                    Custom.color = _color;
                     Custom.isActive = true;
                     break;
 
                 case Layer.Theme:
-                    Theme.color = color;
-                    Theme.brightness = brightness;
+                    Theme.color = _color;
                     Theme.isActive = true;
                     break;
 
                 case Layer.Base:
-                    Base.color = color;
-                    Base.brightness = brightness;
+                    Base.color = _color;
                     break;
             }
-
-            var newstate = getShowState();
-            Console.WriteLine("Old " + oldstate.color.ToString());
-            Console.WriteLine("New " + newstate.color.ToString());
-
-            Show();
         }
 
-        private void SetLightEntity(MLightLayer layer)
+        private ColorBright Flatten()
         {
-            entity.Set(layer.brightness, layer.color);
-        }
+            List<MLightLayer> activeLayers = new List<MLightLayer>();
 
-        private MLightLayer getShowState()
-        {
-            foreach (MLightLayer layer in Layers.Reverse<MLightLayer>())
+            //Check top to bottom for all layers that affect result
+            for (int i = Layers.Count - 1; i >= 0; i--)
             {
-                if (layer.isActive)
-                    return layer;
+                if (Layers[i].isActive)
+                {
+                    activeLayers.Insert(0, Layers[i]); //Add to the list of relevant layers.
+
+                    if (Layers[i].blendMode == BlendMode.Alpha && Layers[i].color.a8 >= 255)
+                    {
+                        break; //If both active and opaque, we have found the bottom-most layer. Any additional layers will be obscured by this one.
+                    }
+                }
+                if (i == 0)
+                {
+                    activeLayers.Insert(0, Layers[i]);
+                }
             }
-            return Base;
+
+            if (activeLayers.Count == 0)
+            {
+                return Base.color.toColorBright(); //Top and bottom are the same layer. No blending necessary.
+            }
+
+            if (activeLayers.Count == 1)
+            {
+                return activeLayers[0].color.toColorBright();
+            }
+
+            //Operations below are performed in linear power space.
+            PowerColor colorOut = activeLayers[0].color.powerColor; //Apply bottom layer here
+
+            //Now we must blend layers bottom-to-top. Start at the second-from-bottom layer and blend with the bottom.
+            for (int i = 1; i <= activeLayers.Count - 1; i++)
+            {
+                colorOut = PowerColor.Blend(activeLayers[i].color.powerColor, colorOut, activeLayers[i].blendMode);
+            }
+
+            return colorOut.fullColor.toColorBright();
         }
     }
 
@@ -99,7 +146,7 @@ namespace NDWrapper.Lighting
     {
         public MLightLayer()
         {
-            color = Color.Black;
+            color = new FullColor();
             isActive = false;
             brightness = 0;
         }
@@ -111,9 +158,9 @@ namespace NDWrapper.Lighting
             brightness = clone.brightness;
         }
 
-        public Color color;
+        public FullColor color;
         public bool isActive;
         public int brightness;
-        public BlendMode blendMode = BlendMode.none;
+        public BlendMode blendMode = BlendMode.None;
     }
 }

@@ -12,12 +12,17 @@ namespace NetDaemonWrapper.Events
     [NetDaemonApp]
     internal class EventManager
     {
+        private static EventManager _instance;
+        public static EventManager Instance
+        { get { return _instance; } }
+
         public delegate void ServiceEventHandler(DataElement d);
 
         public ServiceEventHandler SceneSetEvent;
 
         public EventManager(IHaContext _ha)
         {
+            _instance = this;
             _ha.Events.Where(e => e.EventType == "call_service").Subscribe(e => { CallServiceHandler(e); });
 
             SceneSetEvent += PostEvent;

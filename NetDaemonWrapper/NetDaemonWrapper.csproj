@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="apps\" />
-    <Folder Include="scenes\" />
   </ItemGroup>
 
 </Project>
