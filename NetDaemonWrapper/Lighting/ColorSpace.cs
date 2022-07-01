@@ -95,7 +95,7 @@ namespace NetDaemonWrapper.Lighting
     /// <summary>
     /// HDR16 color in linear perception space
     /// </summary>
-    public class FullColor
+    public partial class FullColor
     {
         public int r16;
         public int g16;

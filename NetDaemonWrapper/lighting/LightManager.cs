@@ -6,24 +6,28 @@ using System.Threading.Tasks;
 using HomeAssistantGenerated;
 using NetDaemon.HassModel.Entities;
 using System.Drawing;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace NetDaemonWrapper.Lighting
 {
     [NetDaemonApp]
     internal class LightManager
     {
-        public static List<MLight> mLights = new List<MLight>();
         private Timer CircadianTimer;
         private Timer LightUpdateTimer;
         private LightManagerConfig LightManConfig;
         private readonly ILogger Logger;
+        private readonly IHaContext ha;
 
         public LightManager(IHaContext _ha, ILogger<LightManager> _logger, IAppConfig<LightManagerConfig> _config)
         {
+            ha = _ha;
             Logger = _logger;
             LightManConfig = _config.Value;
             Logger.LogInformation("Build Light List");
-            BuildList(_ha);
+            BuildList();
             InitTimers();
         }
 
@@ -38,9 +42,9 @@ namespace NetDaemonWrapper.Lighting
             CircadianTimer.Change(0, 60000);
         }
 
-        private void BuildList(IHaContext ha)
+        private void BuildList()
         {
-            mLights.Clear();
+            MLight.All.Clear();
             var entitylist = ha.GetAllEntities();
             foreach (Entity _entity in entitylist)
             {
@@ -50,8 +54,7 @@ namespace NetDaemonWrapper.Lighting
                     {
                         if (!_entity.EntityId.StartsWith("light.theme."))
                         {
-                            LightEntity newlight = new LightEntity(_entity);
-                            mLights.Add(new MLight(newlight));
+                            new MLight(ha, new LightEntity(_entity));
                         }
                     }
                 }
@@ -62,7 +65,7 @@ namespace NetDaemonWrapper.Lighting
         {
             //Light blending and conversion running in parallel
 #if true
-            Parallel.ForEach(mLights, currentLight =>
+            Parallel.ForEach(MLight.All, currentLight =>
             {
                 currentLight.ProcessState();
             });
@@ -75,7 +78,7 @@ namespace NetDaemonWrapper.Lighting
 
             //Actual display handled in series to reduce potential unsafe conflicts.
             //TODO: See if light states can be aggregated and updated in a single command.
-            foreach (MLight currentLight in mLights)
+            foreach (MLight currentLight in MLight.All)
             {
                 currentLight.Show();
             }
@@ -83,10 +86,35 @@ namespace NetDaemonWrapper.Lighting
 
         private void CircadianSet(object? sender)
         {
-            foreach (MLight light in mLights)
+            FullColor kColor = new FullColor(getCircadianColor(), 255);
+            foreach (MLight light in MLight.All)
             {
-                light.Set(Layer.Base, new FullColor(Color.Blue, 255));
+                light.Set(Layer.Base, kColor);
             }
+        }
+
+        private Color getCircadianColor()
+        {
+            Color kColor = Color.White;
+            var attr = ha.Entity("sensor.circadian_values").WithAttributesAs<CircadianAttributes>().Attributes;
+            var cValues = attr.rgb_color;
+            if (cValues != null)
+            {
+                if (cValues.Length == 3)
+                {
+                    kColor = Color.FromArgb(255, (int)cValues[0], (int)cValues[1], (int)cValues[2]);
+                }
+            }
+            return kColor;
+        }
+
+        private record CircadianAttributes
+        {
+            [JsonPropertyName("colortemp")]
+            public double? colortemp { get; init; }
+
+            [JsonPropertyName("rgb_color")]
+            public double[]? rgb_color { get; init; }
         }
     }
 

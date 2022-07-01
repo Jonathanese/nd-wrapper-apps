@@ -14,7 +14,7 @@ namespace NetDaemonWrapper.Lighting
                 return;
             }
             var color = new int[] { _colorBright.r, _colorBright.g, _colorBright.b };
-            _light.TurnOn(rgbColor: color);
+            _light.TurnOn(rgbColor: color, brightness: _colorBright.brightness);
         }
     }
 }

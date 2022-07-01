@@ -11,17 +11,19 @@ namespace NetDaemonWrapper.Lighting
 {
     internal class MLight
     {
+        public static List<MLight> All = new List<MLight>();
         public LightEntity entity;
         public MLightLayer Base = new MLightLayer();
         public MLightLayer Theme = new MLightLayer();
         public MLightLayer Custom = new MLightLayer();
         public MLightLayer Anim = new MLightLayer();
-        public List<MLightLayer> Layers;
+        public readonly List<MLightLayer> Layers;
+        public readonly Area? Room = null;
 
         private ColorBright currentState = new ColorBright();
         private bool isChanged = false;
 
-        public MLight(LightEntity _entity)
+        public MLight(IHaContext _ha, LightEntity _entity)
         {
             entity = _entity;
             Layers = new List<MLightLayer>()
@@ -31,6 +33,9 @@ namespace NetDaemonWrapper.Lighting
                 Custom,
                 Anim
             };
+
+            Room = _ha.GetAreaFromEntityId(entity.EntityId);
+            All.Add(this);
         }
 
         /// <summary>

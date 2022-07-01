@@ -10,9 +10,10 @@ using Newtonsoft.Json;
 namespace NetDaemonWrapper.Events
 {
     [NetDaemonApp]
-    internal class EventManager
+    public class EventManager
     {
         private static EventManager _instance;
+
         public static EventManager Instance
         { get { return _instance; } }
 
@@ -24,37 +25,53 @@ namespace NetDaemonWrapper.Events
         {
             _instance = this;
             _ha.Events.Where(e => e.EventType == "call_service").Subscribe(e => { CallServiceHandler(e); });
-
-            SceneSetEvent += PostEvent;
+            SceneSetEvent += nop;
+            int dsa = Scene.Scene.All.Count;
+            var asd = Scene.Scenes.NightLight.SceneName;
+            asd = Scene.Scenes.NormalLights.SceneName;
         }
 
         private void CallServiceHandler(Event sender)
         {
-            string domain = toDataElement(sender.DataElement).domain;
+            var d = toDataElement(sender.DataElement);
 
-            if (domain == null) return;
-            switch (domain)
+            if (d?.domain == null) return;
+            switch (d.domain)
             {
                 case "scene":
-                    SceneSetEvent.Invoke(toDataElement(sender.DataElement));
+                    SceneSetEvent.Invoke(d);
                     break;
             }
         }
 
-        private void PostEvent(DataElement d)
+        private void nop(DataElement d)
         {
-            ServiceData? sd = toServiceData(d.service_data);
-            Console.WriteLine("Scene Set: " + sd?.entity_id);
         }
 
         public static DataElement? toDataElement(JsonElement? j)
         {
-            return JsonConvert.DeserializeObject<DataElement>(j.ToString());
+            if (j == null) return null;
+            try
+            {
+                return JsonConvert.DeserializeObject<DataElement>(j.ToString());
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static ServiceData? toServiceData(object? j)
         {
-            return JsonConvert.DeserializeObject<ServiceData>(j.ToString());
+            if (j == null) return null;
+            try
+            {
+                return JsonConvert.DeserializeObject<ServiceData>(j.ToString());
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 
