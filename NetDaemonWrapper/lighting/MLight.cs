@@ -9,7 +9,7 @@ using NetDaemonWrapper;
 
 namespace NetDaemonWrapper.Lighting
 {
-    internal class MLight
+    public class MLight
     {
         public static List<MLight> All = new List<MLight>();
         public LightEntity entity;
@@ -22,6 +22,8 @@ namespace NetDaemonWrapper.Lighting
 
         private ColorBright currentState = new ColorBright();
         private bool isChanged = false;
+
+        public UInt16 SceneIdentifier;
 
         public MLight(IHaContext _ha, LightEntity _entity)
         {
@@ -72,6 +74,12 @@ namespace NetDaemonWrapper.Lighting
             }
             isChanged = true;
             currentState = newState;
+        }
+
+        public void UpdateNow()
+        {
+            ProcessState();
+            Show();
         }
 
         public void Set(Layer _layer, FullColor _color)
@@ -144,10 +152,10 @@ namespace NetDaemonWrapper.Lighting
         }
     }
 
-    internal enum Layer
+    public enum Layer
     { Base, Theme, Custom, Anim };
 
-    internal class MLightLayer
+    public class MLightLayer
     {
         public MLightLayer()
         {

@@ -8,6 +8,7 @@ using NetDaemon.Extensions.Scheduler;
 using NetDaemonWrapper.Events;
 using NetDaemon;
 using System.Drawing;
+using Newtonsoft.Json;
 
 namespace NetDaemonWrapper.Scene
 {
@@ -18,6 +19,7 @@ namespace NetDaemonWrapper.Scene
         private static bool isRegistered = false;
         public static List<Scene> All = new List<Scene>();
         public readonly string SceneName;
+        private SettingsFile Settings;
 
         public delegate void SceneAction();
 
@@ -25,7 +27,9 @@ namespace NetDaemonWrapper.Scene
 
         public Scene(string _SceneName, SceneAction _Action)
         {
+            Settings = new SettingsFile("Lighting/Scenes/" + _SceneName + ".xml");
             SceneName = "scene." + _SceneName;
+            Settings.ReadSetDefault("General", "Name", SceneName);
             Console.WriteLine("Scene Added: " + SceneName);
             Action = _Action;
             SetSceneEvent();
@@ -55,15 +59,35 @@ namespace NetDaemonWrapper.Scene
                 {
                     if (s.SceneName == sd.entity_id)
                     {
-                        Console.WriteLine("Scene Set: " + sd.entity_id);
                         found = true;
-                        s.Action.Invoke();
+                        _setScene(s);
                     }
                 }
                 if (!found)
                 {
                     Console.WriteLine("Scene Not Found: " + sd.entity_id);
                 }
+            }
+        }
+
+        private static void _setScene(Scene s)
+        {
+            Console.WriteLine("Scene Set: " + s.SceneName);
+            ClearCustomLayers();
+
+            foreach (MLight l in MLight.All)
+            {
+                l.SceneIdentifier = s.SceneIdentifier;
+            }
+
+            s.Action.Invoke();
+        }
+
+        public static void ClearCustomLayers()
+        {
+            foreach (MLight l in MLight.All)
+            {
+                l.Custom.isActive = false;
             }
         }
     }

@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Newtonsoft.Json;
+using NetDaemonWrapper;
 
 namespace NetDaemonWrapper.Lighting
 {
@@ -17,29 +18,39 @@ namespace NetDaemonWrapper.Lighting
     {
         private Timer CircadianTimer;
         private Timer LightUpdateTimer;
-        private LightManagerConfig LightManConfig;
         private readonly ILogger Logger;
         private readonly IHaContext ha;
+        private SettingsFile LocalSettings;
+        public int CircadianUpdateMilliseconds;
+        public int LightUpdateMilliseconds;
 
-        public LightManager(IHaContext _ha, ILogger<LightManager> _logger, IAppConfig<LightManagerConfig> _config)
+        public string CircadianEntityName;
+
+        public LightManager(IHaContext _ha, ILogger<LightManager> _logger)
         {
+            InitSettings();
             ha = _ha;
             Logger = _logger;
-            LightManConfig = _config.Value;
             Logger.LogInformation("Build Light List");
             BuildList();
             InitTimers();
         }
 
+        private void InitSettings()
+        {
+            LocalSettings = new SettingsFile("/Lighting/LightManager.xml");
+            CircadianEntityName = LocalSettings.ReadSetDefault("General", "CircadianEntity", "sensor.circadian_values");
+            LightUpdateMilliseconds = (int)(1000 * float.Parse(LocalSettings.ReadSetDefault("Timers", "LightUpdateSeconds", "1.0")));
+            CircadianUpdateMilliseconds = (int)(1000 * float.Parse(LocalSettings.ReadSetDefault("Timers", "CircadianUpdateSeconds", "60.0")));
+        }
+
         private void InitTimers()
         {
             LightUpdateTimer = new Timer(UpdateLights);
-            //LightUpdateTimer.Change(0, LightManConfig.LightUpdateSeconds * 1000);
-            LightUpdateTimer.Change(0, 1000);
+            LightUpdateTimer.Change(0, LightUpdateMilliseconds);
 
             CircadianTimer = new Timer(CircadianSet);
-            //CircadianTimer.Change(0, LightManConfig.CircadianUpdateSeconds * 1000);
-            CircadianTimer.Change(0, 60000);
+            CircadianTimer.Change(0, CircadianUpdateMilliseconds);
         }
 
         private void BuildList()
@@ -96,7 +107,7 @@ namespace NetDaemonWrapper.Lighting
         private Color getCircadianColor()
         {
             Color kColor = Color.White;
-            var attr = ha.Entity("sensor.circadian_values").WithAttributesAs<CircadianAttributes>().Attributes;
+            var attr = ha.Entity(CircadianEntityName).WithAttributesAs<CircadianAttributes>().Attributes;
             var cValues = attr.rgb_color;
             if (cValues != null)
             {
@@ -116,11 +127,5 @@ namespace NetDaemonWrapper.Lighting
             [JsonPropertyName("rgb_color")]
             public double[]? rgb_color { get; init; }
         }
-    }
-
-    public class LightManagerConfig
-    {
-        public int CircadianUpdateSeconds { get; set; } = 60;
-        public int LightUpdateSeconds { get; set; } = 10;
     }
 }
