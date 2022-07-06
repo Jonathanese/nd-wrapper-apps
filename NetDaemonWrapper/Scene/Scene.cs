@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NetDaemonWrapper.Lighting;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemonWrapper.Events;
+using System.Threading;
 using NetDaemon;
 using System.Drawing;
 using Newtonsoft.Json;
@@ -21,7 +22,10 @@ namespace NetDaemonWrapper.Scene
         public readonly string SceneName;
         private SettingsFile Settings;
 
-        public delegate void SceneAction();
+        public delegate void SceneAction(List<MLight> lights);
+
+        private Timer UpdateTimer;
+        private int UpdateTime;
 
         public readonly SceneAction Action;
 
@@ -36,6 +40,13 @@ namespace NetDaemonWrapper.Scene
             scenecount++;
             SceneIdentifier = scenecount;
             All.Add(this);
+            UpdateTimer = new Timer((sender) => InvokeAction());
+            UpdateTimer.Change(-1, -1);
+        }
+
+        public Scene(string _SceneName, int UpdateMilliseconds, SceneAction _Action) : this(_SceneName, _Action)
+        {
+            UpdateTime = int.Parse(Settings.ReadSetDefault("Settings", "UpdateMilliseconds", UpdateMilliseconds.ToString()));
         }
 
         private static void SetSceneEvent()
@@ -75,12 +86,49 @@ namespace NetDaemonWrapper.Scene
             Console.WriteLine("Scene Set: " + s.SceneName);
             ClearCustomLayers();
 
+            //TODO: These currently pass MLight.All for testing. In the future, find relevant lights and pass only those.
             foreach (MLight l in MLight.All)
             {
                 l.SceneIdentifier = s.SceneIdentifier;
             }
 
-            s.Action.Invoke();
+            if (s.CheckActive())
+            {
+                s.UpdateTimer.Change(0, s.UpdateTime);
+            }
+        }
+
+        private bool CheckActive()
+        {
+            foreach (MLight l in MLight.All)
+            {
+                if (l.SceneIdentifier == SceneIdentifier)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void InvokeAction()
+        {
+            if (CheckActive())
+                Action.Invoke(GetActiveLights());
+            else
+                UpdateTimer.Change(-1, -1);
+        }
+
+        private List<MLight> GetActiveLights()
+        {
+            List<MLight> ActiveLights = new List<MLight>();
+            foreach (MLight l in MLight.All)
+            {
+                if (l.SceneIdentifier == SceneIdentifier)
+                {
+                    ActiveLights.Add(l);
+                }
+            }
+            return ActiveLights;
         }
 
         public static void ClearCustomLayers()

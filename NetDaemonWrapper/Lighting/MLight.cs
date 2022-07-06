@@ -118,7 +118,7 @@ namespace NetDaemonWrapper.Lighting
                 {
                     activeLayers.Insert(0, Layers[i]); //Add to the list of relevant layers.
 
-                    if (Layers[i].blendMode == BlendMode.Alpha && Layers[i].color.a8 >= 255)
+                    if ((Layers[i].blendMode == BlendMode.Alpha && Layers[i].color.a8 >= 255) || (Layers[i].blendMode == BlendMode.None))
                     {
                         break; //If both active and opaque, we have found the bottom-most layer. Any additional layers will be obscured by this one.
                     }
