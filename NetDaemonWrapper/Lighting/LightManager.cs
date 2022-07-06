@@ -81,7 +81,7 @@ namespace NetDaemonWrapper.Lighting
                 currentLight.ProcessState();
             });
 #else
-            foreach (MLight currentLight in mLights)
+            foreach (MLight currentLight in MLight.All)
             {
                 currentLight.ProcessState();
             }
@@ -100,7 +100,7 @@ namespace NetDaemonWrapper.Lighting
             FullColor kColor = new FullColor(getCircadianColor(), 255);
             foreach (MLight light in MLight.All)
             {
-                light.Set(Layer.Base, kColor);
+                light.Set(Layer.Base, kColor, 3);
             }
         }
 

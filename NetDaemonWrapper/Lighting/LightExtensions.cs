@@ -14,7 +14,18 @@ namespace NetDaemonWrapper.Lighting
                 return;
             }
             var color = new int[] { _colorBright.r, _colorBright.g, _colorBright.b };
-            _light.TurnOn(rgbColor: color, brightness: _colorBright.brightness);
+            _light.TurnOn(rgbColor: color, brightness: _colorBright.brightness, transition: 1);
+        }
+
+        public static void Set(this LightEntity _light, ColorBright _colorBright, int _transition)
+        {
+            if (_colorBright.brightness == 0)
+            {
+                _light.TurnOff();
+                return;
+            }
+            var color = new int[] { _colorBright.r, _colorBright.g, _colorBright.b };
+            _light.TurnOn(rgbColor: color, brightness: _colorBright.brightness, transition: _transition);
         }
     }
 }

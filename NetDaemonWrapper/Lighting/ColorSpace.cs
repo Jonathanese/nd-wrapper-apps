@@ -228,9 +228,9 @@ namespace NetDaemonWrapper.Lighting
         private static PowerColor Multiply(PowerColor a, PowerColor b)
         {
             PowerColor result = new PowerColor();
-            result.r16 = (a.r16 * b.r16) >> 16;
-            result.g16 = (a.g16 * b.g16) >> 16;
-            result.b16 = (a.b16 * b.b16) >> 16;
+            result.r16 = (int)(((Int64)a.r16 * (Int64)b.r16) >> 16);
+            result.g16 = (int)(((Int64)a.g16 * (Int64)b.g16) >> 16);
+            result.b16 = (int)(((Int64)a.b16 * (Int64)b.b16) >> 16);
             return result;
         }
 

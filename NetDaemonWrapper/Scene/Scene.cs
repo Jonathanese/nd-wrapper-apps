@@ -25,7 +25,7 @@ namespace NetDaemonWrapper.Scene
         public delegate void SceneAction(List<MLight> lights);
 
         private Timer UpdateTimer;
-        private int UpdateTime;
+        private int UpdateTimeMS;
 
         public readonly SceneAction Action;
 
@@ -44,9 +44,9 @@ namespace NetDaemonWrapper.Scene
             UpdateTimer.Change(-1, -1);
         }
 
-        public Scene(string _SceneName, int UpdateMilliseconds, SceneAction _Action) : this(_SceneName, _Action)
+        public Scene(string _SceneName, float _UpdateSeconds, SceneAction _Action) : this(_SceneName, _Action)
         {
-            UpdateTime = int.Parse(Settings.ReadSetDefault("Settings", "UpdateMilliseconds", UpdateMilliseconds.ToString()));
+            UpdateTimeMS = (int)(1000 * float.Parse(Settings.ReadSetDefault("Settings", "UpdateSeconds", _UpdateSeconds.ToString())));
         }
 
         private static void SetSceneEvent()
@@ -84,17 +84,21 @@ namespace NetDaemonWrapper.Scene
         private static void _setScene(Scene s)
         {
             Console.WriteLine("Scene Set: " + s.SceneName);
-            ClearCustomLayers();
 
             //TODO: These currently pass MLight.All for testing. In the future, find relevant lights and pass only those.
             foreach (MLight l in MLight.All)
             {
+                l.Custom.isActive = false;
                 l.SceneIdentifier = s.SceneIdentifier;
             }
 
             if (s.CheckActive())
             {
-                s.UpdateTimer.Change(0, s.UpdateTime);
+                s.UpdateTimer.Change(0, s.UpdateTimeMS);
+            }
+            else
+            {
+                s.UpdateTimer.Change(-1, -1);
             }
         }
 
@@ -129,14 +133,6 @@ namespace NetDaemonWrapper.Scene
                 }
             }
             return ActiveLights;
-        }
-
-        public static void ClearCustomLayers()
-        {
-            foreach (MLight l in MLight.All)
-            {
-                l.Custom.isActive = false;
-            }
         }
     }
 }

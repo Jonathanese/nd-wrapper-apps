@@ -22,8 +22,9 @@ namespace NetDaemonWrapper.Lighting
 
         private ColorBright currentState = new ColorBright();
         private bool isChanged = false;
+        public int transition = 1;
 
-        public UInt16 SceneIdentifier;
+        public UInt16 SceneIdentifier = 0;
 
         public MLight(IHaContext _ha, LightEntity _entity)
         {
@@ -47,7 +48,7 @@ namespace NetDaemonWrapper.Lighting
         {
             if (isChanged)
             {
-                entity.Set(currentState);
+                entity.Set(currentState, transition);
             }
         }
 
@@ -82,29 +83,38 @@ namespace NetDaemonWrapper.Lighting
             Show();
         }
 
-        public void Set(Layer _layer, FullColor _color)
+        public void Set(Layer _layer, FullColor _color, int transition)
         {
             switch (_layer)
             {
                 case Layer.Anim:
+                    Anim.transition = transition;
                     Anim.color = _color;
                     Anim.isActive = true;
                     break;
 
                 case Layer.Custom:
+                    Custom.transition = transition;
                     Custom.color = _color;
                     Custom.isActive = true;
                     break;
 
                 case Layer.Theme:
+                    Theme.transition = transition;
                     Theme.color = _color;
                     Theme.isActive = true;
                     break;
 
                 case Layer.Base:
+                    Base.transition = transition;
                     Base.color = _color;
                     break;
             }
+        }
+
+        public void Set(Layer _layer, FullColor _color)
+        {
+            Set(_layer, _color, 1);
         }
 
         private ColorBright Flatten()
@@ -123,7 +133,7 @@ namespace NetDaemonWrapper.Lighting
                         break; //If both active and opaque, we have found the bottom-most layer. Any additional layers will be obscured by this one.
                     }
                 }
-                if (i == 0)
+                else if (i == 0)
                 {
                     activeLayers.Insert(0, Layers[i]);
                 }
@@ -131,11 +141,13 @@ namespace NetDaemonWrapper.Lighting
 
             if (activeLayers.Count == 0)
             {
+                transition = Base.transition;
                 return Base.color.toColorBright(); //Top and bottom are the same layer. No blending necessary.
             }
 
             if (activeLayers.Count == 1)
             {
+                transition = activeLayers[0].transition;
                 return activeLayers[0].color.toColorBright();
             }
 
@@ -147,7 +159,7 @@ namespace NetDaemonWrapper.Lighting
             {
                 colorOut = PowerColor.Blend(activeLayers[i].color.powerColor, colorOut, activeLayers[i].blendMode);
             }
-
+            transition = activeLayers[activeLayers.Count - 1].transition;
             return colorOut.fullColor.toColorBright();
         }
     }
@@ -171,6 +183,7 @@ namespace NetDaemonWrapper.Lighting
             brightness = clone.brightness;
         }
 
+        public int transition = 1;
         public FullColor color;
         public bool isActive;
         public int brightness;
