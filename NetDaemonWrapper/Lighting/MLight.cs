@@ -41,6 +41,11 @@ namespace NetDaemonWrapper.Lighting
             All.Add(this);
         }
 
+        public static MLight byName(string name)
+        {
+            return MLight.All.First(l => l.entity.EntityId == "name");
+        }
+
         /// <summary>
         /// If changes are present, display updated value on final light.
         /// </summary>

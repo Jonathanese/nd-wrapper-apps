@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using NetDaemonWrapper.Lighting;
 using NetDaemon.Extensions.Scheduler;
-using NetDaemonWrapper.Events;
 using System.Threading;
 using NetDaemon;
 using System.Drawing;
 using Newtonsoft.Json;
+using NetDaemon.HassModel;
+using System.Runtime.CompilerServices;
 
 namespace NetDaemonWrapper.Scene
 {
@@ -17,7 +18,6 @@ namespace NetDaemonWrapper.Scene
     {
         private static UInt16 scenecount = 0;
         public readonly UInt16 SceneIdentifier;
-        private static bool isRegistered = false;
         public static List<Scene> All = new List<Scene>();
         public readonly string SceneName;
         private SettingsFile Settings;
@@ -33,52 +33,34 @@ namespace NetDaemonWrapper.Scene
         {
             Settings = new SettingsFile("Lighting/Scenes/" + _SceneName + ".xml");
             SceneName = "scene." + _SceneName;
-            Settings.ReadSetDefault("General", "Name", SceneName);
-            Console.WriteLine("Scene Added: " + SceneName);
+
             Action = _Action;
-            SetSceneEvent();
-            scenecount++;
-            SceneIdentifier = scenecount;
-            All.Add(this);
+
             UpdateTimer = new Timer((sender) => InvokeAction());
             UpdateTimer.Change(-1, -1);
+
+            //Register scene with list
+            scenecount++;
+            SceneIdentifier = scenecount;
+            Console.WriteLine("Scene Added: " + SceneName);
+            All.Add(this);
+
+            SubscribeScene();
+        }
+
+        private void SubscribeScene()
+        {
+            //Subscribe to this scene service call event
+            Context.ha.Events
+                .Where(e => e.EventType == "call_service")
+                .Where(e => Utils.toDataElement(e.DataElement).domain == "scene")
+                .Where(e => Utils.toServiceData(Utils.toDataElement(e.DataElement).service_data).entity_id == SceneName)
+            .Subscribe(s => _setScene(this));
         }
 
         public Scene(string _SceneName, float _UpdateSeconds, SceneAction _Action) : this(_SceneName, _Action)
         {
             UpdateTimeMS = (int)(1000 * float.Parse(Settings.ReadSetDefault("Settings", "UpdateSeconds", _UpdateSeconds.ToString())));
-        }
-
-        private static void SetSceneEvent()
-        {
-            if (!isRegistered)
-            {
-                EventManager.Instance.SceneSetEvent += SetScene;
-                isRegistered = true;
-            }
-        }
-
-        public static void SetScene(DataElement d)
-        {
-            ServiceData? sd = EventManager.toServiceData(d.service_data);
-
-            if (sd?.entity_id != null)
-            {
-                String name = sd.entity_id;
-                bool found = false;
-                foreach (Scene s in All)
-                {
-                    if (s.SceneName == sd.entity_id)
-                    {
-                        found = true;
-                        _setScene(s);
-                    }
-                }
-                if (!found)
-                {
-                    Console.WriteLine("Scene Not Found: " + sd.entity_id);
-                }
-            }
         }
 
         private static void _setScene(Scene s)
@@ -133,6 +115,15 @@ namespace NetDaemonWrapper.Scene
                 }
             }
             return ActiveLights;
+        }
+    }
+
+    [NetDaemonApp]
+    public class SceneInit
+    {
+        public SceneInit(IHaContext ha)
+        {
+            RuntimeHelpers.RunClassConstructor(typeof(Scenes).TypeHandle);
         }
     }
 }

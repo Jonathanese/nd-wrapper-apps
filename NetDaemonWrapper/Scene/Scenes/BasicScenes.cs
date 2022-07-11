@@ -44,8 +44,14 @@ namespace NetDaemonWrapper.Scene
             foreach (MLight l in Lights)
             {
                 l.Theme.blendMode = BlendMode.Multiply;
-
-                l.Set(Layer.Theme, new FullColor(255, 255, 255, (byte)r.Next(255), 255), 1);
+                if (r.Next(100) < 25)
+                {
+                    l.Set(Layer.Theme, new FullColor(255, 255, 255, 255, 255), 1);
+                }
+                else
+                {
+                    l.Set(Layer.Theme, new FullColor(255, 255, 255, 0, 255), 1);
+                }
             }
         });
     }
