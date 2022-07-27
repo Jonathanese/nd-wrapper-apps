@@ -21,13 +21,13 @@ namespace NetDaemonWrapper.Event
             MLight.byName("light.breakfast").UpdateNow();
         });
 
-        public static StateChangeAction FrontDoorOpen = new StateChangeAction("binary_sensor.homespy_9", true, () =>
+        public static StateChangeAction FrontDoorOpen = new StateChangeAction("binary_sensor.homespy_4", true, () =>
         {
             MLight.byName("light.entry").Set(Layer.Anim, FullColor.Red, 1);
             MLight.byName("light.entry").UpdateNow();
         });
 
-        public static StateChangeAction FrontDoorClosed = new StateChangeAction("binary_sensor.homespy_9", false, () =>
+        public static StateChangeAction FrontDoorClosed = new StateChangeAction("binary_sensor.homespy_4", false, () =>
         {
             MLight.byName("light.entry").Anim.isActive = false;
             MLight.byName("light.entry").UpdateNow();

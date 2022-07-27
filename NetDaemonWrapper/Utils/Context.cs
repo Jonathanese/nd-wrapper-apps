@@ -13,10 +13,7 @@ namespace NetDaemonWrapper
 
         public Context(IHaContext _ha)
         {
-            if (ha == null)
-            {
-                ha = _ha;
-            }
+            ha = _ha;
         }
     }
 }

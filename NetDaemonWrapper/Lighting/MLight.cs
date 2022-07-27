@@ -24,7 +24,7 @@ namespace NetDaemonWrapper.Lighting
         private bool isChanged = false;
         public int transition = 1;
 
-        public UInt16 SceneIdentifier = 0;
+        public int SceneIdentifier = 0;
 
         public MLight(IHaContext _ha, LightEntity _entity)
         {
@@ -43,7 +43,7 @@ namespace NetDaemonWrapper.Lighting
 
         public static MLight byName(string name)
         {
-            return MLight.All.First(l => l.entity.EntityId == "name");
+            return MLight.All.First(l => l.entity.EntityId == name);
         }
 
         /// <summary>

@@ -16,10 +16,19 @@ namespace NetDaemonWrapper.Scene
 {
     public class Scene
     {
-        private static UInt16 scenecount = 0;
-        public readonly UInt16 SceneIdentifier;
+        private int _sceneidentifier;
+
+        public int SceneIdentifier
+        { get { return _sceneidentifier; } }
+
         public static List<Scene> All = new List<Scene>();
-        public readonly string SceneName;
+        private string _scenename;
+
+        public string SceneName
+        {
+            get { return _scenename; }
+        }
+
         private SettingsFile Settings;
 
         public delegate void SceneAction(List<MLight> lights);
@@ -31,20 +40,35 @@ namespace NetDaemonWrapper.Scene
 
         public Scene(string _SceneName, SceneAction _Action)
         {
-            Settings = new SettingsFile("Lighting/Scenes/" + _SceneName + ".xml");
-            SceneName = "scene." + _SceneName;
-
             Action = _Action;
-
+            _scenename = "scene." + _SceneName;
+            Settings = new SettingsFile("Lighting/Scenes/" + _SceneName + ".xml");
             UpdateTimer = new Timer((sender) => InvokeAction());
             UpdateTimer.Change(-1, -1);
 
             //Register scene with list
-            scenecount++;
-            SceneIdentifier = scenecount;
-            Console.WriteLine("Scene Added: " + SceneName);
-            All.Add(this);
+            AddScene();
+        }
 
+        private void AddScene()
+        {
+            bool exists = false;
+            for (int i = 0; i < All.Count; i++)
+            {
+                if (All[i].SceneName == SceneName)
+                {
+                    exists = true;
+                    _sceneidentifier = i;
+                    All[i] = this;
+                    Console.WriteLine("Scene Replaced At " + _sceneidentifier.ToString() + " : " + SceneName);
+                }
+            }
+            if (!exists)
+            {
+                All.Add(this);
+                _sceneidentifier = All.Count - 1;
+                Console.WriteLine("Scene Added At " + _sceneidentifier.ToString() + " : " + SceneName);
+            }
             SubscribeScene();
         }
 
@@ -115,15 +139,6 @@ namespace NetDaemonWrapper.Scene
                 }
             }
             return ActiveLights;
-        }
-    }
-
-    [NetDaemonApp]
-    public class SceneInit
-    {
-        public SceneInit(IHaContext ha)
-        {
-            RuntimeHelpers.RunClassConstructor(typeof(Scenes).TypeHandle);
         }
     }
 }
