@@ -38,7 +38,7 @@ namespace NetDaemonWrapper.Scene
 
         public readonly SceneAction Action;
 
-        public Scene(string _SceneName, SceneAction _Action)
+        public Scene(IHaContext _ha, ILogger _logger, string _SceneName, SceneAction _Action)
         {
             Action = _Action;
             _scenename = "scene." + _SceneName;
@@ -74,15 +74,22 @@ namespace NetDaemonWrapper.Scene
 
         private void SubscribeScene()
         {
-            //Subscribe to this scene service call event
-            Context.ha.Events
-                .Where(e => e.EventType == "call_service")
-                .Where(e => Utils.toDataElement(e.DataElement).domain == "scene")
-                .Where(e => Utils.toServiceData(Utils.toDataElement(e.DataElement).service_data).entity_id == SceneName)
-            .Subscribe(s => _setScene(this));
+            try
+            {
+                //Subscribe to this scene service call event
+                Context.ha.Events
+                    .Where(e => e.EventType == "call_service")
+                    .Where(e => Utils.toDataElement(e.DataElement).domain == "scene")
+                    .Where(e => Utils.toServiceData(Utils.toDataElement(e.DataElement).service_data).entity_id == SceneName)
+                .Subscribe(s => _setScene(this));
+            }
+            catch
+            {
+                Console.WriteLine("Subscribe Failed: " + SceneName);
+            }
         }
 
-        public Scene(string _SceneName, float _UpdateSeconds, SceneAction _Action) : this(_SceneName, _Action)
+        public Scene(IHaContext _ha, ILogger _logger, string _SceneName, float _UpdateSeconds, SceneAction _Action) : this(_ha, _logger, _SceneName, _Action)
         {
             UpdateTimeMS = (int)(1000 * float.Parse(Settings.ReadSetDefault("Settings", "UpdateSeconds", _UpdateSeconds.ToString())));
         }

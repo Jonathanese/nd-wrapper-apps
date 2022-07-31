@@ -33,13 +33,4 @@ namespace NetDaemonWrapper.Event
                 Context.ha.Entity(entityid).StateChanges().Where(e => e.New?.State == "off").Subscribe(s => action());
         }
     }
-
-    [NetDaemonApp]
-    public class StateChangeActionInit
-    {
-        public StateChangeActionInit(IHaContext _ha)
-        {
-            RuntimeHelpers.RunClassConstructor(typeof(StateChangeActions).TypeHandle);
-        }
-    }
 }

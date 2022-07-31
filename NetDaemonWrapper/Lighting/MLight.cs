@@ -13,18 +13,20 @@ namespace NetDaemonWrapper.Lighting
     {
         public static List<MLight> All = new List<MLight>();
         public LightEntity entity;
+        public readonly Area? Room = null;
+        private static SettingsFile settings = new SettingsFile("Lighting/LightConfig.xml");
+        public readonly coords Location;
+
+        private ColorBright currentState = new ColorBright();
+        private bool isChanged = false;
+        public int transition = 1;
+        public int SceneIdentifier = 0;
+
         public MLightLayer Base = new MLightLayer();
         public MLightLayer Theme = new MLightLayer();
         public MLightLayer Custom = new MLightLayer();
         public MLightLayer Anim = new MLightLayer();
         public readonly List<MLightLayer> Layers;
-        public readonly Area? Room = null;
-
-        private ColorBright currentState = new ColorBright();
-        private bool isChanged = false;
-        public int transition = 1;
-
-        public int SceneIdentifier = 0;
 
         public MLight(IHaContext _ha, LightEntity _entity)
         {
@@ -38,6 +40,12 @@ namespace NetDaemonWrapper.Lighting
             };
 
             Room = _ha.GetAreaFromEntityId(entity.EntityId);
+
+            Location = new coords(
+                int.Parse(settings.ReadSetDefault(entity.EntityId, "North_Inches", "0")),
+                int.Parse(settings.ReadSetDefault(entity.EntityId, "West_Inches", "0")),
+                int.Parse(settings.ReadSetDefault(entity.EntityId, "Height_Inches", "0")));
+
             All.Add(this);
         }
 
@@ -193,5 +201,31 @@ namespace NetDaemonWrapper.Lighting
         public bool isActive;
         public int brightness;
         public BlendMode blendMode = BlendMode.None;
+    }
+
+    public class coords
+    {
+        public int N_in;
+        public int W_in;
+        public int H_in;
+        private static int N_Max;
+        private static int W_Max;
+        private static int H_Max;
+
+        public double N_rel
+        { get { return (double)N_in / N_Max; } }
+
+        public double W_rel
+        { get { return (double)W_in / N_Max; } }
+
+        public coords(int North_Inches, int West_Inches, int Height_Inches)
+        {
+            N_in = North_Inches;
+            W_in = West_Inches;
+            H_in = Height_Inches;
+            N_Max = Math.Max(N_Max, N_in);
+            W_Max = Math.Max(W_Max, W_in);
+            H_Max = Math.Max(H_Max, H_in);
+        }
     }
 }

@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetDaemon", "NetDaemon\NetDaemon.csproj", "{10E94206-ECB9-4F41-9A49-653618C2E3C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemonWrapper", "NetDaemonWrapper\NetDaemonWrapper.csproj", "{F2DA8899-41BF-477E-A17D-90C01C4928DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetDaemonWrapper", "NetDaemonWrapper\NetDaemonWrapper.csproj", "{F2DA8899-41BF-477E-A17D-90C01C4928DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NDWConfigurator", "NDWConfigurator\NDWConfigurator\NDWConfigurator.csproj", "{85EBAEDF-81B7-44F8-B213-D5A9E92723D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F2DA8899-41BF-477E-A17D-90C01C4928DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2DA8899-41BF-477E-A17D-90C01C4928DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2DA8899-41BF-477E-A17D-90C01C4928DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85EBAEDF-81B7-44F8-B213-D5A9E92723D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85EBAEDF-81B7-44F8-B213-D5A9E92723D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85EBAEDF-81B7-44F8-B213-D5A9E92723D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85EBAEDF-81B7-44F8-B213-D5A9E92723D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
