@@ -494,6 +494,7 @@
             this.pb_Floorplan.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_Floorplan.TabIndex = 0;
             this.pb_Floorplan.TabStop = false;
+            this.pb_Floorplan.WaitOnLoad = true;
             this.pb_Floorplan.SizeChanged += new System.EventHandler(this.pb_Floorplan_SizeChanged);
             this.pb_Floorplan.Click += new System.EventHandler(this.pb_Floorplan_Click);
             // 

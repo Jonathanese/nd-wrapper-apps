@@ -44,6 +44,9 @@ namespace NDWConfigurator
             lb_Floors.SelectedIndex = 1;
         }
 
+        /// <summary>
+        /// Fill list of lights based on saved or default data
+        /// </summary>
         protected void FillLightItems()
         {
             if (LightSettings == null) return;
@@ -58,6 +61,9 @@ namespace NDWConfigurator
             }
         }
 
+        /// <summary>
+        /// Fill array of floor items based on saved or default data
+        /// </summary>
         protected void FillFloorItems()
         {
             if (LightSettings == null) return;
@@ -84,7 +90,11 @@ namespace NDWConfigurator
             ShowSelectedFloor();
         }
 
-        protected void ShowLightsByFloor(int floor)
+        /// <summary>
+        /// For a given floor, populate the list of lights on that floor
+        /// </summary>
+        /// <param name="floor"></param>
+        protected void PopulateLightListByFloor(int floor)
         {
             IEnumerable<LightItem> lights = new List<LightItem>();
             lights = LightItems.Where(l => getLightFloor(l) == floor);
@@ -93,16 +103,30 @@ namespace NDWConfigurator
             {
                 lb_Lights.Items.Add(l.name);
             }
+            if (lb_Lights.Items.Count > 0 && lb_Lights.SelectedIndex == -1)
+            {
+                lb_Lights.SelectedIndex = 0;
+                PlaceLightImage(SelectedLight);
+            }
         }
 
-        protected void SaveFloorImage(int floor, string image)
+        /// <summary>
+        /// Store the floorplan image into the FloorItem object
+        /// </summary>
+        /// <param name="floor"></param>
+        /// <param name="image"></param>
+        protected void StoreFloorImage(int floor, string image)
         {
             if (floor < 0 || floor >= lb_Floors.Items.Count || floor >= FloorItems.Count) return;
 
             FloorItems[lb_Floors.SelectedIndex].ImagePath = image;
         }
 
-        protected void GetLightValues(LightItem light)
+        /// <summary>
+        /// Fill light settings boxes based on chosen light
+        /// </summary>
+        /// <param name="light"></param>
+        protected void DisplayLightValue(LightItem light)
         {
             nud_HeightFromFloor.Value = getLightHeightFromFloor(light, light.H);
             l_LightHeightAbsolute.Text = light.H.ToString();
@@ -110,10 +134,14 @@ namespace NDWConfigurator
             nud_West.Value = light.W;
         }
 
+        /// <summary>
+        /// Configure the form to show the contents of the currently-selected floor
+        /// </summary>
         protected void ShowSelectedFloor()
         {
             if (lb_Floors.SelectedIndex > -1 && lb_Floors.SelectedIndex < FloorItems.Count)
             {
+                //Check if image is valid
                 bool validimage = false;
                 if (SelectedFloor.ImagePath != "")
                 {
@@ -126,17 +154,20 @@ namespace NDWConfigurator
                     catch { pb_Floorplan.ImageLocation = ""; }
                 }
 
+                //Set Floor Measurement Values
                 nud_FloorHeight.Value = SelectedFloor.GroundHeight_in;
                 nud_FloorWidth.Value = SelectedFloor.Width_in;
 
+                //If image is valid, place items based on image
                 if (validimage)
                 {
                     nud_RefX.Value = SelectedFloor.ReferencePixel.X;
                     nud_RefY.Value = SelectedFloor.ReferencePixel.Y;
                     SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
-                    ShowLightsByFloor(lb_Floors.SelectedIndex);
+                    PopulateLightListByFloor(lb_Floors.SelectedIndex);
                 }
 
+                //Enable/Disable move up/down buttons
                 b_MoveDown.Enabled = true;
                 b_MoveUp.Enabled = true;
 
@@ -144,15 +175,244 @@ namespace NDWConfigurator
                 {
                     b_MoveUp.Enabled = false;
                 }
-                else if (lb_Floors.SelectedIndex == 2)
+                else if (lb_Floors.SelectedIndex == lb_Floors.Items.Count - 1)
                 {
                     b_MoveDown.Enabled = false;
                 }
 
                 return;
             }
+            //Invalid floor selection
             pb_Floorplan.ImageLocation = "";
         }
+
+        /// <summary>
+        /// Determine which floor the light is located on
+        /// </summary>
+        /// <param name="l"></param>
+        /// <returns></returns>
+        private int getLightFloor(LightItem l)
+        {
+            if (l.H >= FloorItems[0].GroundHeight_in) { return 0; }
+            else if (l.H < FloorItems[1].GroundHeight_in) { return 2; }
+            return 1;
+        }
+
+        /// <summary>
+        /// Get Light height relative to ground level
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="HeightFromFloor"></param>
+        /// <returns></returns>
+        private int getLightHeightAbsolute(LightItem l, int HeightFromFloor)
+        {
+            return HeightFromFloor + FloorItems[getLightFloor(l)].GroundHeight_in;
+        }
+
+        private int getLightHeightFromFloor(LightItem l, int HeightAbsolute)
+        {
+            return HeightAbsolute - FloorItems[getLightFloor(l)].GroundHeight_in;
+        }
+
+        /// <summary>
+        /// Set reference point location using click event
+        /// </summary>
+        /// <param name="e"></param>
+        private void SetRefPointByClick(EventArgs e)
+        {
+            if (pb_Floorplan.Image == null) return;
+
+            Point location = GetPicturePixel(e);
+            nud_RefX.Value = location.X;
+            nud_RefY.Value = location.Y;
+            SelectedFloor.ReferencePixel = location;
+            SetItemByPixel(pb_Ref, location);
+        }
+
+        /// <summary>
+        /// Set light location using click event
+        /// </summary>
+        /// <param name="e"></param>
+        private void SetLightPointByClick(EventArgs e)
+        {
+            if (pb_Floorplan.Image == null) return;
+
+            Point location = GetPicturePixel(e);
+            SetItemByPixel(pb_Light, location);
+            SetLightValueByPixel(location);
+        }
+
+        /// <summary>
+        /// Set item position based on a pixel in the floorplan image
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="pixel"></param>
+        private void SetItemByPixel(Control item, Point pixel)
+        {
+            if (pb_Floorplan.Image == null) return;
+            Point LightLocation = pixel;
+            double scalar = GetFloorPlanScalar();
+
+            //Scale to display location relative to image location
+            LightLocation = Multiply(LightLocation, scalar);
+
+            //Get full border thickness
+            int oy = pb_Floorplan.Height - (int)(scalar * pb_Floorplan.Image.Height);
+            int ox = pb_Floorplan.Width - (int)(scalar * pb_Floorplan.Image.Width);
+            //Get thickness of one side of the border.
+            oy /= 2;
+            ox /= 2;
+
+            LightLocation = Add(LightLocation, new Point(ox, oy));
+            LightLocation = Add(LightLocation, pb_Floorplan.Location);
+            LightLocation = Subtract(LightLocation, new Point(4, 4));
+
+            item.Location = LightLocation;
+        }
+
+        /// <summary>
+        /// Set light location based on pixel in the flooplan image
+        /// </summary>
+        /// <param name="location"></param>
+        private void SetLightValueByPixel(Point location)
+        {
+            //Get coordinates (pixels) of light relative to reference
+            int dx = (int)nud_RefX.Value;
+            int dy = (int)nud_RefY.Value;
+            //Reversed, remembering that -x is +West and -y is +North
+            dx = dx - location.X;
+            dy = dy - location.Y;
+
+            SelectedLight.N = PixelsToInches(dy);
+            SelectedLight.W = PixelsToInches(dx);
+            nud_West.Value = SelectedLight.W;
+            nud_North.Value = SelectedLight.N;
+        }
+
+        /// <summary>
+        /// Place light icon based on its stored data
+        /// </summary>
+        /// <param name="l"></param>
+        private void PlaceLightImage(LightItem l)
+        {
+            Point location = InchesToPixelLocation(l.W, l.N);
+            SetItemByPixel(pb_Light, location);
+        }
+
+        /// <summary>
+        /// Get the ratio at which the floorplan image is scaled into the form
+        /// </summary>
+        /// <returns>Displayed image size / Actual image size</returns>
+        private double GetFloorPlanScalar()
+        {
+            if (pb_Floorplan.Image == null) return 1.0;
+            double imageaspectratio = (double)pb_Floorplan.Image.Width / (double)pb_Floorplan.Image.Height;
+            double pbAspectRatio = (double)pb_Floorplan.Width / (double)pb_Floorplan.Height;
+
+            if (imageaspectratio > pbAspectRatio)
+            {
+                //Image is wider than container, so width determines scale
+                return (double)pb_Floorplan.Width / (double)pb_Floorplan.Image.Width;
+            }
+            else
+            {
+                //Image is taller than container, so height determines scale
+                return (double)pb_Floorplan.Height / (double)pb_Floorplan.Image.Height;
+            }
+        }
+
+        /// <summary>
+        /// Select a light item, switching floor if necessary
+        /// </summary>
+        /// <param name="l"></param>
+        private void SelectLightAndFloor(LightItem l)
+        {
+            lb_Floors.SelectedIndex = getLightFloor(l);
+            //ShowLightsByFloor(lb_Floors.SelectedIndex);
+            lb_Lights.SelectedItem = l.name;
+        }
+
+        #region TRANSFORMS
+
+        private int PixelsToInches(int pixels)
+        {
+            double InchesPerPixel = 1;
+            InchesPerPixel = (double)SelectedFloor.Width_in / (double)pb_Floorplan.Image.Width;
+            return (int)(InchesPerPixel * pixels);
+        }
+
+        private int InchesToPixels(int inches)
+        {
+            if (pb_Floorplan.Image == null) return 0;
+            double PixelsPerInch = 1;
+            PixelsPerInch = (double)pb_Floorplan.Image.Width / (double)SelectedFloor.Width_in;
+            return (int)(PixelsPerInch * inches);
+        }
+
+        private Point InchesToPixelLocation(int W, int N)
+        {
+            Point location = new Point((int)nud_RefX.Value, (int)nud_RefY.Value);
+            N = InchesToPixels(N);
+            W = InchesToPixels(W);
+            location = Subtract(location, new Point(W, N));
+            return location;
+        }
+
+        /// <summary>
+        /// Get coordinates of mouse relative to the child being clicked
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private Point GetChildMouseCoords(EventArgs e)
+        {
+            Point location = ((MouseEventArgs)e).Location;
+            location = Subtract(location, GetChildAtPoint(location).Location);
+            return location;
+        }
+
+        /// <summary>
+        /// Get which pixel in the image was clicked by the mouse
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private Point GetPicturePixel(EventArgs e)
+        {
+            Point location = GetChildMouseCoords(e);
+
+            double scalingfactor = GetFloorPlanScalar();
+            int ox = 0;
+            int oy = 0;
+
+            //Get full border thickness
+            oy = pb_Floorplan.Height - (int)(scalingfactor * pb_Floorplan.Image.Height);
+            ox = pb_Floorplan.Width - (int)(scalingfactor * pb_Floorplan.Image.Width);
+            //Get thickness of one side of the border.
+            oy /= 2;
+            ox /= 2;
+
+            location = Subtract(location, new Point(ox, oy));
+
+            return Multiply(location, 1 / scalingfactor);
+        }
+
+        private Point Subtract(Point a, Point b)
+        {
+            return new Point(a.X - b.X, a.Y - b.Y);
+        }
+
+        private Point Add(Point a, Point b)
+        {
+            return new Point(a.X + b.X, a.Y + b.Y);
+        }
+
+        private Point Multiply(Point a, double scalar)
+        {
+            return new Point((int)(a.X * scalar), (int)(a.Y * scalar));
+        }
+
+        #endregion TRANSFORMS
+
+        #region GUI
 
         private void loadImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -170,7 +430,7 @@ namespace NDWConfigurator
                 {
                     MessageBox.Show("Image load failed", "Error");
                 }
-                SaveFloorImage(lb_Floors.SelectedIndex, dialog.FileName);
+                StoreFloorImage(lb_Floors.SelectedIndex, dialog.FileName);
             }
         }
 
@@ -178,7 +438,7 @@ namespace NDWConfigurator
         {
             if (lb_Lights.SelectedIndex > -1 && lb_Lights.Items.Count > 0)
             {
-                GetLightValues(LightItems.Where(e => e.name == lb_Lights.SelectedItem.ToString()).First());
+                DisplayLightValue(LightItems.Where(e => e.name == lb_Lights.SelectedItem.ToString()).First());
                 b_PlaceLight.Enabled = true;
                 nud_North.Enabled = true;
                 nud_West.Enabled = true;
@@ -216,23 +476,6 @@ namespace NDWConfigurator
             }
         }
 
-        private int getLightFloor(LightItem l)
-        {
-            if (l.H >= FloorItems[0].GroundHeight_in) { return 0; }
-            else if (l.H < FloorItems[1].GroundHeight_in) { return 2; }
-            return 1;
-        }
-
-        private int getLightHeightAbsolute(LightItem l, int HeightFromFloor)
-        {
-            return HeightFromFloor + FloorItems[getLightFloor(l)].GroundHeight_in;
-        }
-
-        private int getLightHeightFromFloor(LightItem l, int HeightAbsolute)
-        {
-            return HeightAbsolute - FloorItems[getLightFloor(l)].GroundHeight_in;
-        }
-
         private void b_MoveUp_Click(object sender, EventArgs e)
         {
             LightItem light = LightItems.Where(l => l.name == lb_Lights.SelectedItem.ToString()).First();
@@ -252,7 +495,7 @@ namespace NDWConfigurator
                     lb_Floors.SelectedIndex = 1;
                     break;
             }
-            ShowLightsByFloor(lb_Floors.SelectedIndex);
+            PopulateLightListByFloor(lb_Floors.SelectedIndex);
             lb_Lights.SelectedItem = light.name;
         }
 
@@ -276,31 +519,24 @@ namespace NDWConfigurator
             SelectLightAndFloor(light);
         }
 
-        private void SelectLightAndFloor(LightItem l)
-        {
-            lb_Floors.SelectedIndex = getLightFloor(l);
-            ShowLightsByFloor(lb_Floors.SelectedIndex);
-            lb_Lights.SelectedItem = l.name;
-        }
-
         private void nud_HeightFromFloor_ValueChanged(object sender, EventArgs e)
         {
             SelectedLight.H = getLightHeightAbsolute(SelectedLight, (int)nud_HeightFromFloor.Value);
-            GetLightValues(SelectedLight);
+            DisplayLightValue(SelectedLight);
             SelectLightAndFloor(SelectedLight);
         }
 
         private void nud_West_ValueChanged(object sender, EventArgs e)
         {
             SelectedLight.W = (int)nud_West.Value;
-            GetLightValues(SelectedLight);
+            DisplayLightValue(SelectedLight);
             PlaceLightImage(SelectedLight);
         }
 
         private void nud_North_ValueChanged(object sender, EventArgs e)
         {
             SelectedLight.N = (int)nud_North.Value;
-            GetLightValues(SelectedLight);
+            DisplayLightValue(SelectedLight);
             PlaceLightImage(SelectedLight);
         }
 
@@ -320,153 +556,6 @@ namespace NDWConfigurator
                     b_PlaceReference.ForeColor = Color.Black;
                     break;
             }
-        }
-
-        private void SetRefPointByClick(EventArgs e)
-        {
-            if (pb_Floorplan.Image == null) return;
-
-            Point location = GetPicturePixel(e);
-            nud_RefX.Value = location.X;
-            nud_RefY.Value = location.Y;
-            SelectedFloor.ReferencePixel = location;
-            SetItemByPixel(pb_Ref, location);
-        }
-
-        private void SetLightPointByClick(EventArgs e)
-        {
-            if (pb_Floorplan.Image == null) return;
-
-            Point location = GetPicturePixel(e);
-            SetItemByPixel(pb_Light, location);
-            SetLightValueByPixel(location);
-        }
-
-        private void SetItemByPixel(Control item, Point pixel)
-        {
-            if (pb_Floorplan.Image == null) return;
-            Point LightLocation = pixel;
-            double scalar = GetFloorPlanScalar();
-
-            //Scale to display location relative to image location
-            LightLocation = Multiply(LightLocation, scalar);
-
-            //Get full border thickness
-            int oy = pb_Floorplan.Height - (int)(scalar * pb_Floorplan.Image.Height);
-            int ox = pb_Floorplan.Width - (int)(scalar * pb_Floorplan.Image.Width);
-            //Get thickness of one side of the border.
-            oy /= 2;
-            ox /= 2;
-
-            LightLocation = Add(LightLocation, new Point(ox, oy));
-            LightLocation = Add(LightLocation, pb_Floorplan.Location);
-            LightLocation = Subtract(LightLocation, new Point(4, 4));
-
-            item.Location = LightLocation;
-        }
-
-        private void SetLightValueByPixel(Point location)
-        {
-            //Get coordinates (pixels) of light relative to reference
-            int dx = (int)nud_RefX.Value;
-            int dy = (int)nud_RefY.Value;
-            //Reversed, remembering that -x is +West and -y is +North
-            dx = dx - location.X;
-            dy = dy - location.Y;
-
-            SelectedLight.N = PixelsToInches(dy);
-            SelectedLight.W = PixelsToInches(dx);
-            nud_West.Value = SelectedLight.W;
-            nud_North.Value = SelectedLight.N;
-        }
-
-        private int PixelsToInches(int pixels)
-        {
-            double InchesPerPixel = 1;
-            InchesPerPixel = (double)SelectedFloor.Width_in / (double)pb_Floorplan.Image.Width;
-            return (int)(InchesPerPixel * pixels);
-        }
-
-        private int InchesToPixels(int inches)
-        {
-            double PixelsPerInch = 1;
-            PixelsPerInch = (double)pb_Floorplan.Image.Width / (double)SelectedFloor.Width_in;
-            return (int)(PixelsPerInch * inches);
-        }
-
-        private Point InchesToPixelLocation(int W, int N)
-        {
-            Point location = new Point((int)nud_RefX.Value, (int)nud_RefY.Value);
-            N = InchesToPixels(N);
-            W = InchesToPixels(W);
-            location = Subtract(location, new Point(W, N));
-            return location;
-        }
-
-        private void PlaceLightImage(LightItem l)
-        {
-            Point location = InchesToPixelLocation(l.W, l.N);
-            SetItemByPixel(pb_Light, location);
-        }
-
-        private Point GetChildMouseCoords(EventArgs e)
-        {
-            Point location = ((MouseEventArgs)e).Location;
-            location = Subtract(location, GetChildAtPoint(location).Location);
-            return location;
-        }
-
-        private Point GetPicturePixel(EventArgs e)
-        {
-            Point location = GetChildMouseCoords(e);
-
-            double scalingfactor = GetFloorPlanScalar();
-            int ox = 0;
-            int oy = 0;
-
-            //Get full border thickness
-            oy = pb_Floorplan.Height - (int)(scalingfactor * pb_Floorplan.Image.Height);
-            ox = pb_Floorplan.Width - (int)(scalingfactor * pb_Floorplan.Image.Width);
-            //Get thickness of one side of the border.
-            oy /= 2;
-            ox /= 2;
-
-            location = Subtract(location, new Point(ox, oy));
-
-            return Multiply(location, 1 / scalingfactor);
-        }
-
-        private double GetFloorPlanScalar()
-        {
-            if (pb_Floorplan.Image == null) return 1.0;
-            double imageaspectratio = (double)pb_Floorplan.Image.Width / (double)pb_Floorplan.Image.Height;
-            double pbAspectRatio = (double)pb_Floorplan.Width / (double)pb_Floorplan.Height;
-
-            if (imageaspectratio > pbAspectRatio)
-            {
-                //Image is wider than container, so width determines scale
-                return (double)pb_Floorplan.Width / (double)pb_Floorplan.Image.Width;
-            }
-            else
-            {
-                //Image is taller than container, so height determines scale
-                return (double)pb_Floorplan.Height / (double)pb_Floorplan.Image.Height;
-            }
-        }
-
-        private Point Subtract(Point a, Point b)
-        {
-            return new Point(a.X - b.X, a.Y - b.Y);
-        }
-
-        private Point Add(Point a, Point b)
-        {
-            return new Point(a.X + b.X, a.Y + b.Y);
-        }
-
-        private Point Multiply(Point a, double scalar)
-        {
-            return new Point((int)(a.X * scalar), (int)(a.Y * scalar));
         }
 
         private void pb_Floorplan_SizeChanged(object sender, EventArgs e)
@@ -511,6 +600,8 @@ namespace NDWConfigurator
         {
             SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
         }
+
+        #endregion GUI
     }
 
     public class LightItem

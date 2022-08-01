@@ -98,12 +98,12 @@
   <light.nightstand_r>
     <add key="North_Inches" value="174" />
     <add key="West_Inches" value="456" />
-    <add key="Height_Inches" value="108" />
+    <add key="Height_Inches" value="144" />
   </light.nightstand_r>
   <light.bedroom_ceiling>
-    <add key="North_Inches" value="0" />
-    <add key="West_Inches" value="0" />
-    <add key="Height_Inches" value="108" />
+    <add key="North_Inches" value="106" />
+    <add key="West_Inches" value="398" />
+    <add key="Height_Inches" value="216" />
   </light.bedroom_ceiling>
   <light.island_1>
     <add key="North_Inches" value="201" />
@@ -121,14 +121,14 @@
     <add key="Height_Inches" value="0" />
   </light.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_1475bafe_level_light_color_on_off>
   <light.office>
-    <add key="North_Inches" value="0" />
-    <add key="West_Inches" value="0" />
+    <add key="North_Inches" value="57" />
+    <add key="West_Inches" value="64" />
     <add key="Height_Inches" value="108" />
   </light.office>
   <light.stair_2>
-    <add key="North_Inches" value="0" />
-    <add key="West_Inches" value="0" />
-    <add key="Height_Inches" value="108" />
+    <add key="North_Inches" value="90" />
+    <add key="West_Inches" value="268" />
+    <add key="Height_Inches" value="204" />
   </light.stair_2>
   <light.island_4>
     <add key="North_Inches" value="236" />

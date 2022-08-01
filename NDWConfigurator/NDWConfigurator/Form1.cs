@@ -8,12 +8,16 @@ namespace NDWConfigurator
 
         public Form1()
         {
-            DoubleBuffered = true;
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             NDWConfigSettings = new SettingsFile("Settings/", "Config.xml");
             RootDirectory = NDWConfigSettings.ReadSetDefault("General", "RootDirectory", "");
 
             InitializeComponent();
+
+            // Activates double buffering
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);
+
             l_RootDirectory.Text = RootDirectory;
             LoadConfigs();
         }
