@@ -8,7 +8,7 @@ namespace NDWConfigurator
 {
     public partial class Form1 : Form
     {
-        public IEnumerable<LightItem> LightItems = new List<LightItem>();
+        public List<LightItem> LightItems = new List<LightItem>();
         public List<FloorItem> FloorItems = new List<FloorItem>();
 
         public enum _placemode
@@ -17,7 +17,20 @@ namespace NDWConfigurator
         private _placemode PlaceMode = _placemode.None;
 
         private LightItem SelectedLight
-        { get { return LightItems.Where(l => l.name == lb_Lights.SelectedItem.ToString()).First(); } }
+        {
+            get
+            {
+                if (lb_Lights.SelectedItem != null)
+                {
+                    IEnumerable<LightItem> lightItems = LightItems.Where(l => l.name == lb_Lights.SelectedItem.ToString());
+                    if (lightItems.Any())
+                    {
+                        return lightItems.First();
+                    }
+                }
+                return null;
+            }
+        }
 
         private FloorItem SelectedFloor
         {
@@ -50,6 +63,7 @@ namespace NDWConfigurator
         protected void FillLightItems()
         {
             if (LightSettings == null) return;
+            LightItems.Clear();
             foreach (string entity in LightSettings.GetSections())
             {
                 LightItem item = new LightItem();
@@ -57,8 +71,9 @@ namespace NDWConfigurator
                 item.N = int.Parse(LightSettings.ReadSetDefault(entity, "North_Inches", "0"));
                 item.W = int.Parse(LightSettings.ReadSetDefault(entity, "West_Inches", "0"));
                 item.H = int.Parse(LightSettings.ReadSetDefault(entity, "Height_Inches", "0"));
-                LightItems = LightItems.Append(item);
+                LightItems.Add(item);
             }
+            LightItems = LightItems.OrderBy(l => l.name).ToList();
         }
 
         /// <summary>
@@ -106,7 +121,7 @@ namespace NDWConfigurator
             if (lb_Lights.Items.Count > 0 && lb_Lights.SelectedIndex == -1)
             {
                 lb_Lights.SelectedIndex = 0;
-                PlaceLightImage(SelectedLight);
+                PlaceSelectedLightImage();
             }
         }
 
@@ -227,6 +242,7 @@ namespace NDWConfigurator
             nud_RefY.Value = location.Y;
             SelectedFloor.ReferencePixel = location;
             SetItemByPixel(pb_Ref, location);
+            PlaceSelectedLightImage();
         }
 
         /// <summary>
@@ -293,10 +309,13 @@ namespace NDWConfigurator
         /// Place light icon based on its stored data
         /// </summary>
         /// <param name="l"></param>
-        private void PlaceLightImage(LightItem l)
+        private void PlaceSelectedLightImage()
         {
-            Point location = InchesToPixelLocation(l.W, l.N);
-            SetItemByPixel(pb_Light, location);
+            if (SelectedLight != null)
+            {
+                Point location = InchesToPixelLocation(SelectedLight.W, SelectedLight.N);
+                SetItemByPixel(pb_Light, location);
+            }
         }
 
         /// <summary>
@@ -530,14 +549,14 @@ namespace NDWConfigurator
         {
             SelectedLight.W = (int)nud_West.Value;
             DisplayLightValue(SelectedLight);
-            PlaceLightImage(SelectedLight);
+            PlaceSelectedLightImage();
         }
 
         private void nud_North_ValueChanged(object sender, EventArgs e)
         {
             SelectedLight.N = (int)nud_North.Value;
             DisplayLightValue(SelectedLight);
-            PlaceLightImage(SelectedLight);
+            PlaceSelectedLightImage();
         }
 
         private void pb_Floorplan_Click(object sender, EventArgs e)
@@ -563,7 +582,7 @@ namespace NDWConfigurator
             if (pb_Floorplan.Image != null)
                 SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
             if (lb_Lights.SelectedIndex != -1)
-                PlaceLightImage(SelectedLight);
+                PlaceSelectedLightImage();
         }
 
         private void b_PlaceReference_Click(object sender, EventArgs e)
@@ -594,11 +613,13 @@ namespace NDWConfigurator
         private void nud_RefX_ValueChanged(object sender, EventArgs e)
         {
             SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
+            PlaceSelectedLightImage();
         }
 
         private void nud_RefY_ValueChanged(object sender, EventArgs e)
         {
             SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
+            PlaceSelectedLightImage();
         }
 
         #endregion GUI

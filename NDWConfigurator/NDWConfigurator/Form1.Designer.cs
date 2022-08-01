@@ -63,6 +63,7 @@
             this.pb_Floorplan = new System.Windows.Forms.PictureBox();
             this.CMS_Floorplan = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.loadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tt_ToolTips = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -198,6 +199,9 @@
             this.b_PlaceReference.Size = new System.Drawing.Size(155, 23);
             this.b_PlaceReference.TabIndex = 23;
             this.b_PlaceReference.Text = "Place Reference";
+            this.tt_ToolTips.SetToolTip(this.b_PlaceReference, "Reference point is used for consistent coordinates across floors.\r\n\r\nReference po" +
+        "int should go to the furthest south-east point, and be consistent across all flo" +
+        "ors.");
             this.b_PlaceReference.UseVisualStyleBackColor = true;
             this.b_PlaceReference.Click += new System.EventHandler(this.b_PlaceReference_Click);
             // 
@@ -574,5 +578,6 @@
         private NumericUpDown nud_RefX;
         private PictureBox pb_Light;
         private PictureBox pb_Ref;
+        private ToolTip tt_ToolTips;
     }
 }
