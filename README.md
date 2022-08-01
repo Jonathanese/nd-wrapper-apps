@@ -4,7 +4,7 @@ This is an expansion/wrapper to [NetDaemon](https://github.com/net-daemon/netdae
 
 While this is just a personal project, the goal is to create an additional abstraction layer on top of NetDaemon to help organize some of the more cryptic or manual elements of navigating Home Assistant's API.
 
-Planned features will include:
+Features include:
 ## Lighting
 ### Multi-layer colors and blending
 This wrapper handles lighting through Managed Light (MLight) objects which can store and blend several layers of color. What might layering be good for?
@@ -19,3 +19,6 @@ This wrapper stores each of these elements as separate layers and shows the valu
 ### HDR Color Processing
 Commercial smart lighting generally operates in a Hue/Saturation/Brightness color space, while custom devices often use 8-bit-per-channel RGB and 8-bit brightness.
 This wrapper unifies RGB8+8 to RGB16
+
+### Positional Lighting
+Lights can store coordinates describing their location. This means lighting can be controlled with spatial awareness. Allowing effects such as location-based animations, or scenes configured in physical space. After running NDW at least once, it will create a LightConfig.xml file. This can be edited manually, though this may get tedious with lots of lights. So to assist, I've created the NDWConfigurator which allows lights to be positioned via GUI.
