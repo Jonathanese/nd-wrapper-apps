@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <settings>
   <Settings>
-    <add key="UpdateSeconds" value="60" />
+    <add key="UpdateSeconds" value="0.5" />
   </Settings>
 </settings>

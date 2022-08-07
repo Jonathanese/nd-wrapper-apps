@@ -6,6 +6,7 @@
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
         <RootNamespace>NetDaemon</RootNamespace>
+        <Configurations>Debug;Release;Publish</Configurations>
     </PropertyGroup>
     
     <ItemGroup>

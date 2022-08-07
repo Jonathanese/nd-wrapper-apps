@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <settings>
-  <General>
-    <add key="Name" value="scene.night_light" />
-  </General>
+  <Scene>
+    <add key="IsHeightBased" value="true" />
+    <add key="MaxBrightness" value="64" />
+    <add key="MaxHeightPct" value="80" />
+  </Scene>
 </settings>

@@ -11,16 +11,29 @@ namespace NetDaemonWrapper
 {
     public static class Utils
     {
-        private static Random _random = new Random();
+        private static uint seed = 0;
+
+        private static Random _r = new Random();
+
+        public static int PRNG(int maxvalue)
+        {
+            /*
+            seed += 45693;
+            seed *= 968500;
+            seed ^= 772390;
+            return Math.Abs((int)seed % maxvalue);
+            */
+            return _r.Next(maxvalue);
+        }
 
         public static bool RollPermil(int threshold)
         {
-            return (_random.Next(0, 1000) < threshold);
+            return (PRNG(1000) < threshold);
         }
 
         public static bool RollPercent(int threshold)
         {
-            return (_random.Next(0, 100) < threshold);
+            return (PRNG(100) < threshold);
         }
 
         public static DataElement? toDataElement(JsonElement? j)

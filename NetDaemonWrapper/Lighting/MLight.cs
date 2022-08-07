@@ -19,7 +19,7 @@ namespace NetDaemonWrapper.Lighting
 
         private ColorBright currentState = new ColorBright();
         private bool isChanged = false;
-        public int transition = 1;
+        public float transition = 1;
         public int SceneIdentifier = 0;
 
         public MLightLayer Base = new MLightLayer();
@@ -96,7 +96,7 @@ namespace NetDaemonWrapper.Lighting
             Show();
         }
 
-        public void Set(Layer _layer, FullColor _color, int transition)
+        public void Set(Layer _layer, FullColor _color, float transition)
         {
             switch (_layer)
             {
@@ -196,9 +196,14 @@ namespace NetDaemonWrapper.Lighting
             brightness = clone.brightness;
         }
 
-        public int transition = 1;
+        public float transition = 1;
         public FullColor color;
+
+        /// <summary>
+        /// Layer is active
+        /// </summary>
         public bool isActive;
+
         public int brightness;
         public BlendMode blendMode = BlendMode.None;
     }
@@ -216,7 +221,10 @@ namespace NetDaemonWrapper.Lighting
         { get { return (double)N_in / N_Max; } }
 
         public double W_rel
-        { get { return (double)W_in / N_Max; } }
+        { get { return (double)W_in / W_Max; } }
+
+        public double H_rel
+        { get { return (double)H_in / H_Max; } }
 
         public coords(int North_Inches, int West_Inches, int Height_Inches)
         {

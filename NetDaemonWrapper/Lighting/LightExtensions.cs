@@ -17,7 +17,7 @@ namespace NetDaemonWrapper.Lighting
             _light.TurnOn(rgbColor: color, brightness: _colorBright.brightness, transition: 1);
         }
 
-        public static void Set(this LightEntity _light, ColorBright _colorBright, int _transition)
+        public static void Set(this LightEntity _light, ColorBright _colorBright, float _transition)
         {
             if (_colorBright.brightness == 0)
             {

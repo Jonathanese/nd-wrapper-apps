@@ -31,7 +31,7 @@ namespace NetDaemonWrapper.Scene
 
         private SettingsFile Settings;
 
-        public delegate void SceneAction(List<MLight> lights);
+        public delegate void SceneAction(SettingsFile settings, List<MLight> lights);
 
         private Timer UpdateTimer;
         private int UpdateTimeMS;
@@ -50,6 +50,9 @@ namespace NetDaemonWrapper.Scene
             AddScene();
         }
 
+        /// <summary>
+        /// Register scene and add to listeners
+        /// </summary>
         private void AddScene()
         {
             bool exists = false;
@@ -72,16 +75,21 @@ namespace NetDaemonWrapper.Scene
             SubscribeScene();
         }
 
+        /// <summary>
+        /// Add listener for when scene is called.
+        /// </summary>
         private void SubscribeScene()
         {
             try
             {
+                //TODO: Currently passes all lights.
                 //Subscribe to this scene service call event
+
                 Context.ha.Events
                     .Where(e => e.EventType == "call_service")
                     .Where(e => Utils.toDataElement(e.DataElement).domain == "scene")
                     .Where(e => Utils.toServiceData(Utils.toDataElement(e.DataElement).service_data).entity_id == SceneName)
-                .Subscribe(s => _setScene(this));
+                .Subscribe(s => _setScene(this, MLight.All));
             }
             catch
             {
@@ -94,14 +102,20 @@ namespace NetDaemonWrapper.Scene
             UpdateTimeMS = (int)(1000 * float.Parse(Settings.ReadSetDefault("Settings", "UpdateSeconds", _UpdateSeconds.ToString())));
         }
 
-        private static void _setScene(Scene s)
+        /// <summary>
+        /// Sets the theme of each light in lights to scene s
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="lights"></param>
+        private static void _setScene(Scene s, List<MLight> lights)
         {
             Console.WriteLine("Scene Set: " + s.SceneName);
 
-            //TODO: These currently pass MLight.All for testing. In the future, find relevant lights and pass only those.
-            foreach (MLight l in MLight.All)
+            foreach (MLight l in lights)
             {
+                //Deactivate Custom Layer
                 l.Custom.isActive = false;
+                //Overwrite current scene with new scene.
                 l.SceneIdentifier = s.SceneIdentifier;
             }
 
@@ -115,6 +129,7 @@ namespace NetDaemonWrapper.Scene
             }
         }
 
+        //Determine if current scene is in use anywhere
         private bool CheckActive()
         {
             foreach (MLight l in MLight.All)
@@ -127,14 +142,21 @@ namespace NetDaemonWrapper.Scene
             return false;
         }
 
+        /// <summary>
+        /// Run scene action on lights with scene active
+        /// </summary>
         private void InvokeAction()
         {
             if (CheckActive())
-                Action.Invoke(GetActiveLights());
+                Action.Invoke(Settings, GetActiveLights());
             else
                 UpdateTimer.Change(-1, -1);
         }
 
+        /// <summary>
+        /// Get list of lights in which the current scene is active
+        /// </summary>
+        /// <returns></returns>
         private List<MLight> GetActiveLights()
         {
             List<MLight> ActiveLights = new List<MLight>();
