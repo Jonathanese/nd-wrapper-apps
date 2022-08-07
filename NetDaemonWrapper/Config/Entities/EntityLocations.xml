@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <light.test>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.test>
+  <light.island_4>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.island_4>
+  <light.island_3>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.island_3>
+  <light.philips_lct016_a7248e03_level_light_color_on_off>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.philips_lct016_a7248e03_level_light_color_on_off>
+  <light.stair_1>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.stair_1>
+  <light.pole>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.pole>
+  <light.hue_color_lamp_4_3>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.hue_color_lamp_4_3>
+  <light.hall_overlook>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.hall_overlook>
+  <light.lr_floor_2>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.lr_floor_2>
+  <light.ceiling>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.ceiling>
+  <light.tv_stand>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.tv_stand>
+  <light.office>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.office>
+  <light.nightstand_r>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.nightstand_r>
+  <light.island_2>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.island_2>
+  <light.studio_down>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.studio_down>
+  <light.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_218326fe_level_light_color_on_off>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_218326fe_level_light_color_on_off>
+  <light.lr_floor_1>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.lr_floor_1>
+  <light.entry>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.entry>
+  <light.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_1475bafe_level_light_color_on_off>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_1475bafe_level_light_color_on_off>
+  <light.hue_color_lamp_4_2>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.hue_color_lamp_4_2>
+  <light.island_1>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.island_1>
+  <light.bedroom_fan>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.bedroom_fan>
+  <light.breakfast>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.breakfast>
+  <light.hall_stair>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.hall_stair>
+  <light.dining_room>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.dining_room>
+  <light.studio_up>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.studio_up>
+  <light.sign>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.sign>
+  <light.bedroom_ceiling>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.bedroom_ceiling>
+  <light.sink>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.sink>
+  <light.office_main_lights>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.office_main_lights>
+  <light.stair_2>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.stair_2>
+  <light.lr_floor_3>
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.lr_floor_3>
+</settings>

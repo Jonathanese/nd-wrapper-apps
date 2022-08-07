@@ -257,7 +257,7 @@ namespace NDWConfigurator
 
         private void Save(XDocument document)
         {
-            document.Save(_path);
+                document.Save(_path);
         }
 
         private XDocument GetDocument(bool createIfNotExists = true)

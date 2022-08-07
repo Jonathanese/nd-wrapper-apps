@@ -8,24 +8,24 @@ namespace NDWConfigurator
 {
     public partial class Form1 : Form
     {
-        public List<LightItem> LightItems = new List<LightItem>();
+        public List<EntityItem> LocationEntityItems = new List<EntityItem>();
         public List<FloorItem> FloorItems = new List<FloorItem>();
 
         public enum _placemode
-        { Light, Reference, None };
+        { Entity, Reference, None };
 
         private _placemode PlaceMode = _placemode.None;
 
-        private LightItem SelectedLight
+        private EntityItem SelectedLocationEntity
         {
             get
             {
-                if (lb_Lights.SelectedItem != null)
+                if (lb_LocationEntities.SelectedItem != null)
                 {
-                    IEnumerable<LightItem> lightItems = LightItems.Where(l => l.name == lb_Lights.SelectedItem.ToString());
-                    if (lightItems.Any())
+                    IEnumerable<EntityItem> entityItems = LocationEntityItems.Where(l => l.name == lb_LocationEntities.SelectedItem.ToString());
+                    if (entityItems.Any())
                     {
-                        return lightItems.First();
+                        return entityItems.First();
                     }
                 }
                 return null;
@@ -49,31 +49,28 @@ namespace NDWConfigurator
 
         private int DefaultFloorWidth = new FloorItem().Width_in;
 
-        protected void InitLightsTab()
+        protected void InitLocationTab()
         {
-            LightSettings = new SettingsFile(RootDirectory, "/Lighting/LightConfig.xml");
-            FillLightItems();
+            FillEntityLocationsList();
             FillFloorItems();
             lb_Floors.SelectedIndex = 1;
         }
 
         /// <summary>
-        /// Fill list of lights based on saved or default data
+        /// Fill list of entitys based on saved or default data
         /// </summary>
-        protected void FillLightItems()
+        protected void FillEntityLocationsList()
         {
-            if (LightSettings == null) return;
-            LightItems.Clear();
-            foreach (string entity in LightSettings.GetSections())
+            if (EntityLocationsFile == null) return;
+            LocationEntityItems.Clear();
+            foreach (EntityItem entity in EntityItems)
             {
-                LightItem item = new LightItem();
-                item.name = entity;
-                item.N = int.Parse(LightSettings.ReadSetDefault(entity, "North_Inches", "0"));
-                item.W = int.Parse(LightSettings.ReadSetDefault(entity, "West_Inches", "0"));
-                item.H = int.Parse(LightSettings.ReadSetDefault(entity, "Height_Inches", "0"));
-                LightItems.Add(item);
+                if (entity.LocationEnabled)
+                {
+                    LocationEntityItems.Add(entity);
+                }
             }
-            LightItems = LightItems.OrderBy(l => l.name).ToList();
+            LocationEntityItems = LocationEntityItems.OrderBy(l => l.name).ToList();
         }
 
         /// <summary>
@@ -81,23 +78,23 @@ namespace NDWConfigurator
         /// </summary>
         protected void FillFloorItems()
         {
-            if (LightSettings == null) return;
+            if (EntityLocationsFile == null || LocationSettingsFile == null) return;
             FloorItems.Clear();
             for (int i = 0; i < lb_Floors.Items.Count; i++)
             {
                 FloorItems.Add(new FloorItem());
-                FloorItems[i].ImagePath = NDWConfigSettings.ReadSetDefault("Floor" + i.ToString(), "ImagePath", "");
+                FloorItems[i].ImagePath = RootDirectory + "/Location/Images/Floor_" + i.ToString() + ".png";
 
-                string measure = NDWConfigSettings.ReadSetDefault("Floor" + i.ToString(), "Width_in", DefaultFloorWidth.ToString());
+                string measure = LocationSettingsFile.ReadSetDefault("Floor" + i.ToString(), "Width_in", DefaultFloorWidth.ToString());
                 FloorItems[i].Width_in = int.Parse(measure);
 
-                measure = NDWConfigSettings.ReadSetDefault("Floor" + i.ToString(), "GroundHeight_in", ((1 - i) * 96).ToString());
+                measure = LocationSettingsFile.ReadSetDefault("Floor" + i.ToString(), "GroundHeight_in", ((1 - i) * 96).ToString());
                 FloorItems[i].GroundHeight_in = int.Parse(measure);
 
-                measure = NDWConfigSettings.ReadSetDefault("Floor" + i.ToString(), "ReferencePixelX", "0");
+                measure = LocationSettingsFile.ReadSetDefault("Floor" + i.ToString(), "ReferencePixelX", "0");
                 int refx = int.Parse(measure);
 
-                measure = NDWConfigSettings.ReadSetDefault("Floor" + i.ToString(), "ReferencePixelY", "0");
+                measure = LocationSettingsFile.ReadSetDefault("Floor" + i.ToString(), "ReferencePixelY", "0");
                 int refy = int.Parse(measure);
 
                 FloorItems[i].ReferencePixel = new Point(refx, refy);
@@ -106,22 +103,22 @@ namespace NDWConfigurator
         }
 
         /// <summary>
-        /// For a given floor, populate the list of lights on that floor
+        /// For a given floor, populate the list of entitys on that floor
         /// </summary>
         /// <param name="floor"></param>
-        protected void PopulateLightListByFloor(int floor)
+        protected void PopulateEntityListByFloor(int floor)
         {
-            IEnumerable<LightItem> lights = new List<LightItem>();
-            lights = LightItems.Where(l => getLightFloor(l) == floor);
-            lb_Lights.Items.Clear();
-            foreach (LightItem l in lights)
+            IEnumerable<EntityItem> entities = new List<EntityItem>();
+            entities = LocationEntityItems.Where(l => getEntityFloor(l) == floor);
+            lb_LocationEntities.Items.Clear();
+            foreach (EntityItem l in entities)
             {
-                lb_Lights.Items.Add(l.name);
+                lb_LocationEntities.Items.Add(l.name);
             }
-            if (lb_Lights.Items.Count > 0 && lb_Lights.SelectedIndex == -1)
+            if (lb_LocationEntities.Items.Count > 0 && lb_LocationEntities.SelectedIndex == -1)
             {
-                lb_Lights.SelectedIndex = 0;
-                PlaceSelectedLightImage();
+                lb_LocationEntities.SelectedIndex = 0;
+                PlaceSelectedEntityImage();
             }
         }
 
@@ -130,23 +127,43 @@ namespace NDWConfigurator
         /// </summary>
         /// <param name="floor"></param>
         /// <param name="image"></param>
-        protected void StoreFloorImage(int floor, string image)
+        protected void StoreFloorImage(FloorItem floor, string image)
         {
-            if (floor < 0 || floor >= lb_Floors.Items.Count || floor >= FloorItems.Count) return;
+            var imagefileinfo = new FileInfo(image);
+            var destfileinfo = new FileInfo(floor.ImagePath);
+            if (!imagefileinfo.Directory.Exists) imagefileinfo.Directory.Create();
 
-            FloorItems[lb_Floors.SelectedIndex].ImagePath = image;
+            if (imagefileinfo.Directory.Exists)
+            {
+                try
+                {
+                    File.Copy(image, destfileinfo.FullName, true);
+                }
+                catch
+                {
+                }
+
+                if (!(destfileinfo.Exists))
+                {
+                    MessageBox.Show("Could not copy image to\n" + destfileinfo.FullName);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not create directory\n" + imagefileinfo.Directory.FullName, "Error");
+            }
         }
 
         /// <summary>
-        /// Fill light settings boxes based on chosen light
+        /// Fill entity settings boxes based on chosen entity
         /// </summary>
-        /// <param name="light"></param>
-        protected void DisplayLightValue(LightItem light)
+        /// <param name="entity"></param>
+        protected void DisplayEntityValue(EntityItem entity)
         {
-            nud_HeightFromFloor.Value = getLightHeightFromFloor(light, light.H);
-            l_LightHeightAbsolute.Text = light.H.ToString();
-            nud_North.Value = light.N;
-            nud_West.Value = light.W;
+            nud_HeightFromFloor.Value = getEntityHeightFromFloor(entity, entity.H);
+            l_EntityHeightAbsolute.Text = entity.H.ToString();
+            nud_North.Value = entity.N;
+            nud_West.Value = entity.W;
         }
 
         /// <summary>
@@ -179,9 +196,8 @@ namespace NDWConfigurator
                     nud_RefX.Value = SelectedFloor.ReferencePixel.X;
                     nud_RefY.Value = SelectedFloor.ReferencePixel.Y;
                     SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
-                    PopulateLightListByFloor(lb_Floors.SelectedIndex);
                 }
-
+                PopulateEntityListByFloor(lb_Floors.SelectedIndex);
                 //Enable/Disable move up/down buttons
                 b_MoveDown.Enabled = true;
                 b_MoveUp.Enabled = true;
@@ -202,11 +218,11 @@ namespace NDWConfigurator
         }
 
         /// <summary>
-        /// Determine which floor the light is located on
+        /// Determine which floor the entity is located on
         /// </summary>
         /// <param name="l"></param>
         /// <returns></returns>
-        private int getLightFloor(LightItem l)
+        private int getEntityFloor(EntityItem l)
         {
             if (l.H >= FloorItems[0].GroundHeight_in) { return 0; }
             else if (l.H < FloorItems[1].GroundHeight_in) { return 2; }
@@ -214,19 +230,19 @@ namespace NDWConfigurator
         }
 
         /// <summary>
-        /// Get Light height relative to ground level
+        /// Get entity height relative to ground level
         /// </summary>
         /// <param name="l"></param>
         /// <param name="HeightFromFloor"></param>
         /// <returns></returns>
-        private int getLightHeightAbsolute(LightItem l, int HeightFromFloor)
+        private int getEntityHeightAbsolute(EntityItem l, int HeightFromFloor)
         {
-            return HeightFromFloor + FloorItems[getLightFloor(l)].GroundHeight_in;
+            return HeightFromFloor + FloorItems[getEntityFloor(l)].GroundHeight_in;
         }
 
-        private int getLightHeightFromFloor(LightItem l, int HeightAbsolute)
+        private int getEntityHeightFromFloor(EntityItem l, int HeightAbsolute)
         {
-            return HeightAbsolute - FloorItems[getLightFloor(l)].GroundHeight_in;
+            return HeightAbsolute - FloorItems[getEntityFloor(l)].GroundHeight_in;
         }
 
         /// <summary>
@@ -242,20 +258,20 @@ namespace NDWConfigurator
             nud_RefY.Value = location.Y;
             SelectedFloor.ReferencePixel = location;
             SetItemByPixel(pb_Ref, location);
-            PlaceSelectedLightImage();
+            PlaceSelectedEntityImage();
         }
 
         /// <summary>
-        /// Set light location using click event
+        /// Set entity location using click event
         /// </summary>
         /// <param name="e"></param>
-        private void SetLightPointByClick(EventArgs e)
+        private void SetEntityPointByClick(EventArgs e)
         {
             if (pb_Floorplan.Image == null) return;
 
             Point location = GetPicturePixel(e);
-            SetItemByPixel(pb_Light, location);
-            SetLightValueByPixel(location);
+            SetItemByPixel(pb_Entity, location);
+            SetEntityValueByPixel(location);
         }
 
         /// <summary>
@@ -266,11 +282,11 @@ namespace NDWConfigurator
         private void SetItemByPixel(Control item, Point pixel)
         {
             if (pb_Floorplan.Image == null) return;
-            Point LightLocation = pixel;
+            Point EntityLocation = pixel;
             double scalar = GetFloorPlanScalar();
 
             //Scale to display location relative to image location
-            LightLocation = Multiply(LightLocation, scalar);
+            EntityLocation = Multiply(EntityLocation, scalar);
 
             //Get full border thickness
             int oy = pb_Floorplan.Height - (int)(scalar * pb_Floorplan.Image.Height);
@@ -279,43 +295,43 @@ namespace NDWConfigurator
             oy /= 2;
             ox /= 2;
 
-            LightLocation = Add(LightLocation, new Point(ox, oy));
-            LightLocation = Add(LightLocation, pb_Floorplan.Location);
-            LightLocation = Subtract(LightLocation, new Point(4, 4));
+            EntityLocation = Add(EntityLocation, new Point(ox, oy));
+            EntityLocation = Add(EntityLocation, pb_Floorplan.Location);
+            EntityLocation = Subtract(EntityLocation, new Point(4, 4));
 
-            item.Location = LightLocation;
+            item.Location = EntityLocation;
         }
 
         /// <summary>
-        /// Set light location based on pixel in the flooplan image
+        /// Set entity location based on pixel in the flooplan image
         /// </summary>
         /// <param name="location"></param>
-        private void SetLightValueByPixel(Point location)
+        private void SetEntityValueByPixel(Point location)
         {
-            //Get coordinates (pixels) of light relative to reference
+            //Get coordinates (pixels) of entity relative to reference
             int dx = (int)nud_RefX.Value;
             int dy = (int)nud_RefY.Value;
             //Reversed, remembering that -x is +West and -y is +North
             dx = dx - location.X;
             dy = dy - location.Y;
 
-            SelectedLight.N = PixelsToInches(dy);
-            SelectedLight.W = PixelsToInches(dx);
-            nud_West.Value = SelectedLight.W;
-            nud_North.Value = SelectedLight.N;
+            SelectedLocationEntity.N = PixelsToInches(dy);
+            SelectedLocationEntity.W = PixelsToInches(dx);
+            nud_West.Value = SelectedLocationEntity.W;
+            nud_North.Value = SelectedLocationEntity.N;
         }
 
         /// <summary>
-        /// Place light icon based on its stored data
+        /// Place entity icon based on its stored data
         /// </summary>
         /// <param name="l"></param>
-        private void PlaceSelectedLightImage()
+        private void PlaceSelectedEntityImage()
         {
-            if (SelectedLight != null)
-            {
-                Point location = InchesToPixelLocation(SelectedLight.W, SelectedLight.N);
-                SetItemByPixel(pb_Light, location);
-            }
+            if (SelectedLocationEntity == null) return;
+            if (pb_Floorplan.ImageLocation == "") return;
+
+            Point location = InchesToPixelLocation(SelectedLocationEntity.W, SelectedLocationEntity.N);
+            SetItemByPixel(pb_Entity, location);
         }
 
         /// <summary>
@@ -341,14 +357,14 @@ namespace NDWConfigurator
         }
 
         /// <summary>
-        /// Select a light item, switching floor if necessary
+        /// Select a entity item, switching floor if necessary
         /// </summary>
         /// <param name="l"></param>
-        private void SelectLightAndFloor(LightItem l)
+        private void SelectEntityAndFloor(EntityItem l)
         {
-            lb_Floors.SelectedIndex = getLightFloor(l);
-            //ShowLightsByFloor(lb_Floors.SelectedIndex);
-            lb_Lights.SelectedItem = l.name;
+            lb_Floors.SelectedIndex = getEntityFloor(l);
+            //ShowentitysByFloor(lb_Floors.SelectedIndex);
+            lb_LocationEntities.SelectedItem = l.name;
         }
 
         #region TRANSFORMS
@@ -441,30 +457,30 @@ namespace NDWConfigurator
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                StoreFloorImage(SelectedFloor, dialog.FileName);
                 try
                 {
-                    pb_Floorplan.ImageLocation = dialog.FileName;
+                    pb_Floorplan.ImageLocation = SelectedFloor.ImagePath;
                 }
                 catch
                 {
                     MessageBox.Show("Image load failed", "Error");
                 }
-                StoreFloorImage(lb_Floors.SelectedIndex, dialog.FileName);
             }
         }
 
-        private void lb_Lights_SelectedIndexChanged(object sender, EventArgs e)
+        private void lb_Entities_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lb_Lights.SelectedIndex > -1 && lb_Lights.Items.Count > 0)
+            if (lb_LocationEntities.SelectedIndex > -1 && lb_LocationEntities.Items.Count > 0)
             {
-                DisplayLightValue(LightItems.Where(e => e.name == lb_Lights.SelectedItem.ToString()).First());
-                b_PlaceLight.Enabled = true;
+                DisplayEntityValue(LocationEntityItems.Where(e => e.name == lb_LocationEntities.SelectedItem.ToString()).First());
+                b_PlaceEntity.Enabled = true;
                 nud_North.Enabled = true;
                 nud_West.Enabled = true;
             }
             else
             {
-                b_PlaceLight.Enabled = false;
+                b_PlaceEntity.Enabled = false;
                 nud_North.Enabled = false;
                 nud_West.Enabled = false;
             }
@@ -478,26 +494,26 @@ namespace NDWConfigurator
         private void b_SaveFloor_Click(object sender, EventArgs e)
         {
             int idx = lb_Floors.SelectedIndex;
-            NDWConfigSettings.SetValue("Floor" + idx.ToString(), "ImagePath", FloorItems[idx].ImagePath);
-            NDWConfigSettings.SetValue("Floor" + idx.ToString(), "Width_in", FloorItems[idx].Width_in.ToString());
-            NDWConfigSettings.SetValue("Floor" + idx.ToString(), "GroundHeight_in", FloorItems[idx].GroundHeight_in.ToString());
-            NDWConfigSettings.SetValue("Floor" + idx.ToString(), "ReferencePixelX", FloorItems[idx].ReferencePixel.X.ToString());
-            NDWConfigSettings.SetValue("Floor" + idx.ToString(), "ReferencePixelY", FloorItems[idx].ReferencePixel.Y.ToString());
+            LocationSettingsFile.SetValue("Floor" + idx.ToString(), "ImagePath", FloorItems[idx].ImagePath);
+            LocationSettingsFile.SetValue("Floor" + idx.ToString(), "Width_in", FloorItems[idx].Width_in.ToString());
+            LocationSettingsFile.SetValue("Floor" + idx.ToString(), "GroundHeight_in", FloorItems[idx].GroundHeight_in.ToString());
+            LocationSettingsFile.SetValue("Floor" + idx.ToString(), "ReferencePixelX", FloorItems[idx].ReferencePixel.X.ToString());
+            LocationSettingsFile.SetValue("Floor" + idx.ToString(), "ReferencePixelY", FloorItems[idx].ReferencePixel.Y.ToString());
         }
 
-        private void b_SaveLights_Click(object sender, EventArgs e)
+        private void b_SaveEntities_Click(object sender, EventArgs e)
         {
-            foreach (LightItem l in LightItems)
+            foreach (EntityItem l in LocationEntityItems)
             {
-                LightSettings.SetValue(l.name, "North_Inches", l.N.ToString());
-                LightSettings.SetValue(l.name, "West_Inches", l.W.ToString());
-                LightSettings.SetValue(l.name, "Height_Inches", l.H.ToString());
+                EntityLocationsFile.SetValue(l.name, "North_Inches", l.N.ToString());
+                EntityLocationsFile.SetValue(l.name, "West_Inches", l.W.ToString());
+                EntityLocationsFile.SetValue(l.name, "Height_Inches", l.H.ToString());
             }
         }
 
         private void b_MoveUp_Click(object sender, EventArgs e)
         {
-            LightItem light = LightItems.Where(l => l.name == lb_Lights.SelectedItem.ToString()).First();
+            EntityItem entity = LocationEntityItems.Where(l => l.name == lb_LocationEntities.SelectedItem.ToString()).First();
             switch (lb_Floors.SelectedIndex)
             {
                 //Already upstairs
@@ -505,68 +521,68 @@ namespace NDWConfigurator
                     return;
                 //Main Floor -> Upstairs
                 case 1:
-                    light.H += FloorItems[0].GroundHeight_in - FloorItems[1].GroundHeight_in;
+                    entity.H += FloorItems[0].GroundHeight_in - FloorItems[1].GroundHeight_in;
                     lb_Floors.SelectedIndex = 0;
                     break;
                 //Basement -> Main Floor
                 case 2:
-                    light.H += FloorItems[1].GroundHeight_in - FloorItems[2].GroundHeight_in;
+                    entity.H += FloorItems[1].GroundHeight_in - FloorItems[2].GroundHeight_in;
                     lb_Floors.SelectedIndex = 1;
                     break;
             }
-            PopulateLightListByFloor(lb_Floors.SelectedIndex);
-            lb_Lights.SelectedItem = light.name;
+            PopulateEntityListByFloor(lb_Floors.SelectedIndex);
+            lb_LocationEntities.SelectedItem = entity.name;
         }
 
         private void b_MoveDown_Click(object sender, EventArgs e)
         {
-            LightItem light = LightItems.Where(l => l.name == lb_Lights.SelectedItem.ToString()).First();
+            EntityItem entity = LocationEntityItems.Where(l => l.name == lb_LocationEntities.SelectedItem.ToString()).First();
             switch (lb_Floors.SelectedIndex)
             {
                 //Upstairs -> Main Floor
                 case 0:
-                    light.H -= FloorItems[0].GroundHeight_in - FloorItems[1].GroundHeight_in;
+                    entity.H -= FloorItems[0].GroundHeight_in - FloorItems[1].GroundHeight_in;
                     break;
                 //Main Floor -> Basement
                 case 1:
-                    light.H -= FloorItems[1].GroundHeight_in - FloorItems[2].GroundHeight_in;
+                    entity.H -= FloorItems[1].GroundHeight_in - FloorItems[2].GroundHeight_in;
                     break;
                 //Already Downstairs
                 case 2:
                     return;
             }
-            SelectLightAndFloor(light);
+            SelectEntityAndFloor(entity);
         }
 
         private void nud_HeightFromFloor_ValueChanged(object sender, EventArgs e)
         {
-            SelectedLight.H = getLightHeightAbsolute(SelectedLight, (int)nud_HeightFromFloor.Value);
-            DisplayLightValue(SelectedLight);
-            SelectLightAndFloor(SelectedLight);
+            SelectedLocationEntity.H = getEntityHeightAbsolute(SelectedLocationEntity, (int)nud_HeightFromFloor.Value);
+            DisplayEntityValue(SelectedLocationEntity);
+            SelectEntityAndFloor(SelectedLocationEntity);
         }
 
         private void nud_West_ValueChanged(object sender, EventArgs e)
         {
-            SelectedLight.W = (int)nud_West.Value;
-            DisplayLightValue(SelectedLight);
-            PlaceSelectedLightImage();
+            SelectedLocationEntity.W = (int)nud_West.Value;
+            DisplayEntityValue(SelectedLocationEntity);
+            PlaceSelectedEntityImage();
         }
 
         private void nud_North_ValueChanged(object sender, EventArgs e)
         {
-            SelectedLight.N = (int)nud_North.Value;
-            DisplayLightValue(SelectedLight);
-            PlaceSelectedLightImage();
+            SelectedLocationEntity.N = (int)nud_North.Value;
+            DisplayEntityValue(SelectedLocationEntity);
+            PlaceSelectedEntityImage();
         }
 
         private void pb_Floorplan_Click(object sender, EventArgs e)
         {
             switch (PlaceMode)
             {
-                case _placemode.Light:
-                    SetLightPointByClick(e);
+                case _placemode.Entity:
+                    SetEntityPointByClick(e);
                     PlaceMode = _placemode.None;
-                    b_PlaceLight.ForeColor = Color.Black;
+                    b_PlaceEntity.ForeColor = Color.Black;
                     break;
 
                 case _placemode.Reference:
@@ -581,8 +597,8 @@ namespace NDWConfigurator
         {
             if (pb_Floorplan.Image != null)
                 SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
-            if (lb_Lights.SelectedIndex != -1)
-                PlaceSelectedLightImage();
+            if (lb_LocationEntities.SelectedIndex != -1)
+                PlaceSelectedEntityImage();
         }
 
         private void b_PlaceReference_Click(object sender, EventArgs e)
@@ -591,12 +607,12 @@ namespace NDWConfigurator
             b_PlaceReference.ForeColor = Color.Lime;
         }
 
-        private void b_PlaceLight_Click(object sender, EventArgs e)
+        private void b_PlaceEntity_Click(object sender, EventArgs e)
         {
-            if (lb_Lights.SelectedIndex != -1)
+            if (lb_LocationEntities.SelectedIndex != -1)
             {
-                PlaceMode = _placemode.Light;
-                b_PlaceLight.ForeColor = Color.Lime;
+                PlaceMode = _placemode.Entity;
+                b_PlaceEntity.ForeColor = Color.Lime;
             }
         }
 
@@ -613,24 +629,16 @@ namespace NDWConfigurator
         private void nud_RefX_ValueChanged(object sender, EventArgs e)
         {
             SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
-            PlaceSelectedLightImage();
+            PlaceSelectedEntityImage();
         }
 
         private void nud_RefY_ValueChanged(object sender, EventArgs e)
         {
             SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
-            PlaceSelectedLightImage();
+            PlaceSelectedEntityImage();
         }
 
         #endregion GUI
-    }
-
-    public class LightItem
-    {
-        public string name = "";
-        public int N;
-        public int W;
-        public int H;
     }
 
     public class FloorItem

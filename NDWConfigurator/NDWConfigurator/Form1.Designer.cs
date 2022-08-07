@@ -31,20 +31,25 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tp_General = new System.Windows.Forms.TabPage();
             this.l_RootDirectory = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.pb_Light = new System.Windows.Forms.PictureBox();
+            this.tp_Entities = new System.Windows.Forms.TabPage();
+            this.cb_LocationEnabled = new System.Windows.Forms.CheckBox();
+            this.lb_EntityList = new System.Windows.Forms.ListBox();
+            this.b_SaveAllEntities = new System.Windows.Forms.Button();
+            this.b_SaveEntity = new System.Windows.Forms.Button();
+            this.tp_Locations = new System.Windows.Forms.TabPage();
+            this.pb_Entity = new System.Windows.Forms.PictureBox();
             this.pb_Ref = new System.Windows.Forms.PictureBox();
-            this.b_PlaceLight = new System.Windows.Forms.Button();
+            this.b_PlaceEntity = new System.Windows.Forms.Button();
             this.b_PlaceReference = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.nud_RefY = new System.Windows.Forms.NumericUpDown();
             this.nud_RefX = new System.Windows.Forms.NumericUpDown();
             this.b_SaveLights = new System.Windows.Forms.Button();
-            this.l_LightHeightAbsolute = new System.Windows.Forms.Label();
+            this.l_EntityHeightAbsolute = new System.Windows.Forms.Label();
             this.b_MoveDown = new System.Windows.Forms.Button();
             this.b_MoveUp = new System.Windows.Forms.Button();
             this.b_SaveFloor = new System.Windows.Forms.Button();
@@ -55,7 +60,7 @@
             this.nud_North = new System.Windows.Forms.NumericUpDown();
             this.nud_West = new System.Windows.Forms.NumericUpDown();
             this.nud_HeightFromFloor = new System.Windows.Forms.NumericUpDown();
-            this.lb_Lights = new System.Windows.Forms.ListBox();
+            this.lb_LocationEntities = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.nud_FloorWidth = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -63,11 +68,18 @@
             this.pb_Floorplan = new System.Windows.Forms.PictureBox();
             this.CMS_Floorplan = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.loadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tp_Scenes = new System.Windows.Forms.TabPage();
             this.tt_ToolTips = new System.Windows.Forms.ToolTip(this.components);
+            this.lb_ScenesList = new System.Windows.Forms.ListBox();
+            this.nud_SceneRefresh = new System.Windows.Forms.NumericUpDown();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.ch_Setting = new System.Windows.Forms.ColumnHeader();
+            this.ch_Value = new System.Windows.Forms.ColumnHeader();
             this.tabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_Light)).BeginInit();
+            this.tp_General.SuspendLayout();
+            this.tp_Entities.SuspendLayout();
+            this.tp_Locations.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Entity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Ref)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_RefY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_RefX)).BeginInit();
@@ -78,6 +90,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_FloorHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Floorplan)).BeginInit();
             this.CMS_Floorplan.SuspendLayout();
+            this.tp_Scenes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_SceneRefresh)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -85,25 +99,28 @@
             this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl.Controls.Add(this.tabPage1);
-            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tp_General);
+            this.tabControl.Controls.Add(this.tp_Entities);
+            this.tabControl.Controls.Add(this.tp_Locations);
+            this.tabControl.Controls.Add(this.tp_Scenes);
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(801, 464);
             this.tabControl.TabIndex = 1;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
-            // tabPage1
+            // tp_General
             // 
-            this.tabPage1.Controls.Add(this.l_RootDirectory);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(793, 436);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "General";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tp_General.Controls.Add(this.l_RootDirectory);
+            this.tp_General.Controls.Add(this.label6);
+            this.tp_General.Location = new System.Drawing.Point(4, 24);
+            this.tp_General.Name = "tp_General";
+            this.tp_General.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_General.Size = new System.Drawing.Size(793, 436);
+            this.tp_General.TabIndex = 0;
+            this.tp_General.Text = "General";
+            this.tp_General.UseVisualStyleBackColor = true;
             // 
             // l_RootDirectory
             // 
@@ -124,51 +141,107 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Root Path: ";
             // 
-            // tabPage2
+            // tp_Entities
             // 
-            this.tabPage2.Controls.Add(this.pb_Light);
-            this.tabPage2.Controls.Add(this.pb_Ref);
-            this.tabPage2.Controls.Add(this.b_PlaceLight);
-            this.tabPage2.Controls.Add(this.b_PlaceReference);
-            this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.nud_RefY);
-            this.tabPage2.Controls.Add(this.nud_RefX);
-            this.tabPage2.Controls.Add(this.b_SaveLights);
-            this.tabPage2.Controls.Add(this.l_LightHeightAbsolute);
-            this.tabPage2.Controls.Add(this.b_MoveDown);
-            this.tabPage2.Controls.Add(this.b_MoveUp);
-            this.tabPage2.Controls.Add(this.b_SaveFloor);
-            this.tabPage2.Controls.Add(this.lb_Floors);
-            this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.nud_North);
-            this.tabPage2.Controls.Add(this.nud_West);
-            this.tabPage2.Controls.Add(this.nud_HeightFromFloor);
-            this.tabPage2.Controls.Add(this.lb_Lights);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.nud_FloorWidth);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.nud_FloorHeight);
-            this.tabPage2.Controls.Add(this.pb_Floorplan);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(793, 436);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Lights";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tp_Entities.Controls.Add(this.cb_LocationEnabled);
+            this.tp_Entities.Controls.Add(this.lb_EntityList);
+            this.tp_Entities.Controls.Add(this.b_SaveAllEntities);
+            this.tp_Entities.Controls.Add(this.b_SaveEntity);
+            this.tp_Entities.Location = new System.Drawing.Point(4, 24);
+            this.tp_Entities.Name = "tp_Entities";
+            this.tp_Entities.Size = new System.Drawing.Size(793, 436);
+            this.tp_Entities.TabIndex = 4;
+            this.tp_Entities.Text = "Entities";
+            this.tp_Entities.UseVisualStyleBackColor = true;
             // 
-            // pb_Light
+            // cb_LocationEnabled
             // 
-            this.pb_Light.Image = ((System.Drawing.Image)(resources.GetObject("pb_Light.Image")));
-            this.pb_Light.Location = new System.Drawing.Point(179, 277);
-            this.pb_Light.Name = "pb_Light";
-            this.pb_Light.Size = new System.Drawing.Size(12, 12);
-            this.pb_Light.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pb_Light.TabIndex = 26;
-            this.pb_Light.TabStop = false;
+            this.cb_LocationEnabled.AutoSize = true;
+            this.cb_LocationEnabled.Location = new System.Drawing.Point(195, 81);
+            this.cb_LocationEnabled.Name = "cb_LocationEnabled";
+            this.cb_LocationEnabled.Size = new System.Drawing.Size(117, 19);
+            this.cb_LocationEnabled.TabIndex = 4;
+            this.cb_LocationEnabled.Text = "Location Enabled";
+            this.cb_LocationEnabled.UseVisualStyleBackColor = true;
+            this.cb_LocationEnabled.CheckedChanged += new System.EventHandler(this.cb_LocationEnabled_CheckedChanged);
+            // 
+            // lb_EntityList
+            // 
+            this.lb_EntityList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lb_EntityList.FormattingEnabled = true;
+            this.lb_EntityList.ItemHeight = 15;
+            this.lb_EntityList.Location = new System.Drawing.Point(8, 3);
+            this.lb_EntityList.Name = "lb_EntityList";
+            this.lb_EntityList.Size = new System.Drawing.Size(181, 424);
+            this.lb_EntityList.TabIndex = 3;
+            this.lb_EntityList.SelectedIndexChanged += new System.EventHandler(this.lb_EntityList_SelectedIndexChanged);
+            // 
+            // b_SaveAllEntities
+            // 
+            this.b_SaveAllEntities.Location = new System.Drawing.Point(710, 404);
+            this.b_SaveAllEntities.Name = "b_SaveAllEntities";
+            this.b_SaveAllEntities.Size = new System.Drawing.Size(75, 23);
+            this.b_SaveAllEntities.TabIndex = 2;
+            this.b_SaveAllEntities.Text = "Save All";
+            this.b_SaveAllEntities.UseVisualStyleBackColor = true;
+            this.b_SaveAllEntities.Click += new System.EventHandler(this.b_SaveAllEntities_Click);
+            // 
+            // b_SaveEntity
+            // 
+            this.b_SaveEntity.Location = new System.Drawing.Point(629, 404);
+            this.b_SaveEntity.Name = "b_SaveEntity";
+            this.b_SaveEntity.Size = new System.Drawing.Size(75, 23);
+            this.b_SaveEntity.TabIndex = 1;
+            this.b_SaveEntity.Text = "Save";
+            this.b_SaveEntity.UseVisualStyleBackColor = true;
+            this.b_SaveEntity.Click += new System.EventHandler(this.b_SaveEntity_Click);
+            // 
+            // tp_Locations
+            // 
+            this.tp_Locations.Controls.Add(this.pb_Entity);
+            this.tp_Locations.Controls.Add(this.pb_Ref);
+            this.tp_Locations.Controls.Add(this.b_PlaceEntity);
+            this.tp_Locations.Controls.Add(this.b_PlaceReference);
+            this.tp_Locations.Controls.Add(this.label8);
+            this.tp_Locations.Controls.Add(this.label7);
+            this.tp_Locations.Controls.Add(this.nud_RefY);
+            this.tp_Locations.Controls.Add(this.nud_RefX);
+            this.tp_Locations.Controls.Add(this.b_SaveLights);
+            this.tp_Locations.Controls.Add(this.l_EntityHeightAbsolute);
+            this.tp_Locations.Controls.Add(this.b_MoveDown);
+            this.tp_Locations.Controls.Add(this.b_MoveUp);
+            this.tp_Locations.Controls.Add(this.b_SaveFloor);
+            this.tp_Locations.Controls.Add(this.lb_Floors);
+            this.tp_Locations.Controls.Add(this.label5);
+            this.tp_Locations.Controls.Add(this.label4);
+            this.tp_Locations.Controls.Add(this.label3);
+            this.tp_Locations.Controls.Add(this.nud_North);
+            this.tp_Locations.Controls.Add(this.nud_West);
+            this.tp_Locations.Controls.Add(this.nud_HeightFromFloor);
+            this.tp_Locations.Controls.Add(this.lb_LocationEntities);
+            this.tp_Locations.Controls.Add(this.label2);
+            this.tp_Locations.Controls.Add(this.nud_FloorWidth);
+            this.tp_Locations.Controls.Add(this.label1);
+            this.tp_Locations.Controls.Add(this.nud_FloorHeight);
+            this.tp_Locations.Controls.Add(this.pb_Floorplan);
+            this.tp_Locations.Location = new System.Drawing.Point(4, 24);
+            this.tp_Locations.Name = "tp_Locations";
+            this.tp_Locations.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Locations.Size = new System.Drawing.Size(793, 436);
+            this.tp_Locations.TabIndex = 1;
+            this.tp_Locations.Text = "Locations";
+            this.tp_Locations.UseVisualStyleBackColor = true;
+            // 
+            // pb_Entity
+            // 
+            this.pb_Entity.Image = ((System.Drawing.Image)(resources.GetObject("pb_Entity.Image")));
+            this.pb_Entity.Location = new System.Drawing.Point(179, 277);
+            this.pb_Entity.Name = "pb_Entity";
+            this.pb_Entity.Size = new System.Drawing.Size(12, 12);
+            this.pb_Entity.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_Entity.TabIndex = 26;
+            this.pb_Entity.TabStop = false;
             // 
             // pb_Ref
             // 
@@ -181,16 +254,16 @@
             this.pb_Ref.TabIndex = 25;
             this.pb_Ref.TabStop = false;
             // 
-            // b_PlaceLight
+            // b_PlaceEntity
             // 
-            this.b_PlaceLight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.b_PlaceLight.Location = new System.Drawing.Point(343, 340);
-            this.b_PlaceLight.Name = "b_PlaceLight";
-            this.b_PlaceLight.Size = new System.Drawing.Size(81, 23);
-            this.b_PlaceLight.TabIndex = 24;
-            this.b_PlaceLight.Text = "Place Light";
-            this.b_PlaceLight.UseVisualStyleBackColor = true;
-            this.b_PlaceLight.Click += new System.EventHandler(this.b_PlaceLight_Click);
+            this.b_PlaceEntity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.b_PlaceEntity.Location = new System.Drawing.Point(343, 340);
+            this.b_PlaceEntity.Name = "b_PlaceEntity";
+            this.b_PlaceEntity.Size = new System.Drawing.Size(81, 23);
+            this.b_PlaceEntity.TabIndex = 24;
+            this.b_PlaceEntity.Text = "Place Entity";
+            this.b_PlaceEntity.UseVisualStyleBackColor = true;
+            this.b_PlaceEntity.Click += new System.EventHandler(this.b_PlaceEntity_Click);
             // 
             // b_PlaceReference
             // 
@@ -268,17 +341,17 @@
             this.b_SaveLights.TabIndex = 18;
             this.b_SaveLights.Text = "Save Lights";
             this.b_SaveLights.UseVisualStyleBackColor = true;
-            this.b_SaveLights.Click += new System.EventHandler(this.b_SaveLights_Click);
+            this.b_SaveLights.Click += new System.EventHandler(this.b_SaveEntities_Click);
             // 
-            // l_LightHeightAbsolute
+            // l_EntityHeightAbsolute
             // 
-            this.l_LightHeightAbsolute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.l_LightHeightAbsolute.AutoSize = true;
-            this.l_LightHeightAbsolute.Location = new System.Drawing.Point(395, 390);
-            this.l_LightHeightAbsolute.Name = "l_LightHeightAbsolute";
-            this.l_LightHeightAbsolute.Size = new System.Drawing.Size(62, 15);
-            this.l_LightHeightAbsolute.TabIndex = 17;
-            this.l_LightHeightAbsolute.Text = "(Absolute)";
+            this.l_EntityHeightAbsolute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.l_EntityHeightAbsolute.AutoSize = true;
+            this.l_EntityHeightAbsolute.Location = new System.Drawing.Point(395, 390);
+            this.l_EntityHeightAbsolute.Name = "l_EntityHeightAbsolute";
+            this.l_EntityHeightAbsolute.Size = new System.Drawing.Size(62, 15);
+            this.l_EntityHeightAbsolute.TabIndex = 17;
+            this.l_EntityHeightAbsolute.Text = "(Absolute)";
             // 
             // b_MoveDown
             // 
@@ -413,17 +486,17 @@
             this.nud_HeightFromFloor.TabIndex = 7;
             this.nud_HeightFromFloor.ValueChanged += new System.EventHandler(this.nud_HeightFromFloor_ValueChanged);
             // 
-            // lb_Lights
+            // lb_LocationEntities
             // 
-            this.lb_Lights.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lb_LocationEntities.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lb_Lights.FormattingEnabled = true;
-            this.lb_Lights.ItemHeight = 15;
-            this.lb_Lights.Location = new System.Drawing.Point(665, 6);
-            this.lb_Lights.Name = "lb_Lights";
-            this.lb_Lights.Size = new System.Drawing.Size(120, 304);
-            this.lb_Lights.TabIndex = 5;
-            this.lb_Lights.SelectedIndexChanged += new System.EventHandler(this.lb_Lights_SelectedIndexChanged);
+            this.lb_LocationEntities.FormattingEnabled = true;
+            this.lb_LocationEntities.ItemHeight = 15;
+            this.lb_LocationEntities.Location = new System.Drawing.Point(665, 6);
+            this.lb_LocationEntities.Name = "lb_LocationEntities";
+            this.lb_LocationEntities.Size = new System.Drawing.Size(120, 304);
+            this.lb_LocationEntities.TabIndex = 5;
+            this.lb_LocationEntities.SelectedIndexChanged += new System.EventHandler(this.lb_Entities_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -516,6 +589,65 @@
             this.loadImageToolStripMenuItem.Text = "Load Image";
             this.loadImageToolStripMenuItem.Click += new System.EventHandler(this.loadImageToolStripMenuItem_Click);
             // 
+            // tp_Scenes
+            // 
+            this.tp_Scenes.Controls.Add(this.listView1);
+            this.tp_Scenes.Controls.Add(this.nud_SceneRefresh);
+            this.tp_Scenes.Controls.Add(this.lb_ScenesList);
+            this.tp_Scenes.Location = new System.Drawing.Point(4, 24);
+            this.tp_Scenes.Name = "tp_Scenes";
+            this.tp_Scenes.Size = new System.Drawing.Size(793, 436);
+            this.tp_Scenes.TabIndex = 3;
+            this.tp_Scenes.Text = "Scenes";
+            this.tp_Scenes.UseVisualStyleBackColor = true;
+            // 
+            // lb_ScenesList
+            // 
+            this.lb_ScenesList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lb_ScenesList.FormattingEnabled = true;
+            this.lb_ScenesList.ItemHeight = 15;
+            this.lb_ScenesList.Location = new System.Drawing.Point(8, 3);
+            this.lb_ScenesList.Name = "lb_ScenesList";
+            this.lb_ScenesList.Size = new System.Drawing.Size(125, 424);
+            this.lb_ScenesList.TabIndex = 0;
+            // 
+            // nud_SceneRefresh
+            // 
+            this.nud_SceneRefresh.DecimalPlaces = 2;
+            this.nud_SceneRefresh.Location = new System.Drawing.Point(202, 3);
+            this.nud_SceneRefresh.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nud_SceneRefresh.Name = "nud_SceneRefresh";
+            this.nud_SceneRefresh.Size = new System.Drawing.Size(63, 23);
+            this.nud_SceneRefresh.TabIndex = 1;
+            // 
+            // listView1
+            // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ch_Setting,
+            this.ch_Value});
+            this.listView1.Location = new System.Drawing.Point(139, 32);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(187, 395);
+            this.listView1.TabIndex = 2;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // ch_Setting
+            // 
+            this.ch_Setting.Text = "Setting";
+            this.ch_Setting.Width = 120;
+            // 
+            // ch_Value
+            // 
+            this.ch_Value.Text = "Value";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -525,11 +657,13 @@
             this.Name = "Form1";
             this.Text = "NDW Configuration Editor";
             this.tabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_Light)).EndInit();
+            this.tp_General.ResumeLayout(false);
+            this.tp_General.PerformLayout();
+            this.tp_Entities.ResumeLayout(false);
+            this.tp_Entities.PerformLayout();
+            this.tp_Locations.ResumeLayout(false);
+            this.tp_Locations.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Entity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Ref)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_RefY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_RefX)).EndInit();
@@ -540,14 +674,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_FloorHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Floorplan)).EndInit();
             this.CMS_Floorplan.ResumeLayout(false);
+            this.tp_Scenes.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nud_SceneRefresh)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private TabControl tabControl;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
+        private TabPage tp_General;
+        private TabPage tp_Locations;
         private PictureBox pb_Floorplan;
         private ContextMenuStrip CMS_Floorplan;
         private ToolStripMenuItem loadImageToolStripMenuItem;
@@ -555,7 +691,7 @@
         private NumericUpDown nud_FloorWidth;
         private Label label1;
         private NumericUpDown nud_FloorHeight;
-        private ListBox lb_Lights;
+        private ListBox lb_LocationEntities;
         private Label label5;
         private Label label4;
         private Label label3;
@@ -568,16 +704,27 @@
         private Button b_SaveFloor;
         private Button b_MoveDown;
         private Button b_MoveUp;
-        private Label l_LightHeightAbsolute;
+        private Label l_EntityHeightAbsolute;
         private Button b_SaveLights;
-        private Button b_PlaceLight;
+        private Button b_PlaceEntity;
         private Button b_PlaceReference;
         private Label label8;
         private Label label7;
         private NumericUpDown nud_RefY;
         private NumericUpDown nud_RefX;
-        private PictureBox pb_Light;
+        private PictureBox pb_Entity;
         private PictureBox pb_Ref;
         private ToolTip tt_ToolTips;
+        private TabPage tp_Scenes;
+        private TabPage tp_Entities;
+        private Button b_SaveAllEntities;
+        private Button b_SaveEntity;
+        private ListBox lb_EntityList;
+        private CheckBox cb_LocationEnabled;
+        private ListView listView1;
+        private ColumnHeader ch_Setting;
+        private ColumnHeader ch_Value;
+        private NumericUpDown nud_SceneRefresh;
+        private ListBox lb_ScenesList;
     }
 }

@@ -4,7 +4,8 @@ namespace NDWConfigurator
     {
         public string RootDirectory;
         public SettingsFile NDWConfigSettings;
-        public SettingsFile LightSettings;
+        public SettingsFile? EntityLocationsFile;
+        public SettingsFile? LocationSettingsFile;
 
         public Form1()
         {
@@ -18,7 +19,15 @@ namespace NDWConfigurator
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
 
-            l_RootDirectory.Text = RootDirectory;
+            if (RootDirectory == "")
+            {
+                l_RootDirectory.Text = "Click Here To Select Config Location";
+            }
+            else
+            {
+                l_RootDirectory.Text = RootDirectory;
+            }
+
             LoadConfigs();
         }
 
@@ -38,7 +47,17 @@ namespace NDWConfigurator
         {
             if (RootDirectory == null) return;
             if (RootDirectory == "") return;
-            InitLightsTab();
+            LocationSettingsFile = new SettingsFile(RootDirectory, "/Location/LocationSettings.xml");
+            EntityLocationsFile = new SettingsFile(RootDirectory, "/Location/EntityLocations.xml");
+            InitEntitiesTab();
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl.TabPages[tabControl.SelectedIndex] == tp_Locations)
+            {
+                InitLocationTab();
+            }
         }
     }
 }
