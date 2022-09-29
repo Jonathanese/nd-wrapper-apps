@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem3 = new System.Windows.Forms.GradientColorPickerItem();
+            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem4 = new System.Windows.Forms.GradientColorPickerItem();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tp_General = new System.Windows.Forms.TabPage();
             this.l_RootDirectory = new System.Windows.Forms.Label();
@@ -69,12 +71,23 @@
             this.CMS_Floorplan = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.loadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_Scenes = new System.Windows.Forms.TabPage();
-            this.tt_ToolTips = new System.Windows.Forms.ToolTip(this.components);
-            this.lb_ScenesList = new System.Windows.Forms.ListBox();
-            this.nud_SceneRefresh = new System.Windows.Forms.NumericUpDown();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lv_SceneValues = new System.Windows.Forms.ListView();
             this.ch_Setting = new System.Windows.Forms.ColumnHeader();
             this.ch_Value = new System.Windows.Forms.ColumnHeader();
+            this.lb_ScenesList = new System.Windows.Forms.ListBox();
+            this.tp_VisualAssistant = new System.Windows.Forms.TabPage();
+            this.b_play = new System.Windows.Forms.Button();
+            this.nud_KeyFramePosition = new System.Windows.Forms.NumericUpDown();
+            this.b_GradientColorsSet = new System.Windows.Forms.Button();
+            this.b_KeyframePlus = new System.Windows.Forms.Button();
+            this.lb_KeyFrames = new System.Windows.Forms.ListBox();
+            this.lb_GradientColors = new System.Windows.Forms.ListBox();
+            this.b_GradientColorPlus = new System.Windows.Forms.Button();
+            this.tb_KeyFrame = new System.Windows.Forms.TrackBar();
+            this.gcp_1 = new System.Windows.Forms.GradientColorPicker();
+            this.tt_ToolTips = new System.Windows.Forms.ToolTip(this.components);
+            this.gradientanimtimer = new System.Windows.Forms.Timer(this.components);
+            this.tb_SceneValue = new System.Windows.Forms.TextBox();
             this.tabControl.SuspendLayout();
             this.tp_General.SuspendLayout();
             this.tp_Entities.SuspendLayout();
@@ -91,7 +104,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pb_Floorplan)).BeginInit();
             this.CMS_Floorplan.SuspendLayout();
             this.tp_Scenes.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_SceneRefresh)).BeginInit();
+            this.tp_VisualAssistant.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_KeyFramePosition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_KeyFrame)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -103,6 +118,7 @@
             this.tabControl.Controls.Add(this.tp_Entities);
             this.tabControl.Controls.Add(this.tp_Locations);
             this.tabControl.Controls.Add(this.tp_Scenes);
+            this.tabControl.Controls.Add(this.tp_VisualAssistant);
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -591,8 +607,8 @@
             // 
             // tp_Scenes
             // 
-            this.tp_Scenes.Controls.Add(this.listView1);
-            this.tp_Scenes.Controls.Add(this.nud_SceneRefresh);
+            this.tp_Scenes.Controls.Add(this.tb_SceneValue);
+            this.tp_Scenes.Controls.Add(this.lv_SceneValues);
             this.tp_Scenes.Controls.Add(this.lb_ScenesList);
             this.tp_Scenes.Location = new System.Drawing.Point(4, 24);
             this.tp_Scenes.Name = "tp_Scenes";
@@ -600,6 +616,29 @@
             this.tp_Scenes.TabIndex = 3;
             this.tp_Scenes.Text = "Scenes";
             this.tp_Scenes.UseVisualStyleBackColor = true;
+            // 
+            // lv_SceneValues
+            // 
+            this.lv_SceneValues.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lv_SceneValues.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ch_Setting,
+            this.ch_Value});
+            this.lv_SceneValues.Location = new System.Drawing.Point(139, 3);
+            this.lv_SceneValues.Name = "lv_SceneValues";
+            this.lv_SceneValues.Size = new System.Drawing.Size(187, 395);
+            this.lv_SceneValues.TabIndex = 2;
+            this.lv_SceneValues.UseCompatibleStateImageBehavior = false;
+            this.lv_SceneValues.View = System.Windows.Forms.View.Details;
+            // 
+            // ch_Setting
+            // 
+            this.ch_Setting.Text = "Setting";
+            this.ch_Setting.Width = 120;
+            // 
+            // ch_Value
+            // 
+            this.ch_Value.Text = "Value";
             // 
             // lb_ScenesList
             // 
@@ -612,41 +651,135 @@
             this.lb_ScenesList.Size = new System.Drawing.Size(125, 424);
             this.lb_ScenesList.TabIndex = 0;
             // 
-            // nud_SceneRefresh
+            // tp_VisualAssistant
             // 
-            this.nud_SceneRefresh.DecimalPlaces = 2;
-            this.nud_SceneRefresh.Location = new System.Drawing.Point(202, 3);
-            this.nud_SceneRefresh.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.nud_SceneRefresh.Name = "nud_SceneRefresh";
-            this.nud_SceneRefresh.Size = new System.Drawing.Size(63, 23);
-            this.nud_SceneRefresh.TabIndex = 1;
+            this.tp_VisualAssistant.Controls.Add(this.b_play);
+            this.tp_VisualAssistant.Controls.Add(this.nud_KeyFramePosition);
+            this.tp_VisualAssistant.Controls.Add(this.b_GradientColorsSet);
+            this.tp_VisualAssistant.Controls.Add(this.b_KeyframePlus);
+            this.tp_VisualAssistant.Controls.Add(this.lb_KeyFrames);
+            this.tp_VisualAssistant.Controls.Add(this.lb_GradientColors);
+            this.tp_VisualAssistant.Controls.Add(this.b_GradientColorPlus);
+            this.tp_VisualAssistant.Controls.Add(this.tb_KeyFrame);
+            this.tp_VisualAssistant.Controls.Add(this.gcp_1);
+            this.tp_VisualAssistant.Location = new System.Drawing.Point(4, 24);
+            this.tp_VisualAssistant.Name = "tp_VisualAssistant";
+            this.tp_VisualAssistant.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_VisualAssistant.Size = new System.Drawing.Size(793, 436);
+            this.tp_VisualAssistant.TabIndex = 5;
+            this.tp_VisualAssistant.Text = "Visual Assistant";
+            this.tp_VisualAssistant.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // b_play
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ch_Setting,
-            this.ch_Value});
-            this.listView1.Location = new System.Drawing.Point(139, 32);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(187, 395);
-            this.listView1.TabIndex = 2;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.b_play.Location = new System.Drawing.Point(9, 157);
+            this.b_play.Name = "b_play";
+            this.b_play.Size = new System.Drawing.Size(75, 23);
+            this.b_play.TabIndex = 10;
+            this.b_play.Text = "Play";
+            this.b_play.UseVisualStyleBackColor = true;
+            this.b_play.Click += new System.EventHandler(this.b_play_Click);
             // 
-            // ch_Setting
+            // nud_KeyFramePosition
             // 
-            this.ch_Setting.Text = "Setting";
-            this.ch_Setting.Width = 120;
+            this.nud_KeyFramePosition.Location = new System.Drawing.Point(710, 156);
+            this.nud_KeyFramePosition.Name = "nud_KeyFramePosition";
+            this.nud_KeyFramePosition.Size = new System.Drawing.Size(75, 23);
+            this.nud_KeyFramePosition.TabIndex = 9;
+            this.nud_KeyFramePosition.ValueChanged += new System.EventHandler(this.nud_KeyFramePosition_ValueChanged);
             // 
-            // ch_Value
+            // b_GradientColorsSet
             // 
-            this.ch_Value.Text = "Value";
+            this.b_GradientColorsSet.Location = new System.Drawing.Point(710, 77);
+            this.b_GradientColorsSet.Name = "b_GradientColorsSet";
+            this.b_GradientColorsSet.Size = new System.Drawing.Size(75, 23);
+            this.b_GradientColorsSet.TabIndex = 8;
+            this.b_GradientColorsSet.Text = "Set";
+            this.b_GradientColorsSet.UseVisualStyleBackColor = true;
+            this.b_GradientColorsSet.Click += new System.EventHandler(this.b_GradientColorsSet_Click);
+            // 
+            // b_KeyframePlus
+            // 
+            this.b_KeyframePlus.Location = new System.Drawing.Point(710, 106);
+            this.b_KeyframePlus.Name = "b_KeyframePlus";
+            this.b_KeyframePlus.Size = new System.Drawing.Size(23, 23);
+            this.b_KeyframePlus.TabIndex = 7;
+            this.b_KeyframePlus.Text = "+";
+            this.b_KeyframePlus.UseVisualStyleBackColor = true;
+            this.b_KeyframePlus.Click += new System.EventHandler(this.b_KeyframePlus_Click);
+            // 
+            // lb_KeyFrames
+            // 
+            this.lb_KeyFrames.FormattingEnabled = true;
+            this.lb_KeyFrames.ItemHeight = 15;
+            this.lb_KeyFrames.Location = new System.Drawing.Point(658, 106);
+            this.lb_KeyFrames.Name = "lb_KeyFrames";
+            this.lb_KeyFrames.Size = new System.Drawing.Size(46, 109);
+            this.lb_KeyFrames.TabIndex = 6;
+            this.lb_KeyFrames.SelectedIndexChanged += new System.EventHandler(this.lb_KeyFrames_SelectedIndexChanged);
+            this.lb_KeyFrames.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lb_KeyFrames_KeyDown);
+            // 
+            // lb_GradientColors
+            // 
+            this.lb_GradientColors.FormattingEnabled = true;
+            this.lb_GradientColors.ItemHeight = 15;
+            this.lb_GradientColors.Location = new System.Drawing.Point(658, 6);
+            this.lb_GradientColors.Name = "lb_GradientColors";
+            this.lb_GradientColors.Size = new System.Drawing.Size(46, 94);
+            this.lb_GradientColors.TabIndex = 5;
+            this.lb_GradientColors.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lb_GradientColors_KeyDown);
+            // 
+            // b_GradientColorPlus
+            // 
+            this.b_GradientColorPlus.Location = new System.Drawing.Point(710, 6);
+            this.b_GradientColorPlus.Name = "b_GradientColorPlus";
+            this.b_GradientColorPlus.Size = new System.Drawing.Size(23, 23);
+            this.b_GradientColorPlus.TabIndex = 2;
+            this.b_GradientColorPlus.Text = "+";
+            this.b_GradientColorPlus.UseVisualStyleBackColor = true;
+            this.b_GradientColorPlus.Click += new System.EventHandler(this.b_GradientColorPlus_Click);
+            // 
+            // tb_KeyFrame
+            // 
+            this.tb_KeyFrame.Location = new System.Drawing.Point(9, 106);
+            this.tb_KeyFrame.Maximum = 100;
+            this.tb_KeyFrame.Name = "tb_KeyFrame";
+            this.tb_KeyFrame.Size = new System.Drawing.Size(642, 45);
+            this.tb_KeyFrame.TabIndex = 1;
+            this.tb_KeyFrame.Scroll += new System.EventHandler(this.tb_KeyFrame_Scroll);
+            // 
+            // gcp_1
+            // 
+            this.gcp_1.AllowAddColorByClick = false;
+            this.gcp_1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.gcp_1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.gcp_1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gcp_1.ColorItemBorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gcp_1.ColorItemWidth = 6;
+            gradientColorPickerItem3.Position = 0F;
+            gradientColorPickerItem4.Position = 1F;
+            this.gcp_1.Colors.Add(gradientColorPickerItem3);
+            this.gcp_1.Colors.Add(gradientColorPickerItem4);
+            this.gcp_1.GradientLayout = System.Windows.Forms.GradientColorPickerLayout.Percent;
+            this.gcp_1.GradientLayoutSize = 75;
+            this.gcp_1.Location = new System.Drawing.Point(9, 6);
+            this.gcp_1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gcp_1.Name = "gcp_1";
+            this.gcp_1.SelectedColor = null;
+            this.gcp_1.Size = new System.Drawing.Size(642, 84);
+            this.gcp_1.TabIndex = 0;
+            this.gcp_1.ColorSelected += new System.EventHandler(this.gcp_1_ColorSelected);
+            // 
+            // gradientanimtimer
+            // 
+            this.gradientanimtimer.Tick += new System.EventHandler(this.gradientanimtimer_Tick);
+            // 
+            // tb_SceneValue
+            // 
+            this.tb_SceneValue.Location = new System.Drawing.Point(139, 404);
+            this.tb_SceneValue.Name = "tb_SceneValue";
+            this.tb_SceneValue.Size = new System.Drawing.Size(187, 23);
+            this.tb_SceneValue.TabIndex = 3;
             // 
             // Form1
             // 
@@ -675,7 +808,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pb_Floorplan)).EndInit();
             this.CMS_Floorplan.ResumeLayout(false);
             this.tp_Scenes.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nud_SceneRefresh)).EndInit();
+            this.tp_Scenes.PerformLayout();
+            this.tp_VisualAssistant.ResumeLayout(false);
+            this.tp_VisualAssistant.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_KeyFramePosition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_KeyFrame)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -721,10 +858,21 @@
         private Button b_SaveEntity;
         private ListBox lb_EntityList;
         private CheckBox cb_LocationEnabled;
-        private ListView listView1;
+        private ListView lv_SceneValues;
         private ColumnHeader ch_Setting;
         private ColumnHeader ch_Value;
-        private NumericUpDown nud_SceneRefresh;
         private ListBox lb_ScenesList;
+        private TabPage tp_VisualAssistant;
+        private TrackBar tb_KeyFrame;
+        private Button b_GradientColorPlus;
+        private Button b_KeyframePlus;
+        private ListBox lb_KeyFrames;
+        private ListBox lb_GradientColors;
+        private GradientColorPicker gcp_1;
+        private NumericUpDown nud_KeyFramePosition;
+        private Button b_GradientColorsSet;
+        private Button b_play;
+        private System.Windows.Forms.Timer gradientanimtimer;
+        private TextBox tb_SceneValue;
     }
 }

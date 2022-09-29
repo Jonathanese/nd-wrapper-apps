@@ -147,6 +147,16 @@ namespace NetDaemonWrapper.Lighting
             return new FullColor(PowerColor.Blend(a.powerColor, b.powerColor, mode));
         }
 
+        public void Normalize()
+        {
+            float scalar = Utils.Max(r16, g16, b16);
+            if (scalar <= 0) return;
+            scalar = 65535 / scalar;
+            r16 = (int)scalar * r16;
+            g16 = (int)scalar * g16;
+            b16 = (int)scalar * b16;
+        }
+
         public ColorBright toColorBright()
         {
             int max = Math.Max(r16, Math.Max(g16, b16)); //Get Maximum Value

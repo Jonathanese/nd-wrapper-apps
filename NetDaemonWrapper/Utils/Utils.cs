@@ -61,6 +61,16 @@ namespace NetDaemonWrapper
                 return null;
             }
         }
+
+        public static int Max(int a = int.MinValue, int b = int.MinValue, int c = int.MinValue, int d = int.MinValue, int e = int.MinValue, int f = int.MinValue)
+        {
+            if (a < b) a = b;
+            if (a < c) a = c;
+            if (a < d) a = d;
+            if (a < e) a = e;
+            if (a < f) a = f;
+            return a;
+        }
     }
 
     public record DataElement

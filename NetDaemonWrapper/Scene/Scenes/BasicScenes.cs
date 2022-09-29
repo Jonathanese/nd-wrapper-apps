@@ -52,34 +52,15 @@ namespace NetDaemonWrapper.Scene
                 10,
                 (Settings, Lights) =>
                 {
-                    System.Drawing.Color c = System.Drawing.Color.FromArgb(Utils.PRNG(255), Utils.PRNG(255), Utils.PRNG(255));
+                    FullColor c = new FullColor((byte)Utils.PRNG(255), (byte)Utils.PRNG(255), (byte)Utils.PRNG(255), 255, 255);
+                    c.Normalize();
                     foreach (MLight l in Lights)
                     {
                         l.Theme.isActive = true;
-                        c = System.Drawing.Color.FromArgb(Utils.PRNG(255), Utils.PRNG(255), Utils.PRNG(255));
+                        c = new FullColor((byte)Utils.PRNG(255), (byte)Utils.PRNG(255), (byte)Utils.PRNG(255), 255, 255);
+                        c.Normalize();
                         l.Theme.blendMode = BlendMode.None;
-                        l.Set(Layer.Theme, new FullColor(c, 255), 15);
-                    }
-                });
-
-            Scene VacationLights = new Scene(_ha, _logger,
-                "vacation_lights",
-                60,
-                (Settings, Lights) =>
-                {
-                    int LightCountPercent = int.Parse(Settings.ReadSetDefault("Scene", "LightCountPercent", "25"));
-                    foreach (MLight l in Lights)
-                    {
-                        l.Theme.isActive = true;
-                        l.Theme.blendMode = BlendMode.Multiply;
-                        if (Utils.PRNG(100) < LightCountPercent)
-                        {
-                            l.Set(Layer.Theme, new FullColor(255, 255, 255, 255, 255), 1);
-                        }
-                        else
-                        {
-                            l.Set(Layer.Theme, new FullColor(255, 255, 255, 0, 255), 1);
-                        }
+                        l.Set(Layer.Theme, c, 15);
                     }
                 });
 
@@ -96,27 +77,6 @@ namespace NetDaemonWrapper.Scene
                         color.g16 = (int)(l.Location.W_rel * 65535);
                         color.b16 = (int)(l.Location.H_rel * 65535);
                         l.Set(Layer.Theme, color, 1);
-                    }
-                });
-
-            Scene Flicker = new Scene(_ha, _logger,
-                "flicker",
-                0.5f,
-                (Settings, Lights) =>
-                {
-                    int FlickerAmount = int.Parse(Settings.ReadSetDefault("Scene", "FlickerAmount", "25"));
-                    foreach (MLight l in Lights)
-                    {
-                        l.Theme.isActive = true;
-                        l.Theme.blendMode = BlendMode.Multiply;
-                        if (Utils.PRNG(100) < FlickerAmount)
-                        {
-                            l.Set(Layer.Theme, new FullColor(255, 255, 255, 128, 255), 0.25f);
-                        }
-                        else
-                        {
-                            l.Set(Layer.Theme, FullColor.White, 0.25f);
-                        }
                     }
                 });
         }

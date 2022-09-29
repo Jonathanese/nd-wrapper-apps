@@ -103,20 +103,34 @@ namespace HomeAssistantGenerated
 			_haContext = haContext;
 		}
 
+		///<summary>Home Arrive</summary>
+		public AutomationEntity Automation8 => new(_haContext, "automation.automation_8");
+		///<summary>Close Shades On Sunset</summary>
+		public AutomationEntity CloseShadesOnSunset => new(_haContext, "automation.close_shades_on_sunset");
 		///<summary>Garage Close</summary>
 		public AutomationEntity GarageClose => new(_haContext, "automation.garage_close");
 		///<summary>Garage Open</summary>
 		public AutomationEntity GarageOpen => new(_haContext, "automation.garage_open");
+		///<summary>Keep Modem On</summary>
+		public AutomationEntity KeepModemOn => new(_haContext, "automation.keep_modem_on");
 		///<summary>Kitchen Cover Control</summary>
 		public AutomationEntity KitchenCoverControl => new(_haContext, "automation.kitchen_cover_control");
+		///<summary>Landscape Lights Off</summary>
+		public AutomationEntity LandscapeLightsOff => new(_haContext, "automation.landscape_lights_off");
+		///<summary>Landscape Lights On</summary>
+		public AutomationEntity LandscapeLightsOn => new(_haContext, "automation.landscape_lights_on");
 		///<summary>Living Room Cover Control</summary>
 		public AutomationEntity LivingRoomCoverControl => new(_haContext, "automation.living_room_cover_control");
 		///<summary>Living Room Remote</summary>
 		public AutomationEntity LivingRoomRemote => new(_haContext, "automation.living_room_remote");
-		///<summary>Modem Keep On</summary>
-		public AutomationEntity ModemKeepOn => new(_haContext, "automation.modem_keep_on");
-		///<summary>Set Theme</summary>
-		public AutomationEntity SetTheme => new(_haContext, "automation.set_theme");
+		///<summary>Morning</summary>
+		public AutomationEntity Morning => new(_haContext, "automation.morning");
+		///<summary>New Automation</summary>
+		public AutomationEntity NewAutomation => new(_haContext, "automation.new_automation");
+		///<summary>Ozone Max Time</summary>
+		public AutomationEntity OzoneMaxTime => new(_haContext, "automation.ozone_max_time");
+		///<summary>Home Leave</summary>
+		public AutomationEntity RaiseChargeLimitAwayFromHome => new(_haContext, "automation.raise_charge_limit_away_from_home");
 	}
 
 	public partial class BinarySensorEntities
@@ -211,10 +225,6 @@ namespace HomeAssistantGenerated
 		public ButtonEntity CasetaRWirelessFanSpeedControlIdentify2 => new(_haContext, "button.caseta_r_wireless_fan_speed_control_identify_2");
 		///<summary>Caséta® Wireless In-wall Dimmer Identify</summary>
 		public ButtonEntity CasetaRWirelessInWallDimmerIdentify => new(_haContext, "button.caseta_r_wireless_in_wall_dimmer_identify");
-		///<summary>IKEA of Sweden TRADFRI bulb E26 CWS opal 600lm Identifybutton</summary>
-		public ButtonEntity IkeaOfSwedenTradfriBulbE26CwsOpal600lm1475bafeIdentify => new(_haContext, "button.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_1475bafe_identify");
-		///<summary>IKEA of Sweden TRADFRI bulb E26 CWS opal 600lm Identifybutton</summary>
-		public ButtonEntity IkeaOfSwedenTradfriBulbE26CwsOpal600lm218326feIdentify => new(_haContext, "button.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_218326fe_identify");
 		///<summary>Zigbee Repeater 4 Identifybutton</summary>
 		public ButtonEntity IkeaOfSwedenTradfriSignalRepeater6c33d5feIdentify => new(_haContext, "button.ikea_of_sweden_tradfri_signal_repeater_6c33d5fe_identify");
 		///<summary>Zigbee Repeater 4 Identifybutton</summary>
@@ -243,8 +253,6 @@ namespace HomeAssistantGenerated
 		public ButtonEntity LumiLumiWeatherD99a8205Identify => new(_haContext, "button.lumi_lumi_weather_d99a8205_identify");
 		///<summary>Bedroom 1 Temp Sensor Identifybutton</summary>
 		public ButtonEntity LumiLumiWeatherF7e97806Identify => new(_haContext, "button.lumi_lumi_weather_f7e97806_identify");
-		///<summary>Node 2: Ping</summary>
-		public ButtonEntity Node2Ping => new(_haContext, "button.node_2_ping");
 		///<summary>Philips LCT016 Identifybutton</summary>
 		public ButtonEntity PhilipsLct016A7248e03Identify => new(_haContext, "button.philips_lct016_a7248e03_identify");
 		///<summary>Smart Bridge 2 Identify</summary>
@@ -423,20 +431,14 @@ namespace HomeAssistantGenerated
 		public LightEntity Ceiling => new(_haContext, "light.ceiling");
 		///<summary>Dining Room</summary>
 		public LightEntity DiningRoom => new(_haContext, "light.dining_room");
+		///<summary>Dining Room Floor</summary>
+		public LightEntity DrFloor => new(_haContext, "light.dr_floor");
 		///<summary>Entry</summary>
 		public LightEntity Entry => new(_haContext, "light.entry");
 		///<summary>Hall Overlook</summary>
 		public LightEntity HallOverlook => new(_haContext, "light.hall_overlook");
 		///<summary>Hall Stair</summary>
 		public LightEntity HallStair => new(_haContext, "light.hall_stair");
-		///<summary>Living Room Corner</summary>
-		public LightEntity HueColorLamp42 => new(_haContext, "light.hue_color_lamp_4_2");
-		///<summary>Living Room Floor</summary>
-		public LightEntity HueColorLamp43 => new(_haContext, "light.hue_color_lamp_4_3");
-		///<summary>IKEA of Sweden TRADFRI bulb E26 CWS opal 600lm Light</summary>
-		public LightEntity IkeaOfSwedenTradfriBulbE26CwsOpal600lm1475bafeLevelLightColorOnOff => new(_haContext, "light.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_1475bafe_level_light_color_on_off");
-		///<summary>IKEA of Sweden TRADFRI bulb E26 CWS opal 600lm Light</summary>
-		public LightEntity IkeaOfSwedenTradfriBulbE26CwsOpal600lm218326feLevelLightColorOnOff => new(_haContext, "light.ikea_of_sweden_tradfri_bulb_e26_cws_opal_600lm_218326fe_level_light_color_on_off");
 		///<summary>Kitchen 1</summary>
 		public LightEntity Island1 => new(_haContext, "light.island_1");
 		///<summary>Island 2</summary>
@@ -445,6 +447,8 @@ namespace HomeAssistantGenerated
 		public LightEntity Island3 => new(_haContext, "light.island_3");
 		///<summary>Island 4</summary>
 		public LightEntity Island4 => new(_haContext, "light.island_4");
+		///<summary>Living Room Corner</summary>
+		public LightEntity LrCorner => new(_haContext, "light.lr_corner");
 		///<summary>Living Floor 1</summary>
 		public LightEntity LrFloor1 => new(_haContext, "light.lr_floor_1");
 		///<summary>Living Floor 2</summary>
@@ -473,8 +477,6 @@ namespace HomeAssistantGenerated
 		public LightEntity StudioDown => new(_haContext, "light.studio_down");
 		///<summary>Studio Up</summary>
 		public LightEntity StudioUp => new(_haContext, "light.studio_up");
-		///<summary>Test</summary>
-		public LightEntity Test => new(_haContext, "light.test");
 		///<summary>TV Stand</summary>
 		public LightEntity TvStand => new(_haContext, "light.tv_stand");
 	}
@@ -513,16 +515,12 @@ namespace HomeAssistantGenerated
 		public MediaPlayerEntity Googlehome9161 => new(_haContext, "media_player.googlehome9161");
 		///<summary>Living Room Assistant</summary>
 		public MediaPlayerEntity LivingRoomAssistant => new(_haContext, "media_player.living_room_assistant");
-		///<summary>Living Room SHIELD</summary>
-		public MediaPlayerEntity LivingRoomShield => new(_haContext, "media_player.living_room_shield");
 		///<summary>Living Room speaker</summary>
 		public MediaPlayerEntity LivingRoomSpeaker => new(_haContext, "media_player.living_room_speaker");
 		///<summary>SHIELD</summary>
 		public MediaPlayerEntity Shield => new(_haContext, "media_player.shield");
 		///<summary>SHIELD</summary>
 		public MediaPlayerEntity Shield2 => new(_haContext, "media_player.shield_2");
-		///<summary>VSX-1022</summary>
-		public MediaPlayerEntity Vsx1022 => new(_haContext, "media_player.vsx_1022");
 	}
 
 	public partial class NumberEntities
@@ -581,6 +579,8 @@ namespace HomeAssistantGenerated
 			_haContext = haContext;
 		}
 
+		///<summary>Close All Shades</summary>
+		public ScriptEntity CloseAllShades => new(_haContext, "script.close_all_shades");
 		///<summary>k_center</summary>
 		public ScriptEntity KCenter => new(_haContext, "script.k_center");
 		///<summary>k_down</summary>
@@ -591,6 +591,12 @@ namespace HomeAssistantGenerated
 		public ScriptEntity KRight => new(_haContext, "script.k_right");
 		///<summary>k_up</summary>
 		public ScriptEntity KUp => new(_haContext, "script.k_up");
+		///<summary>Open All Shades</summary>
+		public ScriptEntity OpenAllShades => new(_haContext, "script.open_all_shades");
+		///<summary>Tesla Set Limit 90</summary>
+		public ScriptEntity TeslaSetChargeLimitSoc => new(_haContext, "script.tesla_set_charge_limit_soc");
+		///<summary>Tesla Set Limit 50</summary>
+		public ScriptEntity TeslaSetLimit50 => new(_haContext, "script.tesla_set_limit_50");
 	}
 
 	public partial class SelectEntities
@@ -815,6 +821,8 @@ namespace HomeAssistantGenerated
 		public NumericSensorEntity PiHoleSeenClients => new(_haContext, "sensor.pi_hole_seen_clients");
 		///<summary>Pixel 6 Pro Battery Level</summary>
 		public NumericSensorEntity Pixel6ProBatteryLevel => new(_haContext, "sensor.pixel_6_pro_battery_level");
+		///<summary>Pixel 6 Pro Battery Power</summary>
+		public NumericSensorEntity Pixel6ProBatteryPower => new(_haContext, "sensor.pixel_6_pro_battery_power");
 		///<summary>Pixel 6 Pro Battery Temperature</summary>
 		public NumericSensorEntity Pixel6ProBatteryTemperature => new(_haContext, "sensor.pixel_6_pro_battery_temperature");
 		///<summary>RBR20 (Gateway) B received</summary>
@@ -953,8 +961,6 @@ namespace HomeAssistantGenerated
 		public UpdateEntity PiHoleFtlUpdateAvailable => new(_haContext, "update.pi_hole_ftl_update_available");
 		///<summary>Pi-Hole Web Update Available</summary>
 		public UpdateEntity PiHoleWebUpdateAvailable => new(_haContext, "update.pi_hole_web_update_available");
-		///<summary>Z-Wave JS Update</summary>
-		public UpdateEntity ZWaveJsUpdate => new(_haContext, "update.z_wave_js_update");
 	}
 
 	public partial class WeatherEntities
@@ -981,6 +987,8 @@ namespace HomeAssistantGenerated
 
 		///<summary>Home</summary>
 		public ZoneEntity Home => new(_haContext, "zone.home");
+		///<summary>Work</summary>
+		public ZoneEntity Work => new(_haContext, "zone.work");
 	}
 
 	public partial record AutomationEntity : Entity<AutomationEntity, EntityState<AutomationAttributes>, AutomationAttributes>
@@ -1001,6 +1009,9 @@ namespace HomeAssistantGenerated
 
 		[JsonPropertyName("friendly_name")]
 		public string? FriendlyName { get; init; }
+
+		[JsonPropertyName("id")]
+		public string? Id { get; init; }
 
 		[JsonPropertyName("last_triggered")]
 		public string? LastTriggered { get; init; }
@@ -1040,6 +1051,9 @@ namespace HomeAssistantGenerated
 		[JsonPropertyName("conn_charge_cable")]
 		public string? ConnChargeCable { get; init; }
 
+		[JsonPropertyName("current_version")]
+		public string? CurrentVersion { get; init; }
+
 		[JsonPropertyName("description")]
 		public string? Description { get; init; }
 
@@ -1072,6 +1086,9 @@ namespace HomeAssistantGenerated
 
 		[JsonPropertyName("installed_version")]
 		public string? InstalledVersion { get; init; }
+
+		[JsonPropertyName("latest_version")]
+		public string? LatestVersion { get; init; }
 
 		[JsonPropertyName("node_id")]
 		public double? NodeId { get; init; }
@@ -1632,6 +1649,12 @@ namespace HomeAssistantGenerated
 
 		[JsonPropertyName("mode")]
 		public string? Mode { get; init; }
+
+		[JsonPropertyName("restored")]
+		public bool? Restored { get; init; }
+
+		[JsonPropertyName("supported_features")]
+		public double? SupportedFeatures { get; init; }
 	}
 
 	public partial record SelectEntity : Entity<SelectEntity, EntityState<SelectAttributes>, SelectAttributes>
@@ -1685,6 +1708,9 @@ namespace HomeAssistantGenerated
 		[JsonPropertyName("allergen_genus_2")]
 		public string? AllergenGenus2 { get; init; }
 
+		[JsonPropertyName("allergen_genus_3")]
+		public string? AllergenGenus3 { get; init; }
+
 		[JsonPropertyName("allergen_name_1")]
 		public string? AllergenName1 { get; init; }
 
@@ -1699,6 +1725,9 @@ namespace HomeAssistantGenerated
 
 		[JsonPropertyName("allergen_type_2")]
 		public string? AllergenType2 { get; init; }
+
+		[JsonPropertyName("allergen_type_3")]
+		public string? AllergenType3 { get; init; }
 
 		[JsonPropertyName("city")]
 		public string? City { get; init; }
@@ -1870,26 +1899,26 @@ namespace HomeAssistantGenerated
 		[JsonPropertyName("connected_paired_devices")]
 		public string? ConnectedPairedDevices { get; init; }
 
+		[JsonPropertyName("current")]
+		public double? Current { get; init; }
+
 		[JsonPropertyName("destination")]
 		public string? Destination { get; init; }
 
 		[JsonPropertyName("device_class")]
 		public string? DeviceClass { get; init; }
 
-		[JsonPropertyName("dewpoint")]
-		public double? Dewpoint { get; init; }
-
 		[JsonPropertyName("distance")]
 		public double? Distance { get; init; }
+
+		[JsonPropertyName("domains_blocked")]
+		public double? DomainsBlocked { get; init; }
 
 		[JsonPropertyName("dominentpol")]
 		public string? Dominentpol { get; init; }
 
 		[JsonPropertyName("duration")]
 		public double? Duration { get; init; }
-
-		[JsonPropertyName("estimated_critical_temp")]
-		public double? EstimatedCriticalTemp { get; init; }
 
 		[JsonPropertyName("Free internal storage")]
 		public string? Freeinternalstorage { get; init; }
@@ -1939,9 +1968,6 @@ namespace HomeAssistantGenerated
 		[JsonPropertyName("repositories")]
 		public IReadOnlyList<object>? Repositories { get; init; }
 
-		[JsonPropertyName("restored")]
-		public bool? Restored { get; init; }
-
 		[JsonPropertyName("rgb_color")]
 		public IReadOnlyList<double>? RgbColor { get; init; }
 
@@ -1953,9 +1979,6 @@ namespace HomeAssistantGenerated
 
 		[JsonPropertyName("state_class")]
 		public string? StateClass { get; init; }
-
-		[JsonPropertyName("supported_features")]
-		public double? SupportedFeatures { get; init; }
 
 		[JsonPropertyName("temperature")]
 		public double? Temperature { get; init; }
@@ -1971,6 +1994,9 @@ namespace HomeAssistantGenerated
 
 		[JsonPropertyName("unit_of_measurement")]
 		public string? UnitOfMeasurement { get; init; }
+
+		[JsonPropertyName("voltage")]
+		public double? Voltage { get; init; }
 
 		[JsonPropertyName("w")]
 		public double? W { get; init; }
@@ -2091,9 +2117,6 @@ namespace HomeAssistantGenerated
 
 		[JsonPropertyName("release_url")]
 		public string? ReleaseUrl { get; init; }
-
-		[JsonPropertyName("restored")]
-		public bool? Restored { get; init; }
 
 		[JsonPropertyName("skipped_version")]
 		public object? SkippedVersion { get; init; }
@@ -2280,6 +2303,8 @@ namespace HomeAssistantGenerated
 
 		SceneServices Scene { get; }
 
+		ScheduleServices Schedule { get; }
+
 		ScriptServices Script { get; }
 
 		SelectServices Select { get; }
@@ -2307,8 +2332,6 @@ namespace HomeAssistantGenerated
 		ZhaServices Zha { get; }
 
 		ZoneServices Zone { get; }
-
-		ZwaveJsServices ZwaveJs { get; }
 	}
 
 	public class Services : IServices
@@ -2357,6 +2380,7 @@ namespace HomeAssistantGenerated
 		public PersonServices Person => new(_haContext);
 		public RecorderServices Recorder => new(_haContext);
 		public SceneServices Scene => new(_haContext);
+		public ScheduleServices Schedule => new(_haContext);
 		public ScriptServices Script => new(_haContext);
 		public SelectServices Select => new(_haContext);
 		public ShoppingListServices ShoppingList => new(_haContext);
@@ -2371,7 +2395,6 @@ namespace HomeAssistantGenerated
 		public VacuumServices Vacuum => new(_haContext);
 		public ZhaServices Zha => new(_haContext);
 		public ZoneServices Zone => new(_haContext);
-		public ZwaveJsServices ZwaveJs => new(_haContext);
 	}
 
 	public class AlarmControlPanelServices
@@ -4436,15 +4459,14 @@ namespace HomeAssistantGenerated
 		///<param name="xyColor">Color for the light in XY-format. eg: [0.52, 0.43]</param>
 		///<param name="colorTemp">Color temperature for the light in mireds.</param>
 		///<param name="kelvin">Color temperature for the light in Kelvin.</param>
-		///<param name="whiteValue">Number indicating level of white.</param>
 		///<param name="brightness">Number indicating brightness, where 0 turns the light off, 1 is the minimum brightness and 255 is the maximum brightness supported by the light.</param>
 		///<param name="brightnessPct">Number indicating percentage of full brightness, where 0 turns the light off, 1 is the minimum brightness and 100 is the maximum brightness supported by the light.</param>
 		///<param name="profile">Name of a light profile to use. eg: relax</param>
 		///<param name="flash">If the light should flash.</param>
 		///<param name="effect">Light effect.</param>
-		public void Toggle(ServiceTarget target, float? @transition = null, object? @rgbColor = null, object? @colorName = null, object? @hsColor = null, object? @xyColor = null, object? @colorTemp = null, long? @kelvin = null, long? @whiteValue = null, long? @brightness = null, long? @brightnessPct = null, string? @profile = null, object? @flash = null, string? @effect = null)
+		public void Toggle(ServiceTarget target, float? @transition = null, object? @rgbColor = null, object? @colorName = null, object? @hsColor = null, object? @xyColor = null, object? @colorTemp = null, long? @kelvin = null, long? @brightness = null, long? @brightnessPct = null, string? @profile = null, object? @flash = null, string? @effect = null)
 		{
-			_haContext.CallService("light", "toggle", target, new LightToggleParameters{Transition = @transition, RgbColor = @rgbColor, ColorName = @colorName, HsColor = @hsColor, XyColor = @xyColor, ColorTemp = @colorTemp, Kelvin = @kelvin, WhiteValue = @whiteValue, Brightness = @brightness, BrightnessPct = @brightnessPct, Profile = @profile, Flash = @flash, Effect = @effect});
+			_haContext.CallService("light", "toggle", target, new LightToggleParameters{Transition = @transition, RgbColor = @rgbColor, ColorName = @colorName, HsColor = @hsColor, XyColor = @xyColor, ColorTemp = @colorTemp, Kelvin = @kelvin, Brightness = @brightness, BrightnessPct = @brightnessPct, Profile = @profile, Flash = @flash, Effect = @effect});
 		}
 
 		///<summary>Turns off one or more lights.</summary>
@@ -4524,10 +4546,6 @@ namespace HomeAssistantGenerated
 		///<summary>Color temperature for the light in Kelvin.</summary>
 		[JsonPropertyName("kelvin")]
 		public long? Kelvin { get; init; }
-
-		///<summary>Number indicating level of white.</summary>
-		[JsonPropertyName("white_value")]
-		public long? WhiteValue { get; init; }
 
 		///<summary>Number indicating brightness, where 0 turns the light off, 1 is the minimum brightness and 255 is the maximum brightness supported by the light.</summary>
 		[JsonPropertyName("brightness")]
@@ -5766,6 +5784,21 @@ namespace HomeAssistantGenerated
 		public float? Transition { get; init; }
 	}
 
+	public class ScheduleServices
+	{
+		private readonly IHaContext _haContext;
+		public ScheduleServices(IHaContext haContext)
+		{
+			_haContext = haContext;
+		}
+
+		///<summary>Reload the schedule configuration</summary>
+		public void Reload()
+		{
+			_haContext.CallService("schedule", "reload", null);
+		}
+	}
+
 	public class ScriptServices
 	{
 		private readonly IHaContext _haContext;
@@ -5774,35 +5807,30 @@ namespace HomeAssistantGenerated
 			_haContext = haContext;
 		}
 
-		public void KCenter()
+		public void CloseAllShades()
 		{
-			_haContext.CallService("script", "k_center", null);
+			_haContext.CallService("script", "close_all_shades", null);
 		}
 
-		public void KDown()
+		public void OpenAllShades()
 		{
-			_haContext.CallService("script", "k_down", null);
-		}
-
-		public void KLeft()
-		{
-			_haContext.CallService("script", "k_left", null);
-		}
-
-		public void KRight()
-		{
-			_haContext.CallService("script", "k_right", null);
-		}
-
-		public void KUp()
-		{
-			_haContext.CallService("script", "k_up", null);
+			_haContext.CallService("script", "open_all_shades", null);
 		}
 
 		///<summary>Reload all the available scripts</summary>
 		public void Reload()
 		{
 			_haContext.CallService("script", "reload", null);
+		}
+
+		public void TeslaSetChargeLimitSoc()
+		{
+			_haContext.CallService("script", "tesla_set_charge_limit_soc", null);
+		}
+
+		public void TeslaSetLimit50()
+		{
+			_haContext.CallService("script", "tesla_set_limit_50", null);
 		}
 
 		///<summary>Toggle script</summary>
@@ -6899,274 +6927,6 @@ namespace HomeAssistantGenerated
 		}
 	}
 
-	public class ZwaveJsServices
-	{
-		private readonly IHaContext _haContext;
-		public ZwaveJsServices(IHaContext haContext)
-		{
-			_haContext = haContext;
-		}
-
-		///<summary>Allow for bulk setting partial parameters. Useful when multiple partial parameters have to be set at the same time.</summary>
-		///<param name="target">The target for this service call</param>
-		public void BulkSetPartialConfigParameters(ServiceTarget target, ZwaveJsBulkSetPartialConfigParametersParameters data)
-		{
-			_haContext.CallService("zwave_js", "bulk_set_partial_config_parameters", target, data);
-		}
-
-		///<summary>Allow for bulk setting partial parameters. Useful when multiple partial parameters have to be set at the same time.</summary>
-		///<param name="target">The target for this service call</param>
-		///<param name="parameter">The id of the configuration parameter you want to configure. eg: 9</param>
-		///<param name="value">The new value(s) to set for this configuration parameter. Can either be a raw integer value to represent the bulk change or a mapping where the key is the bitmask (either in hex or integer form) and the value is the new value you want to set for that partial parameter. eg: {"0x1":1,"0x10":1,"0x20":1,"0x40":1}</param>
-		public void BulkSetPartialConfigParameters(ServiceTarget target, string @parameter, object @value)
-		{
-			_haContext.CallService("zwave_js", "bulk_set_partial_config_parameters", target, new ZwaveJsBulkSetPartialConfigParametersParameters{Parameter = @parameter, Value = @value});
-		}
-
-		///<summary>Allows for calling a Command Class API on a node. Some Command Classes can't be fully controlled via the `set_value` service and require direct calls to the Command Class API.</summary>
-		///<param name="target">The target for this service call</param>
-		public void InvokeCcApi(ServiceTarget target, ZwaveJsInvokeCcApiParameters data)
-		{
-			_haContext.CallService("zwave_js", "invoke_cc_api", target, data);
-		}
-
-		///<summary>Allows for calling a Command Class API on a node. Some Command Classes can't be fully controlled via the `set_value` service and require direct calls to the Command Class API.</summary>
-		///<param name="target">The target for this service call</param>
-		///<param name="commandClass">The ID of the command class that you want to issue a command to. eg: 132</param>
-		///<param name="endpoint">The endpoint to call the API on. If an endpoint is specified, that endpoint will be targeted for all nodes associated with the target areas, devices, and/or entities. If an endpoint is not specified, the root endpoint (0) will be targeted for nodes associated with target areas and devices, and the endpoint for the primary value of each entity will be targeted. eg: 1</param>
-		///<param name="methodName">The name of the API method to call. Refer to the Z-Wave JS Command Class API documentation (https://zwave-js.github.io/node-zwave-js/#/api/CCs/index) for available methods. eg: setInterval</param>
-		///<param name="parameters">A list of parameters to pass to the API method. Refer to the Z-Wave JS Command Class API documentation (https://zwave-js.github.io/node-zwave-js/#/api/CCs/index) for parameters. eg: [1,1]</param>
-		public void InvokeCcApi(ServiceTarget target, string @commandClass, string @methodName, object @parameters, string? @endpoint = null)
-		{
-			_haContext.CallService("zwave_js", "invoke_cc_api", target, new ZwaveJsInvokeCcApiParameters{CommandClass = @commandClass, Endpoint = @endpoint, MethodName = @methodName, Parameters = @parameters});
-		}
-
-		///<summary>Allow for changing any value that Z-Wave JS recognizes on multiple Z-Wave devices using multicast, so all devices receive the message simultaneously. This service has minimal validation so only use this service if you know what you are doing.</summary>
-		///<param name="target">The target for this service call</param>
-		public void MulticastSetValue(ServiceTarget target, ZwaveJsMulticastSetValueParameters data)
-		{
-			_haContext.CallService("zwave_js", "multicast_set_value", target, data);
-		}
-
-		///<summary>Allow for changing any value that Z-Wave JS recognizes on multiple Z-Wave devices using multicast, so all devices receive the message simultaneously. This service has minimal validation so only use this service if you know what you are doing.</summary>
-		///<param name="target">The target for this service call</param>
-		///<param name="broadcast">Whether command should be broadcast to all devices on the network. eg: True</param>
-		///<param name="commandClass">The ID of the command class for the value. eg: 117</param>
-		///<param name="endpoint">The endpoint for the value. eg: 1</param>
-		///<param name="property">The ID of the property for the value. eg: currentValue</param>
-		///<param name="propertyKey">The ID of the property key for the value eg: 1</param>
-		///<param name="options">Set value options map. Refer to the Z-Wave JS documentation for more information on what options can be set.</param>
-		///<param name="value">The new value to set. eg: ffbb99</param>
-		public void MulticastSetValue(ServiceTarget target, string @commandClass, string @property, object @value, bool? @broadcast = null, string? @endpoint = null, string? @propertyKey = null, object? @options = null)
-		{
-			_haContext.CallService("zwave_js", "multicast_set_value", target, new ZwaveJsMulticastSetValueParameters{Broadcast = @broadcast, CommandClass = @commandClass, Endpoint = @endpoint, Property = @property, PropertyKey = @propertyKey, Options = @options, Value = @value});
-		}
-
-		///<summary>Forces Z-Wave JS to try to reach a node. This can be used to update the status of the node in Z-Wave JS when you think it doesn't accurately reflect reality, e.g. reviving a failed/dead node or marking the node as asleep.</summary>
-		///<param name="target">The target for this service call</param>
-		public void Ping(ServiceTarget target)
-		{
-			_haContext.CallService("zwave_js", "ping", target);
-		}
-
-		///<summary>Force update value(s) for a Z-Wave entity</summary>
-		public void RefreshValue(ZwaveJsRefreshValueParameters data)
-		{
-			_haContext.CallService("zwave_js", "refresh_value", null, data);
-		}
-
-		///<summary>Force update value(s) for a Z-Wave entity</summary>
-		///<param name="entityId">Entity whose value(s) should be refreshed eg: sensor.family_room_motion</param>
-		///<param name="refreshAllValues">Whether to refresh all values (true) or just the primary value (false)</param>
-		public void RefreshValue(string @entityId, bool? @refreshAllValues = null)
-		{
-			_haContext.CallService("zwave_js", "refresh_value", null, new ZwaveJsRefreshValueParameters{EntityId = @entityId, RefreshAllValues = @refreshAllValues});
-		}
-
-		///<summary>Resets the meter(s) on a node.</summary>
-		///<param name="target">The target for this service call</param>
-		public void ResetMeter(ServiceTarget target, ZwaveJsResetMeterParameters data)
-		{
-			_haContext.CallService("zwave_js", "reset_meter", target, data);
-		}
-
-		///<summary>Resets the meter(s) on a node.</summary>
-		///<param name="target">The target for this service call</param>
-		///<param name="meterType">The type of meter to reset. Not all meters support the ability to pick a meter type to reset. eg: 1</param>
-		///<param name="value">The value that meter(s) should be reset to. Not all meters support the ability to be reset to a specific value. eg: 5</param>
-		public void ResetMeter(ServiceTarget target, string? @meterType = null, string? @value = null)
-		{
-			_haContext.CallService("zwave_js", "reset_meter", target, new ZwaveJsResetMeterParameters{MeterType = @meterType, Value = @value});
-		}
-
-		///<summary>Allow for changing configuration parameters of your Z-Wave devices.</summary>
-		///<param name="target">The target for this service call</param>
-		public void SetConfigParameter(ServiceTarget target, ZwaveJsSetConfigParameterParameters data)
-		{
-			_haContext.CallService("zwave_js", "set_config_parameter", target, data);
-		}
-
-		///<summary>Allow for changing configuration parameters of your Z-Wave devices.</summary>
-		///<param name="target">The target for this service call</param>
-		///<param name="parameter">The (name or id of the) configuration parameter you want to configure. eg: Minimum brightness level</param>
-		///<param name="value">The new value to set for this configuration parameter. eg: 5</param>
-		///<param name="bitmask">Target a specific bitmask (see the documentation for more information).</param>
-		public void SetConfigParameter(ServiceTarget target, string @parameter, string @value, string? @bitmask = null)
-		{
-			_haContext.CallService("zwave_js", "set_config_parameter", target, new ZwaveJsSetConfigParameterParameters{Parameter = @parameter, Value = @value, Bitmask = @bitmask});
-		}
-
-		///<summary>Allow for changing any value that Z-Wave JS recognizes on a Z-Wave device. This service has minimal validation so only use this service if you know what you are doing.</summary>
-		///<param name="target">The target for this service call</param>
-		public void SetValue(ServiceTarget target, ZwaveJsSetValueParameters data)
-		{
-			_haContext.CallService("zwave_js", "set_value", target, data);
-		}
-
-		///<summary>Allow for changing any value that Z-Wave JS recognizes on a Z-Wave device. This service has minimal validation so only use this service if you know what you are doing.</summary>
-		///<param name="target">The target for this service call</param>
-		///<param name="commandClass">The ID of the command class for the value. eg: 117</param>
-		///<param name="endpoint">The endpoint for the value. eg: 1</param>
-		///<param name="property">The ID of the property for the value. eg: currentValue</param>
-		///<param name="propertyKey">The ID of the property key for the value eg: 1</param>
-		///<param name="value">The new value to set. eg: ffbb99</param>
-		///<param name="options">Set value options map. Refer to the Z-Wave JS documentation for more information on what options can be set.</param>
-		///<param name="waitForResult">Whether or not to wait for a response from the node. If not included in the payload, the integration will decide whether to wait or not. If set to `true`, note that the service call can take a while if setting a value on an asleep battery device.</param>
-		public void SetValue(ServiceTarget target, string @commandClass, string @property, object @value, string? @endpoint = null, string? @propertyKey = null, object? @options = null, bool? @waitForResult = null)
-		{
-			_haContext.CallService("zwave_js", "set_value", target, new ZwaveJsSetValueParameters{CommandClass = @commandClass, Endpoint = @endpoint, Property = @property, PropertyKey = @propertyKey, Value = @value, Options = @options, WaitForResult = @waitForResult});
-		}
-	}
-
-	public record ZwaveJsBulkSetPartialConfigParametersParameters
-	{
-		///<summary>The id of the configuration parameter you want to configure. eg: 9</summary>
-		[JsonPropertyName("parameter")]
-		public string? Parameter { get; init; }
-
-		///<summary>The new value(s) to set for this configuration parameter. Can either be a raw integer value to represent the bulk change or a mapping where the key is the bitmask (either in hex or integer form) and the value is the new value you want to set for that partial parameter. eg: {"0x1":1,"0x10":1,"0x20":1,"0x40":1}</summary>
-		[JsonPropertyName("value")]
-		public object? Value { get; init; }
-	}
-
-	public record ZwaveJsInvokeCcApiParameters
-	{
-		///<summary>The ID of the command class that you want to issue a command to. eg: 132</summary>
-		[JsonPropertyName("command_class")]
-		public string? CommandClass { get; init; }
-
-		///<summary>The endpoint to call the API on. If an endpoint is specified, that endpoint will be targeted for all nodes associated with the target areas, devices, and/or entities. If an endpoint is not specified, the root endpoint (0) will be targeted for nodes associated with target areas and devices, and the endpoint for the primary value of each entity will be targeted. eg: 1</summary>
-		[JsonPropertyName("endpoint")]
-		public string? Endpoint { get; init; }
-
-		///<summary>The name of the API method to call. Refer to the Z-Wave JS Command Class API documentation (https://zwave-js.github.io/node-zwave-js/#/api/CCs/index) for available methods. eg: setInterval</summary>
-		[JsonPropertyName("method_name")]
-		public string? MethodName { get; init; }
-
-		///<summary>A list of parameters to pass to the API method. Refer to the Z-Wave JS Command Class API documentation (https://zwave-js.github.io/node-zwave-js/#/api/CCs/index) for parameters. eg: [1,1]</summary>
-		[JsonPropertyName("parameters")]
-		public object? Parameters { get; init; }
-	}
-
-	public record ZwaveJsMulticastSetValueParameters
-	{
-		///<summary>Whether command should be broadcast to all devices on the network. eg: True</summary>
-		[JsonPropertyName("broadcast")]
-		public bool? Broadcast { get; init; }
-
-		///<summary>The ID of the command class for the value. eg: 117</summary>
-		[JsonPropertyName("command_class")]
-		public string? CommandClass { get; init; }
-
-		///<summary>The endpoint for the value. eg: 1</summary>
-		[JsonPropertyName("endpoint")]
-		public string? Endpoint { get; init; }
-
-		///<summary>The ID of the property for the value. eg: currentValue</summary>
-		[JsonPropertyName("property")]
-		public string? Property { get; init; }
-
-		///<summary>The ID of the property key for the value eg: 1</summary>
-		[JsonPropertyName("property_key")]
-		public string? PropertyKey { get; init; }
-
-		///<summary>Set value options map. Refer to the Z-Wave JS documentation for more information on what options can be set.</summary>
-		[JsonPropertyName("options")]
-		public object? Options { get; init; }
-
-		///<summary>The new value to set. eg: ffbb99</summary>
-		[JsonPropertyName("value")]
-		public object? Value { get; init; }
-	}
-
-	public record ZwaveJsRefreshValueParameters
-	{
-		///<summary>Entity whose value(s) should be refreshed eg: sensor.family_room_motion</summary>
-		[JsonPropertyName("entity_id")]
-		public string? EntityId { get; init; }
-
-		///<summary>Whether to refresh all values (true) or just the primary value (false)</summary>
-		[JsonPropertyName("refresh_all_values")]
-		public bool? RefreshAllValues { get; init; }
-	}
-
-	public record ZwaveJsResetMeterParameters
-	{
-		///<summary>The type of meter to reset. Not all meters support the ability to pick a meter type to reset. eg: 1</summary>
-		[JsonPropertyName("meter_type")]
-		public string? MeterType { get; init; }
-
-		///<summary>The value that meter(s) should be reset to. Not all meters support the ability to be reset to a specific value. eg: 5</summary>
-		[JsonPropertyName("value")]
-		public string? Value { get; init; }
-	}
-
-	public record ZwaveJsSetConfigParameterParameters
-	{
-		///<summary>The (name or id of the) configuration parameter you want to configure. eg: Minimum brightness level</summary>
-		[JsonPropertyName("parameter")]
-		public string? Parameter { get; init; }
-
-		///<summary>The new value to set for this configuration parameter. eg: 5</summary>
-		[JsonPropertyName("value")]
-		public string? Value { get; init; }
-
-		///<summary>Target a specific bitmask (see the documentation for more information).</summary>
-		[JsonPropertyName("bitmask")]
-		public string? Bitmask { get; init; }
-	}
-
-	public record ZwaveJsSetValueParameters
-	{
-		///<summary>The ID of the command class for the value. eg: 117</summary>
-		[JsonPropertyName("command_class")]
-		public string? CommandClass { get; init; }
-
-		///<summary>The endpoint for the value. eg: 1</summary>
-		[JsonPropertyName("endpoint")]
-		public string? Endpoint { get; init; }
-
-		///<summary>The ID of the property for the value. eg: currentValue</summary>
-		[JsonPropertyName("property")]
-		public string? Property { get; init; }
-
-		///<summary>The ID of the property key for the value eg: 1</summary>
-		[JsonPropertyName("property_key")]
-		public string? PropertyKey { get; init; }
-
-		///<summary>The new value to set. eg: ffbb99</summary>
-		[JsonPropertyName("value")]
-		public object? Value { get; init; }
-
-		///<summary>Set value options map. Refer to the Z-Wave JS documentation for more information on what options can be set.</summary>
-		[JsonPropertyName("options")]
-		public object? Options { get; init; }
-
-		///<summary>Whether or not to wait for a response from the node. If not included in the payload, the integration will decide whether to wait or not. If set to `true`, note that the service call can take a while if setting a value on an asleep battery device.</summary>
-		[JsonPropertyName("wait_for_result")]
-		public bool? WaitForResult { get; init; }
-	}
-
 	public static class AutomationEntityExtensionMethods
 	{
 		///<summary>Toggle (enable / disable) an automation.</summary>
@@ -8208,15 +7968,14 @@ namespace HomeAssistantGenerated
 		///<param name="xyColor">Color for the light in XY-format. eg: [0.52, 0.43]</param>
 		///<param name="colorTemp">Color temperature for the light in mireds.</param>
 		///<param name="kelvin">Color temperature for the light in Kelvin.</param>
-		///<param name="whiteValue">Number indicating level of white.</param>
 		///<param name="brightness">Number indicating brightness, where 0 turns the light off, 1 is the minimum brightness and 255 is the maximum brightness supported by the light.</param>
 		///<param name="brightnessPct">Number indicating percentage of full brightness, where 0 turns the light off, 1 is the minimum brightness and 100 is the maximum brightness supported by the light.</param>
 		///<param name="profile">Name of a light profile to use. eg: relax</param>
 		///<param name="flash">If the light should flash.</param>
 		///<param name="effect">Light effect.</param>
-		public static void Toggle(this LightEntity target, float? @transition = null, object? @rgbColor = null, object? @colorName = null, object? @hsColor = null, object? @xyColor = null, object? @colorTemp = null, long? @kelvin = null, long? @whiteValue = null, long? @brightness = null, long? @brightnessPct = null, string? @profile = null, object? @flash = null, string? @effect = null)
+		public static void Toggle(this LightEntity target, float? @transition = null, object? @rgbColor = null, object? @colorName = null, object? @hsColor = null, object? @xyColor = null, object? @colorTemp = null, long? @kelvin = null, long? @brightness = null, long? @brightnessPct = null, string? @profile = null, object? @flash = null, string? @effect = null)
 		{
-			target.CallService("toggle", new LightToggleParameters{Transition = @transition, RgbColor = @rgbColor, ColorName = @colorName, HsColor = @hsColor, XyColor = @xyColor, ColorTemp = @colorTemp, Kelvin = @kelvin, WhiteValue = @whiteValue, Brightness = @brightness, BrightnessPct = @brightnessPct, Profile = @profile, Flash = @flash, Effect = @effect});
+			target.CallService("toggle", new LightToggleParameters{Transition = @transition, RgbColor = @rgbColor, ColorName = @colorName, HsColor = @hsColor, XyColor = @xyColor, ColorTemp = @colorTemp, Kelvin = @kelvin, Brightness = @brightness, BrightnessPct = @brightnessPct, Profile = @profile, Flash = @flash, Effect = @effect});
 		}
 
 		///<summary>Toggles one or more lights, from on to off, or, off to on, based on their current state. </summary>
@@ -8228,15 +7987,14 @@ namespace HomeAssistantGenerated
 		///<param name="xyColor">Color for the light in XY-format. eg: [0.52, 0.43]</param>
 		///<param name="colorTemp">Color temperature for the light in mireds.</param>
 		///<param name="kelvin">Color temperature for the light in Kelvin.</param>
-		///<param name="whiteValue">Number indicating level of white.</param>
 		///<param name="brightness">Number indicating brightness, where 0 turns the light off, 1 is the minimum brightness and 255 is the maximum brightness supported by the light.</param>
 		///<param name="brightnessPct">Number indicating percentage of full brightness, where 0 turns the light off, 1 is the minimum brightness and 100 is the maximum brightness supported by the light.</param>
 		///<param name="profile">Name of a light profile to use. eg: relax</param>
 		///<param name="flash">If the light should flash.</param>
 		///<param name="effect">Light effect.</param>
-		public static void Toggle(this IEnumerable<LightEntity> target, float? @transition = null, object? @rgbColor = null, object? @colorName = null, object? @hsColor = null, object? @xyColor = null, object? @colorTemp = null, long? @kelvin = null, long? @whiteValue = null, long? @brightness = null, long? @brightnessPct = null, string? @profile = null, object? @flash = null, string? @effect = null)
+		public static void Toggle(this IEnumerable<LightEntity> target, float? @transition = null, object? @rgbColor = null, object? @colorName = null, object? @hsColor = null, object? @xyColor = null, object? @colorTemp = null, long? @kelvin = null, long? @brightness = null, long? @brightnessPct = null, string? @profile = null, object? @flash = null, string? @effect = null)
 		{
-			target.CallService("toggle", new LightToggleParameters{Transition = @transition, RgbColor = @rgbColor, ColorName = @colorName, HsColor = @hsColor, XyColor = @xyColor, ColorTemp = @colorTemp, Kelvin = @kelvin, WhiteValue = @whiteValue, Brightness = @brightness, BrightnessPct = @brightnessPct, Profile = @profile, Flash = @flash, Effect = @effect});
+			target.CallService("toggle", new LightToggleParameters{Transition = @transition, RgbColor = @rgbColor, ColorName = @colorName, HsColor = @hsColor, XyColor = @xyColor, ColorTemp = @colorTemp, Kelvin = @kelvin, Brightness = @brightness, BrightnessPct = @brightnessPct, Profile = @profile, Flash = @flash, Effect = @effect});
 		}
 
 		///<summary>Turns off one or more lights.</summary>
@@ -9176,39 +8934,6 @@ namespace HomeAssistantGenerated
 		public static void SetLockUserCode(this IEnumerable<LockEntity> target, string @codeSlot, string @userCode)
 		{
 			target.CallService("set_lock_user_code", new ZhaSetLockUserCodeParameters{CodeSlot = @codeSlot, UserCode = @userCode});
-		}
-	}
-
-	public static class ZwaveJsEntityExtensionMethods
-	{
-		///<summary>Resets the meter(s) on a node.</summary>
-		public static void ResetMeter(this SensorEntity target, ZwaveJsResetMeterParameters data)
-		{
-			target.CallService("reset_meter", data);
-		}
-
-		///<summary>Resets the meter(s) on a node.</summary>
-		public static void ResetMeter(this IEnumerable<SensorEntity> target, ZwaveJsResetMeterParameters data)
-		{
-			target.CallService("reset_meter", data);
-		}
-
-		///<summary>Resets the meter(s) on a node.</summary>
-		///<param name="target">The SensorEntity to call this service for</param>
-		///<param name="meterType">The type of meter to reset. Not all meters support the ability to pick a meter type to reset. eg: 1</param>
-		///<param name="value">The value that meter(s) should be reset to. Not all meters support the ability to be reset to a specific value. eg: 5</param>
-		public static void ResetMeter(this SensorEntity target, string? @meterType = null, string? @value = null)
-		{
-			target.CallService("reset_meter", new ZwaveJsResetMeterParameters{MeterType = @meterType, Value = @value});
-		}
-
-		///<summary>Resets the meter(s) on a node.</summary>
-		///<param name="target">The IEnumerable<SensorEntity> to call this service for</param>
-		///<param name="meterType">The type of meter to reset. Not all meters support the ability to pick a meter type to reset. eg: 1</param>
-		///<param name="value">The value that meter(s) should be reset to. Not all meters support the ability to be reset to a specific value. eg: 5</param>
-		public static void ResetMeter(this IEnumerable<SensorEntity> target, string? @meterType = null, string? @value = null)
-		{
-			target.CallService("reset_meter", new ZwaveJsResetMeterParameters{MeterType = @meterType, Value = @value});
 		}
 	}
 }

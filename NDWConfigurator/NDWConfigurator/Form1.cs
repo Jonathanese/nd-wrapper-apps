@@ -29,6 +29,7 @@ namespace NDWConfigurator
             }
 
             LoadConfigs();
+            InitVisualAssistant();
         }
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -50,6 +51,7 @@ namespace NDWConfigurator
             LocationSettingsFile = new SettingsFile(RootDirectory, "/Location/LocationSettings.xml");
             EntityLocationsFile = new SettingsFile(RootDirectory, "/Location/EntityLocations.xml");
             InitEntitiesTab();
+            InitScenesTab();
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
