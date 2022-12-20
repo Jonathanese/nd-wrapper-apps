@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <settings>
   <Settings>
-    <add key="UpdateSeconds" value="60" />
+    <add key="UpdateSeconds" value="10" />
   </Settings>
   <Scene>
-    <add key="LightCountPercent" value="25" />
+    <add key="Gradient" value="DuskDawn" />
   </Scene>
 </settings>

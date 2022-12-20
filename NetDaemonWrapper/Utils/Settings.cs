@@ -12,7 +12,7 @@ namespace NetDaemonWrapper
 
         public SettingsFile(string relativepath)
         {
-            _path = "Config/" + relativepath;
+            _path = PATHS.CONFIG_BASE + relativepath;
         }
 
         public string GetValue(string section, string key)
@@ -242,6 +242,17 @@ namespace NetDaemonWrapper
             sectionElement.Remove();
             Save(config);
             return true;
+        }
+
+        public List<string> GetSections()
+        {
+            XDocument config = GetDocument();
+            List<string> sections = new List<string>();
+            foreach (XElement c in config.Root.Elements())
+            {
+                sections.Add(c.Name.LocalName);
+            }
+            return sections;
         }
 
         private void Save(XDocument document)

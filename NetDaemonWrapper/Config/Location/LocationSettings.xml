@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <Floor0>
+    <add key="Width_in" value="540" />
+    <add key="GroundHeight_in" value="120" />
+    <add key="ReferencePixelX" value="1663" />
+    <add key="ReferencePixelY" value="1057" />
+    <add key="ImagePath" value="X:\hass\homeassistant\netdaemon3\Config/Location/Images/Floor_0.png" />
+  </Floor0>
+  <Floor1>
+    <add key="Width_in" value="540" />
+    <add key="GroundHeight_in" value="0" />
+    <add key="ReferencePixelX" value="1680" />
+    <add key="ReferencePixelY" value="1199" />
+    <add key="ImagePath" value="X:\hass\homeassistant\netdaemon3\Config/Location/Images/Floor_1.png" />
+  </Floor1>
+  <Floor2>
+    <add key="Width_in" value="540" />
+    <add key="GroundHeight_in" value="-108" />
+    <add key="ReferencePixelX" value="1672" />
+    <add key="ReferencePixelY" value="1075" />
+    <add key="ImagePath" value="X:\hass\homeassistant\netdaemon3\Config/Location/Images/Floor_2.png" />
+  </Floor2>
+</settings>

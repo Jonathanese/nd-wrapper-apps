@@ -42,7 +42,7 @@ namespace NetDaemonWrapper.Scene
         {
             Action = _Action;
             _scenename = "scene." + _SceneName;
-            Settings = new SettingsFile("Lighting/Scenes/" + _SceneName + ".xml");
+            Settings = new SettingsFile(PATHS.SCENES + _SceneName + ".xml");
             UpdateTimer = new Timer((sender) => InvokeAction());
             UpdateTimer.Change(-1, -1);
 

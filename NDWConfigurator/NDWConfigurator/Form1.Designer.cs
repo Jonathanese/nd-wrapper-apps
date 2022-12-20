@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem3 = new System.Windows.Forms.GradientColorPickerItem();
-            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem4 = new System.Windows.Forms.GradientColorPickerItem();
+            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem1 = new System.Windows.Forms.GradientColorPickerItem();
+            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem2 = new System.Windows.Forms.GradientColorPickerItem();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tp_General = new System.Windows.Forms.TabPage();
             this.l_RootDirectory = new System.Windows.Forms.Label();
@@ -71,12 +71,16 @@
             this.CMS_Floorplan = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.loadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_Scenes = new System.Windows.Forms.TabPage();
+            this.tb_SceneValue = new System.Windows.Forms.TextBox();
             this.lv_SceneValues = new System.Windows.Forms.ListView();
             this.ch_Setting = new System.Windows.Forms.ColumnHeader();
             this.ch_Value = new System.Windows.Forms.ColumnHeader();
             this.lb_ScenesList = new System.Windows.Forms.ListBox();
             this.tp_VisualAssistant = new System.Windows.Forms.TabPage();
-            this.b_play = new System.Windows.Forms.Button();
+            this.b_GradientLoad = new System.Windows.Forms.Button();
+            this.tb_GradientName = new System.Windows.Forms.TextBox();
+            this.b_Gradient_Save = new System.Windows.Forms.Button();
+            this.b_Gradient_play = new System.Windows.Forms.Button();
             this.nud_KeyFramePosition = new System.Windows.Forms.NumericUpDown();
             this.b_GradientColorsSet = new System.Windows.Forms.Button();
             this.b_KeyframePlus = new System.Windows.Forms.Button();
@@ -87,7 +91,7 @@
             this.gcp_1 = new System.Windows.Forms.GradientColorPicker();
             this.tt_ToolTips = new System.Windows.Forms.ToolTip(this.components);
             this.gradientanimtimer = new System.Windows.Forms.Timer(this.components);
-            this.tb_SceneValue = new System.Windows.Forms.TextBox();
+            this.lb_GradientList = new System.Windows.Forms.ListBox();
             this.tabControl.SuspendLayout();
             this.tp_General.SuspendLayout();
             this.tp_Entities.SuspendLayout();
@@ -617,6 +621,13 @@
             this.tp_Scenes.Text = "Scenes";
             this.tp_Scenes.UseVisualStyleBackColor = true;
             // 
+            // tb_SceneValue
+            // 
+            this.tb_SceneValue.Location = new System.Drawing.Point(139, 404);
+            this.tb_SceneValue.Name = "tb_SceneValue";
+            this.tb_SceneValue.Size = new System.Drawing.Size(187, 23);
+            this.tb_SceneValue.TabIndex = 3;
+            // 
             // lv_SceneValues
             // 
             this.lv_SceneValues.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -653,7 +664,11 @@
             // 
             // tp_VisualAssistant
             // 
-            this.tp_VisualAssistant.Controls.Add(this.b_play);
+            this.tp_VisualAssistant.Controls.Add(this.lb_GradientList);
+            this.tp_VisualAssistant.Controls.Add(this.b_GradientLoad);
+            this.tp_VisualAssistant.Controls.Add(this.tb_GradientName);
+            this.tp_VisualAssistant.Controls.Add(this.b_Gradient_Save);
+            this.tp_VisualAssistant.Controls.Add(this.b_Gradient_play);
             this.tp_VisualAssistant.Controls.Add(this.nud_KeyFramePosition);
             this.tp_VisualAssistant.Controls.Add(this.b_GradientColorsSet);
             this.tp_VisualAssistant.Controls.Add(this.b_KeyframePlus);
@@ -670,15 +685,42 @@
             this.tp_VisualAssistant.Text = "Visual Assistant";
             this.tp_VisualAssistant.UseVisualStyleBackColor = true;
             // 
-            // b_play
+            // b_GradientLoad
             // 
-            this.b_play.Location = new System.Drawing.Point(9, 157);
-            this.b_play.Name = "b_play";
-            this.b_play.Size = new System.Drawing.Size(75, 23);
-            this.b_play.TabIndex = 10;
-            this.b_play.Text = "Play";
-            this.b_play.UseVisualStyleBackColor = true;
-            this.b_play.Click += new System.EventHandler(this.b_play_Click);
+            this.b_GradientLoad.Location = new System.Drawing.Point(151, 194);
+            this.b_GradientLoad.Name = "b_GradientLoad";
+            this.b_GradientLoad.Size = new System.Drawing.Size(75, 23);
+            this.b_GradientLoad.TabIndex = 14;
+            this.b_GradientLoad.Text = "Load";
+            this.b_GradientLoad.UseVisualStyleBackColor = true;
+            this.b_GradientLoad.Click += new System.EventHandler(this.b_GradientLoad_Click);
+            // 
+            // tb_GradientName
+            // 
+            this.tb_GradientName.Location = new System.Drawing.Point(9, 294);
+            this.tb_GradientName.Name = "tb_GradientName";
+            this.tb_GradientName.Size = new System.Drawing.Size(100, 23);
+            this.tb_GradientName.TabIndex = 13;
+            // 
+            // b_Gradient_Save
+            // 
+            this.b_Gradient_Save.Location = new System.Drawing.Point(9, 265);
+            this.b_Gradient_Save.Name = "b_Gradient_Save";
+            this.b_Gradient_Save.Size = new System.Drawing.Size(75, 23);
+            this.b_Gradient_Save.TabIndex = 11;
+            this.b_Gradient_Save.Text = "Save";
+            this.b_Gradient_Save.UseVisualStyleBackColor = true;
+            this.b_Gradient_Save.Click += new System.EventHandler(this.b_Gradient_Save_Click);
+            // 
+            // b_Gradient_play
+            // 
+            this.b_Gradient_play.Location = new System.Drawing.Point(9, 157);
+            this.b_Gradient_play.Name = "b_Gradient_play";
+            this.b_Gradient_play.Size = new System.Drawing.Size(75, 23);
+            this.b_Gradient_play.TabIndex = 10;
+            this.b_Gradient_play.Text = "Play";
+            this.b_Gradient_play.UseVisualStyleBackColor = true;
+            this.b_Gradient_play.Click += new System.EventHandler(this.b_play_Click);
             // 
             // nud_KeyFramePosition
             // 
@@ -756,10 +798,10 @@
             this.gcp_1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.gcp_1.ColorItemBorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gcp_1.ColorItemWidth = 6;
-            gradientColorPickerItem3.Position = 0F;
-            gradientColorPickerItem4.Position = 1F;
-            this.gcp_1.Colors.Add(gradientColorPickerItem3);
-            this.gcp_1.Colors.Add(gradientColorPickerItem4);
+            gradientColorPickerItem1.Position = 0F;
+            gradientColorPickerItem2.Position = 1F;
+            this.gcp_1.Colors.Add(gradientColorPickerItem1);
+            this.gcp_1.Colors.Add(gradientColorPickerItem2);
             this.gcp_1.GradientLayout = System.Windows.Forms.GradientColorPickerLayout.Percent;
             this.gcp_1.GradientLayoutSize = 75;
             this.gcp_1.Location = new System.Drawing.Point(9, 6);
@@ -774,12 +816,14 @@
             // 
             this.gradientanimtimer.Tick += new System.EventHandler(this.gradientanimtimer_Tick);
             // 
-            // tb_SceneValue
+            // lb_GradientList
             // 
-            this.tb_SceneValue.Location = new System.Drawing.Point(139, 404);
-            this.tb_SceneValue.Name = "tb_SceneValue";
-            this.tb_SceneValue.Size = new System.Drawing.Size(187, 23);
-            this.tb_SceneValue.TabIndex = 3;
+            this.lb_GradientList.FormattingEnabled = true;
+            this.lb_GradientList.ItemHeight = 15;
+            this.lb_GradientList.Location = new System.Drawing.Point(151, 223);
+            this.lb_GradientList.Name = "lb_GradientList";
+            this.lb_GradientList.Size = new System.Drawing.Size(120, 94);
+            this.lb_GradientList.TabIndex = 15;
             // 
             // Form1
             // 
@@ -871,8 +915,12 @@
         private GradientColorPicker gcp_1;
         private NumericUpDown nud_KeyFramePosition;
         private Button b_GradientColorsSet;
-        private Button b_play;
+        private Button b_Gradient_play;
         private System.Windows.Forms.Timer gradientanimtimer;
         private TextBox tb_SceneValue;
+        private Button b_Gradient_Save;
+        private TextBox tb_GradientName;
+        private Button b_GradientLoad;
+        private ListBox lb_GradientList;
     }
 }

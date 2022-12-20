@@ -79,6 +79,22 @@ namespace NetDaemonWrapper.Scene
                         l.Set(Layer.Theme, color, 1);
                     }
                 });
+            Scene SpatialGradientDemo = new Scene(_ha, _logger,
+                "spatial_gradient_demo", 10, (Settings, Lights) =>
+                {
+                    Gradient? g = Gradient.getGradientFromName(Settings.ReadSetDefault("Scene", "Gradient", "DuskDawn"));
+                    if (g == null) return;
+
+                    float time = (float)(DateTime.Now.TimeOfDay.TotalSeconds % 300) / 300;
+
+                    foreach (MLight l in Lights)
+                    {
+                        l.Theme.isActive = true;
+
+                        FullColor color = new FullColor(g.GetColor((float)l.Location.W_rel, time), 255);
+                        l.Set(Layer.Theme, color, 10);
+                    }
+                });
         }
     }
 }

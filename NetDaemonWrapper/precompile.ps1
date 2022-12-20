@@ -37,7 +37,7 @@ if($config -eq "Publish"){
     echo "PUBLISH FOR SERVER ----------------------------------------------------------"
     $location = "$base\appsettings.json"
     $appconfig = Get-Content "$location" | ConvertFrom-Json
-    $appconfig.HomeAssistant.Host = "127.0.0.1"
+    $appconfig.HomeAssistant.Host = "192.168.1.20"
     $appconfig | ConvertTo-Json | Out-File "$location"
 
 }
@@ -45,7 +45,7 @@ else{
     echo "BUILD FOR REMOTE ------------------------------------------------------------"
     $location = "$base\appsettings.json"
     $appconfig = Get-Content "$location" | ConvertFrom-Json
-    $appconfig.HomeAssistant.Host = "192.168.1.1"
+    $appconfig.HomeAssistant.Host = "192.168.1.20"
     $appconfig | ConvertTo-Json | Out-File "$location"
 
 }

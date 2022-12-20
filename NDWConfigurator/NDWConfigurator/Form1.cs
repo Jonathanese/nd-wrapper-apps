@@ -61,5 +61,7 @@ namespace NDWConfigurator
                 InitLocationTab();
             }
         }
+
+
     }
 }

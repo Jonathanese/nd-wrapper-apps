@@ -38,6 +38,21 @@ namespace NDWConfigurator
             gradientanimtimer.Stop();
             gradientanimtimer.Interval = 50;
             SetDefaults();
+            GetGradientsList();
+        }
+
+        private void GetGradientsList()
+        {
+            lb_GradientList.Items.Clear();
+            List<String> filelist = Directory.GetFiles(RootDirectory + "/Lighting/Gradients").ToList();
+            filelist = filelist.Where(name => name.EndsWith(".xml")).ToList();
+            filelist.Sort();
+            string thisfile = "";
+            foreach (String file in filelist)
+            {
+                thisfile = Path.GetFileNameWithoutExtension(file);
+                lb_GradientList.Items.Add(thisfile);
+            }
         }
 
         private void gradientanimtimer_Tick(object sender, EventArgs e)
@@ -47,7 +62,7 @@ namespace NDWConfigurator
             if (tb_KeyFrame.Value >= tb_KeyFrame.Maximum)
             {
                 gradientanimtimer.Stop();
-                b_play.Text = "Play";
+                b_Gradient_play.Text = "Play";
             }
         }
 
@@ -192,6 +207,124 @@ namespace NDWConfigurator
             }
         }
 
+        private void SaveGradient(string gradientname)
+        {
+            String filename = "/Lighting/Gradients/";
+            if (gradientname == "")
+            {
+                //Filename is blank
+                MessageBox.Show("Gradient name can't be blank", "Name Error");
+                return;
+            }
+
+            filename += gradientname + ".xml";
+
+            SettingsFile output = new SettingsFile(RootDirectory, filename);
+
+            for (int k = 0; k < keyframes.Count; k++)
+            {
+                output.SetValue("keytimes", k.ToString(), keyframes[k].position.ToString());
+                for (int c = 0; c < keyframes[0].colorpoints.Count; c++)
+                {
+                    output.SetValue(getKeyFrameName(k, c), "R", keyframes[k].colorpoints[c].color.R.ToString());
+                    output.SetValue(getKeyFrameName(k, c), "G", keyframes[k].colorpoints[c].color.G.ToString());
+                    output.SetValue(getKeyFrameName(k, c), "B", keyframes[k].colorpoints[c].color.B.ToString());
+                    output.SetValue(getKeyFrameName(k, c), "A", keyframes[k].colorpoints[c].color.A.ToString());
+                    output.SetValue(getKeyFrameName(k, c), "P", keyframes[k].colorpoints[c].position.ToString());
+                }
+            }
+        }
+
+        private void LoadGradient(string gradientname)
+        {
+            tb_KeyFrame.Value = 0;
+            String filename = "/Lighting/Gradients/";
+            if (gradientname == "")
+            {
+                //Filename is blank
+                MessageBox.Show("Gradient name can't be blank", "Name Error");
+                return;
+            }
+
+            filename += gradientname + ".xml";
+
+            SettingsFile output = new SettingsFile(RootDirectory, filename);
+
+            List<string> sections = output.GetSections();
+            int k = 0;
+            int c = 0;
+            int maxk = -1;
+            int maxc = -1;
+
+            //Get maximum extents of array
+            foreach (string section in sections)
+            {
+                getKeyFrameFromName(section, out k, out c);
+                if (k > maxk) maxk = k;
+                if (c > maxc) maxc = c;
+            }
+
+            int r = 0;
+            int g = 0;
+            int b = 0;
+            int a = 0;
+            float p = 0;
+
+            //load in keyframes
+            for (k = 0; k <= maxk; k++)
+            {
+                keyframe newkf = new keyframe();
+                newkf.position = float.Parse(output.ReadSetDefault("keytimes", k.ToString(), "0"));
+                for (c = 0; c <= maxc; c++)
+                {
+                    r = int.Parse(output.ReadSetDefault(getKeyFrameName(k, c), "R", "0"));
+                    g = int.Parse(output.ReadSetDefault(getKeyFrameName(k, c), "G", "0"));
+                    b = int.Parse(output.ReadSetDefault(getKeyFrameName(k, c), "B", "0"));
+                    a = int.Parse(output.ReadSetDefault(getKeyFrameName(k, c), "A", "255"));
+                    p = float.Parse(output.ReadSetDefault(getKeyFrameName(k, c), "P", "0"));
+                    colorpoint newcp = new colorpoint();
+
+                    newcp.color = Color.FromArgb(a, r, g, b);
+                    newcp.position = p;
+
+                    newkf.colorpoints.Add(newcp);
+                }
+                keyframes.Add(newkf);
+            }
+            SyncColorPointsList();
+            SyncKeyFramesList();
+        }
+
+        private String getKeyFrameName(int keyframe, int colorpoint)
+        {
+            return "k" + keyframe.ToString() + "c" + colorpoint.ToString();
+        }
+
+        private bool getKeyFrameFromName(string name, out int keyframe, out int colorpoint)
+        {
+            keyframe = -1;
+            colorpoint = -1;
+
+            if (name.IndexOf('k') != 0)
+                return false;
+            if (name.IndexOf('c') == -1)
+                return false;
+
+            try
+            {
+                keyframe = int.Parse(name.Substring(1, name.IndexOf('c') - 1));
+                colorpoint = int.Parse(name.Substring(name.IndexOf('c') + 1));
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #region GUI
+
         private void b_GradientColorPlus_Click(object sender, EventArgs e)
         {
             AddColorpoint(SelectedColorpoint.Clone());
@@ -262,15 +395,29 @@ namespace NDWConfigurator
             if (gradientanimtimer.Enabled)
             {
                 gradientanimtimer.Stop();
-                b_play.Text = "Play";
+                b_Gradient_play.Text = "Play";
             }
             else
             {
                 tb_KeyFrame.Value = 0;
                 gradientanimtimer.Start();
-                b_play.Text = "Stop";
+                b_Gradient_play.Text = "Stop";
             }
         }
+
+        private void b_Gradient_Save_Click(object sender, EventArgs e)
+        {
+            SaveGradient(tb_GradientName.Text);
+        }
+
+        private void b_GradientLoad_Click(object sender, EventArgs e)
+        {
+            if (lb_GradientList.Text == "") return;
+            LoadGradient(lb_GradientList.Text);
+            tb_GradientName.Text = lb_GradientList.Text;
+        }
+
+        #endregion GUI
     }
 
     public class keyframe

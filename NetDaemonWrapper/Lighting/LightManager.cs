@@ -38,7 +38,7 @@ namespace NetDaemonWrapper.Lighting
 
         private void InitSettings()
         {
-            LocalSettings = new SettingsFile("/Lighting/LightManager.xml");
+            LocalSettings = new SettingsFile(PATHS.LIGHTING + "LightManager.xml");
             CircadianEntityName = LocalSettings.ReadSetDefault("General", "CircadianEntity", "sensor.circadian_values");
             LightUpdateMilliseconds = (int)(1000 * float.Parse(LocalSettings.ReadSetDefault("Timers", "LightUpdateSeconds", "0.25")));
             CircadianUpdateMilliseconds = (int)(1000 * float.Parse(LocalSettings.ReadSetDefault("Timers", "CircadianUpdateSeconds", "60.0")));

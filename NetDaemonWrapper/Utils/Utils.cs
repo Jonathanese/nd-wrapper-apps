@@ -9,6 +9,15 @@ using Newtonsoft.Json;
 
 namespace NetDaemonWrapper
 {
+    internal static class PATHS
+    {
+        public const string CONFIG_BASE = "Config/";
+        public const string LIGHTING = "Lighting/";
+        public const string GRADIENTS = LIGHTING + "Gradients/";
+        public const string SCENES = LIGHTING + "Scenes/";
+        public const string LOCATION = "Location/";
+    }
+
     public static class Utils
     {
         private static uint seed = 0;
@@ -70,6 +79,29 @@ namespace NetDaemonWrapper
             if (a < e) a = e;
             if (a < f) a = f;
             return a;
+        }
+
+        public static float lerp(float A, float B, float ratio)
+        {
+            return (A * (1 - ratio) + B * ratio);
+        }
+
+        public static float powerlerp(float A, float B, float ratio)
+        {
+            A *= A;
+            B *= B;
+            return (float)Math.Sqrt(lerp(A, B, ratio));
+        }
+
+        public static float getRatio(float A, float B, float ab)
+        {
+            //Cut everything before A for both such that A = 0;
+            B = B - A;
+            if (B == 0) return 0; //Prevent division by zero for overlapping points.
+            ab = ab - A;
+            //Scale everything such that B = 1.
+            ab = ab / B;
+            return ab;
         }
     }
 

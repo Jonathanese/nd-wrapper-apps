@@ -10,7 +10,7 @@ namespace NetDaemonWrapper
 {
     public class PositionedEntity
     {
-        private static SettingsFile settings = new SettingsFile("Location/EntityLocations.xml");
+        private static SettingsFile settings = new SettingsFile(PATHS.LOCATION + "EntityLocations.xml");
         public bool LocationEnabled = true;
         public readonly coords Location;
         public readonly Area? Room = null;

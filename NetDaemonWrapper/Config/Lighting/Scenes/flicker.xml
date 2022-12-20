@@ -3,4 +3,7 @@
   <Settings>
     <add key="UpdateSeconds" value="0.5" />
   </Settings>
+  <Scene>
+    <add key="FlickerAmount" value="25" />
+  </Scene>
 </settings>
