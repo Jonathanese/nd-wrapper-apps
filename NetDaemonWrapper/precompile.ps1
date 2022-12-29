@@ -17,9 +17,13 @@ ForEach ($file in get-childitem . -recurse | where { $_.extension -like "*proj" 
     }
 }
 
+
+
 # Update the codegen
-dotnet tool install joysoftware.netdaemon.hassmodel.codegen
-nd-codegen
+echo "Update Codegen"
+dotnet tool update -g joysoftware.netdaemon.hassmodel.codegen
+echo "Run Codegen"
+nd-codegen -host 192.168.1.20
 
 echo "-----------------------------------------------------------------"
 
@@ -33,11 +37,12 @@ $content = $content.Replace("long? @transition","float? @transition")
 [System.IO.File]::WriteAllText("$location", $content)
 
 $config = $args[0]
+
 if($config -eq "Publish"){
     echo "PUBLISH FOR SERVER ----------------------------------------------------------"
     $location = "$base\appsettings.json"
     $appconfig = Get-Content "$location" | ConvertFrom-Json
-    $appconfig.HomeAssistant.Host = "192.168.1.20"
+    $appconfig.HomeAssistant.Host = "127.0.0.1"
     $appconfig | ConvertTo-Json | Out-File "$location"
 
 }

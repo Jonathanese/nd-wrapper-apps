@@ -24,7 +24,14 @@ namespace NetDaemonWrapper.Lighting
         public int CircadianUpdateMilliseconds;
         public int LightUpdateMilliseconds;
 
+        public static DateTime Sunrise;
+        public static DateTime Sunset;
+        public static float Now_Minute;
+        public static float Sunset_Minute;
+        public static float Sunrise_Minute;
+
         public string CircadianEntityName;
+        public string SunEntityName;
 
         public LightManager(IHaContext _ha, ILogger<LightManager> _logger)
         {
@@ -40,6 +47,7 @@ namespace NetDaemonWrapper.Lighting
         {
             LocalSettings = new SettingsFile(PATHS.LIGHTING + "LightManager.xml");
             CircadianEntityName = LocalSettings.ReadSetDefault("General", "CircadianEntity", "sensor.circadian_values");
+            SunEntityName = LocalSettings.ReadSetDefault("General", "SunEntity", "sun.sun");
             LightUpdateMilliseconds = (int)(1000 * float.Parse(LocalSettings.ReadSetDefault("Timers", "LightUpdateSeconds", "0.25")));
             CircadianUpdateMilliseconds = (int)(1000 * float.Parse(LocalSettings.ReadSetDefault("Timers", "CircadianUpdateSeconds", "60.0")));
         }
@@ -75,17 +83,10 @@ namespace NetDaemonWrapper.Lighting
         private void UpdateLights(object? sender)
         {
             //Light blending and conversion running in parallel
-#if true
             Parallel.ForEach(MLight.All, currentLight =>
             {
                 currentLight.ProcessState();
             });
-#else
-            foreach (MLight currentLight in MLight.All)
-            {
-                currentLight.ProcessState();
-            }
-#endif
 
             //Actual display handled in series to reduce potential unsafe conflicts.
             //TODO: See if light states can be aggregated and updated in a single command.
@@ -97,10 +98,38 @@ namespace NetDaemonWrapper.Lighting
 
         private void CircadianSet(object? sender)
         {
+            UpdateSunriseSunset();
+
             FullColor kColor = new FullColor(getCircadianColor(), 255);
             foreach (MLight light in MLight.All)
             {
                 light.Set(Layer.Base, kColor, 3);
+            }
+        }
+
+        private void UpdateSunriseSunset()
+        {
+            var sunattr = ha.Entity(SunEntityName).WithAttributesAs<SunAttributes>();
+            if (sunattr != null)
+            {
+                if (sunattr.Attributes != null)
+                {
+                    if (sunattr.Attributes.NextRising != null && sunattr.Attributes.NextSetting != null)
+                    {
+                        Sunrise = DateTime.Parse(sunattr.Attributes.NextRising);
+                        Sunset = DateTime.Parse(sunattr.Attributes.NextSetting);
+
+                        Sunset_Minute = Sunset.Minute + (60 * Sunset.Hour);
+                        Sunrise_Minute = Sunrise.Minute + (60 * Sunrise.Hour);
+                        Now_Minute = DateTime.Now.Minute + (60 * DateTime.Now.Hour);
+
+                        Logger.LogInformation("Sunrise: " + Sunrise_Minute);
+                        Logger.LogInformation("Sunset: " + Sunset_Minute);
+                        Logger.LogInformation("Now: " + Now_Minute);
+
+
+                    }
+                }
             }
         }
 

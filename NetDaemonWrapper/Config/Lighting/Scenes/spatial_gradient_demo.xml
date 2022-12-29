@@ -4,6 +4,6 @@
     <add key="UpdateSeconds" value="10" />
   </Settings>
   <Scene>
-    <add key="Gradient" value="DuskDawn" />
+    <add key="Gradient" value="Test" />
   </Scene>
 </settings>

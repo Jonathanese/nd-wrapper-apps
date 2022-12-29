@@ -82,7 +82,7 @@ namespace NetDaemonWrapper.Scene
             Scene SpatialGradientDemo = new Scene(_ha, _logger,
                 "spatial_gradient_demo", 10, (Settings, Lights) =>
                 {
-                    Gradient? g = Gradient.getGradientFromName(Settings.ReadSetDefault("Scene", "Gradient", "DuskDawn"));
+                    Gradient? g = Gradient.getGradientFromName(Settings.ReadSetDefault("Scene", "Gradient", "Test"));
                     if (g == null) return;
 
                     float time = (float)(DateTime.Now.TimeOfDay.TotalSeconds % 300) / 300;
@@ -92,6 +92,44 @@ namespace NetDaemonWrapper.Scene
                         l.Theme.isActive = true;
 
                         FullColor color = new FullColor(g.GetColor((float)l.Location.W_rel, time), 255);
+                        l.Set(Layer.Theme, color, 10);
+                    }
+                });
+            Scene DuskDawn = new Scene(_ha, _logger,
+                "duskdawn", 10, (Settings, Lights) =>
+                {
+                    float sunrise = float.Parse(Settings.ReadSetDefault("Scene", "Sunrise_kf", ".01"));
+                    float sunset = float.Parse(Settings.ReadSetDefault("Scene", "Sunset_kf", ".99"));
+                    float keytime = 0;
+
+                    //Remap time so that sunrise and sunset align.
+                    if (LightManager.Now_Minute < LightManager.Sunrise_Minute)
+                    {
+                        //Before sunrise
+                        keytime = Utils.Map(LightManager.Now_Minute, 0, LightManager.Sunrise_Minute, 0, sunrise);
+                        _logger.LogInformation("Before Sunrise: " + keytime.ToString());
+                    }
+                    else if (LightManager.Now_Minute > LightManager.Sunset_Minute)
+                    {
+                        //After sunset
+                        keytime = Utils.Map(LightManager.Now_Minute, LightManager.Sunset_Minute, 1440, sunset, 100);
+                        _logger.LogInformation("After Sunset: " + keytime.ToString());
+                    }
+                    else
+                    {
+                        //Daytime
+                        keytime = Utils.Map(LightManager.Now_Minute, LightManager.Sunrise_Minute, LightManager.Sunset_Minute, sunrise, sunset);
+                        _logger.LogInformation("Daytime: " + keytime.ToString());
+                    }
+
+                    Gradient? g = Gradient.getGradientFromName(Settings.ReadSetDefault("Scene", "Gradient", "DuskDawn"));
+                    if (g == null) return;
+
+                    foreach (MLight l in Lights)
+                    {
+                        l.Theme.isActive = true;
+
+                        FullColor color = new FullColor(g.GetColor((float)l.Location.W_rel, keytime), 255);
                         l.Set(Layer.Theme, color, 10);
                     }
                 });

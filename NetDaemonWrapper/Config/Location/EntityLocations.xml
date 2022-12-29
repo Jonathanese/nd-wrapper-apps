@@ -210,4 +210,10 @@
     <add key="West_Inches" value="478" />
     <add key="Height_Inches" value="48" />
   </light.dr_floor>
+  <light.nightstand_l>
+    <add key="Location_Enabled" value="true" />
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.nightstand_l>
 </settings>

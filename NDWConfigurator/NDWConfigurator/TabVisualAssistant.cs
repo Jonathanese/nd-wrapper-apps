@@ -176,7 +176,7 @@ namespace NDWConfigurator
 
         private void ShowAtPosition(float position)
         {
-            keyframe A = keyframes.First();
+            keyframe A = keyframes[0];
             keyframe B = A.Clone();
 
             foreach (keyframe kf in keyframes)
@@ -192,18 +192,35 @@ namespace NDWConfigurator
                     break;
                 }
             }
-            float ratio = getRatio(A.position, B.position, position);
-            int r, g, b;
-            for (int i = 0; i < colorpoints.Count; i++)
-            {
-                colorpoints[i].position = lerp(A.colorpoints[i].position, B.colorpoints[i].position, ratio);
-                r = (int)powerlerp(A.colorpoints[i].color.R, B.colorpoints[i].color.R, ratio);
-                g = (int)powerlerp(A.colorpoints[i].color.G, B.colorpoints[i].color.G, ratio);
-                b = (int)powerlerp(A.colorpoints[i].color.B, B.colorpoints[i].color.B, ratio);
-                colorpoints[i].color = Color.FromArgb(r, g, b);
 
-                gcp_1.Colors[i].Color = colorpoints[i].color;
-                gcp_1.Colors[i].Position = colorpoints[i].position;
+            if (A != B)
+            {
+                float ratio = getRatio(A.position, B.position, position);
+
+                int r, g, b;
+                for (int i = 0; i < colorpoints.Count; i++)
+                {
+                    colorpoints[i].position = lerp(A.colorpoints[i].position, B.colorpoints[i].position, ratio);
+                    r = (int)powerlerp(A.colorpoints[i].color.R, B.colorpoints[i].color.R, ratio);
+                    g = (int)powerlerp(A.colorpoints[i].color.G, B.colorpoints[i].color.G, ratio);
+                    b = (int)powerlerp(A.colorpoints[i].color.B, B.colorpoints[i].color.B, ratio);
+                    colorpoints[i].color = Color.FromArgb(r, g, b);
+
+                    gcp_1.Colors[i].Color = colorpoints[i].color;
+                    gcp_1.Colors[i].Position = colorpoints[i].position;
+                }
+            }
+            if (A == B)
+            {
+                int r, g, b;
+                for (int i = 0; i < colorpoints.Count; i++)
+                {
+                    colorpoints[i].position = A.colorpoints[i].position;
+                    colorpoints[i].color = A.colorpoints[i].color;
+
+                    gcp_1.Colors[i].Color = colorpoints[i].color;
+                    gcp_1.Colors[i].Position = colorpoints[i].position;
+                }
             }
         }
 
@@ -238,6 +255,8 @@ namespace NDWConfigurator
         private void LoadGradient(string gradientname)
         {
             tb_KeyFrame.Value = 0;
+            lb_KeyFrames.SelectedIndex = 0;
+            lb_GradientColors.SelectedIndex = 0;
             String filename = "/Lighting/Gradients/";
             if (gradientname == "")
             {
@@ -270,6 +289,9 @@ namespace NDWConfigurator
             int a = 0;
             float p = 0;
 
+            keyframes.Clear();
+            colorpoints.Clear();
+
             //load in keyframes
             for (k = 0; k <= maxk; k++)
             {
@@ -291,8 +313,23 @@ namespace NDWConfigurator
                 }
                 keyframes.Add(newkf);
             }
-            SyncColorPointsList();
             SyncKeyFramesList();
+
+            //Add the colorpoints of the first keyframe to the GUI colorpoint list.
+            foreach (colorpoint cp in keyframes[0].colorpoints)
+            {
+                colorpoints.Add(cp);
+            }
+
+            SyncColorPointsList();
+
+            //b_GradientColorsSet_Click(null, null);
+            for (int i = 0; i < colorpoints.Count; i++)
+            {
+                colorpoints[i].color = gcp_1.Colors[i].Color;
+                colorpoints[i].position = gcp_1.Colors[i].Position;
+                SelectedKeyframe.colorpoints[i] = colorpoints[i].Clone();
+            }
         }
 
         private String getKeyFrameName(int keyframe, int colorpoint)

@@ -77,6 +77,7 @@
             this.ch_Value = new System.Windows.Forms.ColumnHeader();
             this.lb_ScenesList = new System.Windows.Forms.ListBox();
             this.tp_VisualAssistant = new System.Windows.Forms.TabPage();
+            this.lb_GradientList = new System.Windows.Forms.ListBox();
             this.b_GradientLoad = new System.Windows.Forms.Button();
             this.tb_GradientName = new System.Windows.Forms.TextBox();
             this.b_Gradient_Save = new System.Windows.Forms.Button();
@@ -91,7 +92,8 @@
             this.gcp_1 = new System.Windows.Forms.GradientColorPicker();
             this.tt_ToolTips = new System.Windows.Forms.ToolTip(this.components);
             this.gradientanimtimer = new System.Windows.Forms.Timer(this.components);
-            this.lb_GradientList = new System.Windows.Forms.ListBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tp_General.SuspendLayout();
             this.tp_Entities.SuspendLayout();
@@ -664,6 +666,8 @@
             // 
             // tp_VisualAssistant
             // 
+            this.tp_VisualAssistant.Controls.Add(this.label10);
+            this.tp_VisualAssistant.Controls.Add(this.label9);
             this.tp_VisualAssistant.Controls.Add(this.lb_GradientList);
             this.tp_VisualAssistant.Controls.Add(this.b_GradientLoad);
             this.tp_VisualAssistant.Controls.Add(this.tb_GradientName);
@@ -685,9 +689,20 @@
             this.tp_VisualAssistant.Text = "Visual Assistant";
             this.tp_VisualAssistant.UseVisualStyleBackColor = true;
             // 
+            // lb_GradientList
+            // 
+            this.lb_GradientList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lb_GradientList.FormattingEnabled = true;
+            this.lb_GradientList.ItemHeight = 15;
+            this.lb_GradientList.Location = new System.Drawing.Point(667, 304);
+            this.lb_GradientList.Name = "lb_GradientList";
+            this.lb_GradientList.Size = new System.Drawing.Size(120, 94);
+            this.lb_GradientList.TabIndex = 15;
+            // 
             // b_GradientLoad
             // 
-            this.b_GradientLoad.Location = new System.Drawing.Point(151, 194);
+            this.b_GradientLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_GradientLoad.Location = new System.Drawing.Point(586, 304);
             this.b_GradientLoad.Name = "b_GradientLoad";
             this.b_GradientLoad.Size = new System.Drawing.Size(75, 23);
             this.b_GradientLoad.TabIndex = 14;
@@ -697,14 +712,16 @@
             // 
             // tb_GradientName
             // 
-            this.tb_GradientName.Location = new System.Drawing.Point(9, 294);
+            this.tb_GradientName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_GradientName.Location = new System.Drawing.Point(667, 404);
             this.tb_GradientName.Name = "tb_GradientName";
-            this.tb_GradientName.Size = new System.Drawing.Size(100, 23);
+            this.tb_GradientName.Size = new System.Drawing.Size(120, 23);
             this.tb_GradientName.TabIndex = 13;
             // 
             // b_Gradient_Save
             // 
-            this.b_Gradient_Save.Location = new System.Drawing.Point(9, 265);
+            this.b_Gradient_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Gradient_Save.Location = new System.Drawing.Point(586, 404);
             this.b_Gradient_Save.Name = "b_Gradient_Save";
             this.b_Gradient_Save.Size = new System.Drawing.Size(75, 23);
             this.b_Gradient_Save.TabIndex = 11;
@@ -714,7 +731,9 @@
             // 
             // b_Gradient_play
             // 
-            this.b_Gradient_play.Location = new System.Drawing.Point(9, 157);
+            this.b_Gradient_play.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Gradient_play.Location = new System.Drawing.Point(304, 303);
             this.b_Gradient_play.Name = "b_Gradient_play";
             this.b_Gradient_play.Size = new System.Drawing.Size(75, 23);
             this.b_Gradient_play.TabIndex = 10;
@@ -724,7 +743,9 @@
             // 
             // nud_KeyFramePosition
             // 
-            this.nud_KeyFramePosition.Location = new System.Drawing.Point(710, 156);
+            this.nud_KeyFramePosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.nud_KeyFramePosition.Location = new System.Drawing.Point(385, 303);
             this.nud_KeyFramePosition.Name = "nud_KeyFramePosition";
             this.nud_KeyFramePosition.Size = new System.Drawing.Size(75, 23);
             this.nud_KeyFramePosition.TabIndex = 9;
@@ -732,17 +753,19 @@
             // 
             // b_GradientColorsSet
             // 
-            this.b_GradientColorsSet.Location = new System.Drawing.Point(710, 77);
+            this.b_GradientColorsSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.b_GradientColorsSet.Location = new System.Drawing.Point(58, 354);
             this.b_GradientColorsSet.Name = "b_GradientColorsSet";
-            this.b_GradientColorsSet.Size = new System.Drawing.Size(75, 23);
+            this.b_GradientColorsSet.Size = new System.Drawing.Size(48, 23);
             this.b_GradientColorsSet.TabIndex = 8;
-            this.b_GradientColorsSet.Text = "Set";
+            this.b_GradientColorsSet.Text = "◄Set";
             this.b_GradientColorsSet.UseVisualStyleBackColor = true;
             this.b_GradientColorsSet.Click += new System.EventHandler(this.b_GradientColorsSet_Click);
             // 
             // b_KeyframePlus
             // 
-            this.b_KeyframePlus.Location = new System.Drawing.Point(710, 106);
+            this.b_KeyframePlus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.b_KeyframePlus.Location = new System.Drawing.Point(58, 318);
             this.b_KeyframePlus.Name = "b_KeyframePlus";
             this.b_KeyframePlus.Size = new System.Drawing.Size(23, 23);
             this.b_KeyframePlus.TabIndex = 7;
@@ -752,9 +775,10 @@
             // 
             // lb_KeyFrames
             // 
+            this.lb_KeyFrames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lb_KeyFrames.FormattingEnabled = true;
             this.lb_KeyFrames.ItemHeight = 15;
-            this.lb_KeyFrames.Location = new System.Drawing.Point(658, 106);
+            this.lb_KeyFrames.Location = new System.Drawing.Point(6, 318);
             this.lb_KeyFrames.Name = "lb_KeyFrames";
             this.lb_KeyFrames.Size = new System.Drawing.Size(46, 109);
             this.lb_KeyFrames.TabIndex = 6;
@@ -763,17 +787,19 @@
             // 
             // lb_GradientColors
             // 
+            this.lb_GradientColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lb_GradientColors.FormattingEnabled = true;
             this.lb_GradientColors.ItemHeight = 15;
-            this.lb_GradientColors.Location = new System.Drawing.Point(658, 6);
+            this.lb_GradientColors.Location = new System.Drawing.Point(112, 318);
             this.lb_GradientColors.Name = "lb_GradientColors";
-            this.lb_GradientColors.Size = new System.Drawing.Size(46, 94);
+            this.lb_GradientColors.Size = new System.Drawing.Size(46, 109);
             this.lb_GradientColors.TabIndex = 5;
             this.lb_GradientColors.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lb_GradientColors_KeyDown);
             // 
             // b_GradientColorPlus
             // 
-            this.b_GradientColorPlus.Location = new System.Drawing.Point(710, 6);
+            this.b_GradientColorPlus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.b_GradientColorPlus.Location = new System.Drawing.Point(164, 318);
             this.b_GradientColorPlus.Name = "b_GradientColorPlus";
             this.b_GradientColorPlus.Size = new System.Drawing.Size(23, 23);
             this.b_GradientColorPlus.TabIndex = 2;
@@ -783,16 +809,22 @@
             // 
             // tb_KeyFrame
             // 
-            this.tb_KeyFrame.Location = new System.Drawing.Point(9, 106);
+            this.tb_KeyFrame.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_KeyFrame.Location = new System.Drawing.Point(6, 252);
             this.tb_KeyFrame.Maximum = 100;
             this.tb_KeyFrame.Name = "tb_KeyFrame";
-            this.tb_KeyFrame.Size = new System.Drawing.Size(642, 45);
+            this.tb_KeyFrame.Size = new System.Drawing.Size(781, 45);
             this.tb_KeyFrame.TabIndex = 1;
             this.tb_KeyFrame.Scroll += new System.EventHandler(this.tb_KeyFrame_Scroll);
             // 
             // gcp_1
             // 
             this.gcp_1.AllowAddColorByClick = false;
+            this.gcp_1.AllowDragOutColor = false;
+            this.gcp_1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gcp_1.AutoScrollMargin = new System.Drawing.Size(0, 0);
             this.gcp_1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
             this.gcp_1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -804,11 +836,11 @@
             this.gcp_1.Colors.Add(gradientColorPickerItem2);
             this.gcp_1.GradientLayout = System.Windows.Forms.GradientColorPickerLayout.Percent;
             this.gcp_1.GradientLayoutSize = 75;
-            this.gcp_1.Location = new System.Drawing.Point(9, 6);
+            this.gcp_1.Location = new System.Drawing.Point(6, 6);
             this.gcp_1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gcp_1.Name = "gcp_1";
             this.gcp_1.SelectedColor = null;
-            this.gcp_1.Size = new System.Drawing.Size(642, 84);
+            this.gcp_1.Size = new System.Drawing.Size(781, 240);
             this.gcp_1.TabIndex = 0;
             this.gcp_1.ColorSelected += new System.EventHandler(this.gcp_1_ColorSelected);
             // 
@@ -816,14 +848,25 @@
             // 
             this.gradientanimtimer.Tick += new System.EventHandler(this.gradientanimtimer_Tick);
             // 
-            // lb_GradientList
+            // label9
             // 
-            this.lb_GradientList.FormattingEnabled = true;
-            this.lb_GradientList.ItemHeight = 15;
-            this.lb_GradientList.Location = new System.Drawing.Point(151, 223);
-            this.lb_GradientList.Name = "lb_GradientList";
-            this.lb_GradientList.Size = new System.Drawing.Size(120, 94);
-            this.lb_GradientList.TabIndex = 15;
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 300);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(62, 15);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "Keyframes";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(112, 300);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 15);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Colors";
             // 
             // Form1
             // 
@@ -922,5 +965,7 @@
         private TextBox tb_GradientName;
         private Button b_GradientLoad;
         private ListBox lb_GradientList;
+        private Label label10;
+        private Label label9;
     }
 }

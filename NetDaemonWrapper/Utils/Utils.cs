@@ -103,6 +103,11 @@ namespace NetDaemonWrapper
             ab = ab / B;
             return ab;
         }
+
+        public static float Map(float x, float xMin, float xMax, float yMin, float yMax)
+        {
+            return (x - xMin) * (yMax - yMin) / (xMax - xMin) + yMin;
+        }
     }
 
     public record DataElement
