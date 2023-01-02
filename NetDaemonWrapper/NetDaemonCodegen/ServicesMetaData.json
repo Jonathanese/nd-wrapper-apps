@@ -1,67 +1,4 @@
 {
-  "persistent_notification": {
-    "create": {
-      "name": "Create",
-      "description": "Show a notification in the frontend.",
-      "fields": {
-        "message": {
-          "name": "Message",
-          "description": "Message body of the notification. [Templates accepted]",
-          "required": true,
-          "example": "Please check your configuration.yaml.",
-          "selector": {
-            "text": null
-          }
-        },
-        "title": {
-          "name": "Title",
-          "description": "Optional title for your notification. [Templates accepted]",
-          "example": "Test notification",
-          "selector": {
-            "text": null
-          }
-        },
-        "notification_id": {
-          "name": "Notification ID",
-          "description": "Target ID of the notification, will replace a notification with the same ID.",
-          "example": 1234,
-          "selector": {
-            "text": null
-          }
-        }
-      }
-    },
-    "dismiss": {
-      "name": "Dismiss",
-      "description": "Remove a notification from the frontend.",
-      "fields": {
-        "notification_id": {
-          "name": "Notification ID",
-          "description": "Target ID of the notification, which should be removed.",
-          "required": true,
-          "example": 1234,
-          "selector": {
-            "text": null
-          }
-        }
-      }
-    },
-    "mark_read": {
-      "name": "Mark read",
-      "description": "Mark a notification read.",
-      "fields": {
-        "notification_id": {
-          "name": "Notification ID",
-          "description": "Target ID of the notification, which should be mark read.",
-          "required": true,
-          "example": 1234,
-          "selector": {
-            "text": null
-          }
-        }
-      }
-    }
-  },
   "homeassistant": {
     "save_persistent_states": {
       "name": "Save Persistent States",
@@ -162,6 +99,69 @@
       "target": {
         "entity": {},
         "device": {}
+      }
+    }
+  },
+  "persistent_notification": {
+    "create": {
+      "name": "Create",
+      "description": "Show a notification in the frontend.",
+      "fields": {
+        "message": {
+          "name": "Message",
+          "description": "Message body of the notification. [Templates accepted]",
+          "required": true,
+          "example": "Please check your configuration.yaml.",
+          "selector": {
+            "text": null
+          }
+        },
+        "title": {
+          "name": "Title",
+          "description": "Optional title for your notification. [Templates accepted]",
+          "example": "Test notification",
+          "selector": {
+            "text": null
+          }
+        },
+        "notification_id": {
+          "name": "Notification ID",
+          "description": "Target ID of the notification, will replace a notification with the same ID.",
+          "example": 1234,
+          "selector": {
+            "text": null
+          }
+        }
+      }
+    },
+    "dismiss": {
+      "name": "Dismiss",
+      "description": "Remove a notification from the frontend.",
+      "fields": {
+        "notification_id": {
+          "name": "Notification ID",
+          "description": "Target ID of the notification, which should be removed.",
+          "required": true,
+          "example": 1234,
+          "selector": {
+            "text": null
+          }
+        }
+      }
+    },
+    "mark_read": {
+      "name": "Mark read",
+      "description": "Mark a notification read.",
+      "fields": {
+        "notification_id": {
+          "name": "Notification ID",
+          "description": "Target ID of the notification, which should be mark read.",
+          "required": true,
+          "example": 1234,
+          "selector": {
+            "text": null
+          }
+        }
       }
     }
   },
@@ -1720,6 +1720,67 @@
       }
     }
   },
+  "shopping_list": {
+    "add_item": {
+      "name": "Add item",
+      "description": "Add an item to the shopping list.",
+      "fields": {
+        "name": {
+          "name": "Name",
+          "description": "The name of the item to add.",
+          "required": true,
+          "example": "Beer",
+          "selector": {
+            "text": null
+          }
+        }
+      }
+    },
+    "complete_item": {
+      "name": "Complete item",
+      "description": "Mark an item as completed in the shopping list.",
+      "fields": {
+        "name": {
+          "name": "Name",
+          "description": "The name of the item to mark as completed (without removing).",
+          "required": true,
+          "example": "Beer",
+          "selector": {
+            "text": null
+          }
+        }
+      }
+    },
+    "incomplete_item": {
+      "name": "Incomplete item",
+      "description": "Marks an item as incomplete in the shopping list.",
+      "fields": {
+        "name": {
+          "description": "The name of the item to mark as incomplete.",
+          "example": "Beer",
+          "required": true,
+          "selector": {
+            "text": null
+          }
+        }
+      }
+    },
+    "complete_all": {
+      "name": "Complete all",
+      "description": "Marks all items as completed in the shopping list. It does not remove the items.",
+      "fields": {}
+    },
+    "incomplete_all": {
+      "name": "Incomplete all",
+      "description": "Marks all items as incomplete in the shopping list.",
+      "fields": {}
+    },
+    "clear_completed_items": {
+      "name": "Clear completed items",
+      "description": "Clear completed items from the shopping list.",
+      "fields": {}
+    }
+  },
   "timer": {
     "reload": {
       "name": "",
@@ -1874,64 +1935,27 @@
       }
     }
   },
-  "shopping_list": {
-    "add_item": {
-      "name": "Add item",
-      "description": "Add an item to the shopping list.",
-      "fields": {
-        "name": {
-          "name": "Name",
-          "description": "The name of the item to add.",
-          "required": true,
-          "example": "Beer",
-          "selector": {
-            "text": null
-          }
-        }
-      }
-    },
-    "complete_item": {
-      "name": "Complete item",
-      "description": "Mark an item as completed in the shopping list.",
-      "fields": {
-        "name": {
-          "name": "Name",
-          "description": "The name of the item to mark as completed (without removing).",
-          "required": true,
-          "example": "Beer",
-          "selector": {
-            "text": null
-          }
-        }
-      }
-    },
-    "incomplete_item": {
-      "name": "Incomplete item",
-      "description": "Marks an item as incomplete in the shopping list.",
-      "fields": {
-        "name": {
-          "description": "The name of the item to mark as incomplete.",
-          "example": "Beer",
-          "required": true,
-          "selector": {
-            "text": null
-          }
-        }
-      }
-    },
-    "complete_all": {
-      "name": "Complete all",
-      "description": "Marks all items as completed in the shopping list. It does not remove the items.",
+  "input_button": {
+    "reload": {
+      "name": "",
+      "description": "",
       "fields": {}
     },
-    "incomplete_all": {
-      "name": "Incomplete all",
-      "description": "Marks all items as incomplete in the shopping list.",
-      "fields": {}
-    },
-    "clear_completed_items": {
-      "name": "Clear completed items",
-      "description": "Clear completed items from the shopping list.",
+    "press": {
+      "name": "Press",
+      "description": "Press the input button entity.",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "input_button"
+        }
+      }
+    }
+  },
+  "schedule": {
+    "reload": {
+      "name": "Reload",
+      "description": "Reload the schedule configuration",
       "fields": {}
     }
   },
@@ -2065,30 +2089,6 @@
           "domain": "input_text"
         }
       }
-    }
-  },
-  "input_button": {
-    "reload": {
-      "name": "",
-      "description": "",
-      "fields": {}
-    },
-    "press": {
-      "name": "Press",
-      "description": "Press the input button entity.",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "input_button"
-        }
-      }
-    }
-  },
-  "schedule": {
-    "reload": {
-      "name": "Reload",
-      "description": "Reload the schedule configuration",
-      "fields": {}
     }
   },
   "zone": {
@@ -2325,165 +2325,14 @@
       }
     }
   },
-  "input_datetime": {
-    "reload": {
-      "name": "Reload",
-      "description": "Reload the input_datetime configuration.",
-      "fields": {}
-    },
-    "set_datetime": {
-      "name": "Set",
-      "description": "This can be used to dynamically set the date and/or time.",
-      "fields": {
-        "date": {
-          "name": "Date",
-          "description": "The target date the entity should be set to.",
-          "example": "\u00222019-04-20\u0022",
-          "selector": {
-            "text": null
-          }
-        },
-        "time": {
-          "name": "Time",
-          "description": "The target time the entity should be set to.",
-          "example": "\u002205:04:20\u0022",
-          "selector": {
-            "time": null
-          }
-        },
-        "datetime": {
-          "name": "Date \u0026 Time",
-          "description": "The target date \u0026 time the entity should be set to.",
-          "example": "\u00222019-04-20 05:04:20\u0022",
-          "selector": {
-            "text": null
-          }
-        },
-        "timestamp": {
-          "name": "Timestamp",
-          "description": "The target date \u0026 time the entity should be set to as expressed by a UNIX timestamp.",
-          "selector": {
-            "number": {
-              "min": 0,
-              "max": 9223372036854775807,
-              "mode": "box"
-            }
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "input_datetime"
-        }
-      }
-    }
-  },
-  "input_boolean": {
-    "reload": {
-      "name": "Reload",
-      "description": "Reload the input_boolean configuration",
-      "fields": {}
-    },
-    "turn_on": {
-      "name": "Turn on",
-      "description": "Turn on an input boolean",
+  "button": {
+    "press": {
+      "name": "Press",
+      "description": "Press the button entity.",
       "fields": {},
       "target": {
         "entity": {
-          "domain": "input_boolean"
-        }
-      }
-    },
-    "turn_off": {
-      "name": "Turn off",
-      "description": "Turn off an input boolean",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "input_boolean"
-        }
-      }
-    },
-    "toggle": {
-      "name": "Toggle",
-      "description": "Toggle an input boolean",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "input_boolean"
-        }
-      }
-    }
-  },
-  "humidifier": {
-    "turn_on": {
-      "name": "Turn on",
-      "description": "Turn humidifier device on.",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "humidifier"
-        }
-      }
-    },
-    "turn_off": {
-      "name": "Turn off",
-      "description": "Turn humidifier device off.",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "humidifier"
-        }
-      }
-    },
-    "toggle": {
-      "name": "Toggle",
-      "description": "Toggles a humidifier device.",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "humidifier"
-        }
-      }
-    },
-    "set_mode": {
-      "name": "Set mode",
-      "description": "Set mode for humidifier device.",
-      "fields": {
-        "mode": {
-          "description": "New mode",
-          "required": true,
-          "example": "away",
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "humidifier"
-        }
-      }
-    },
-    "set_humidity": {
-      "name": "Set humidity",
-      "description": "Set target humidity of humidifier device.",
-      "fields": {
-        "humidity": {
-          "description": "New target humidity for humidifier device.",
-          "required": true,
-          "selector": {
-            "number": {
-              "min": 0,
-              "max": 100,
-              "unit_of_measurement": "%"
-            }
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "humidifier"
+          "domain": "button"
         }
       }
     }
@@ -2748,204 +2597,6 @@
       }
     }
   },
-  "fan": {
-    "turn_on": {
-      "name": "Turn on",
-      "description": "Turn fan on.",
-      "fields": {
-        "speed": {
-          "name": "Speed",
-          "description": "Speed setting.",
-          "example": "high",
-          "selector": {
-            "text": null
-          }
-        },
-        "percentage": {
-          "name": "Percentage",
-          "description": "Percentage speed setting.",
-          "selector": {
-            "number": {
-              "min": 0,
-              "max": 100,
-              "unit_of_measurement": "%"
-            }
-          }
-        },
-        "preset_mode": {
-          "name": "Preset mode",
-          "description": "Preset mode setting.",
-          "example": "auto",
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    },
-    "turn_off": {
-      "name": "Turn off",
-      "description": "Turn fan off.",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    },
-    "toggle": {
-      "name": "Toggle",
-      "description": "Toggle the fan on/off.",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    },
-    "increase_speed": {
-      "name": "Increase speed",
-      "description": "Increase the speed of the fan by one speed or a percentage_step.",
-      "fields": {
-        "percentage_step": {
-          "advanced": true,
-          "required": false,
-          "description": "Increase speed by a percentage.",
-          "selector": {
-            "number": {
-              "min": 0,
-              "max": 100,
-              "unit_of_measurement": "%"
-            }
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    },
-    "decrease_speed": {
-      "name": "Decrease speed",
-      "description": "Decrease the speed of the fan by one speed or a percentage_step.",
-      "fields": {
-        "percentage_step": {
-          "advanced": true,
-          "required": false,
-          "description": "Decrease speed by a percentage.",
-          "selector": {
-            "number": {
-              "min": 0,
-              "max": 100,
-              "unit_of_measurement": "%"
-            }
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    },
-    "oscillate": {
-      "name": "Oscillate",
-      "description": "Oscillate the fan.",
-      "fields": {
-        "oscillating": {
-          "name": "Oscillating",
-          "description": "Flag to turn on/off oscillation.",
-          "required": true,
-          "selector": {
-            "boolean": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    },
-    "set_direction": {
-      "name": "Set direction",
-      "description": "Set the fan rotation.",
-      "fields": {
-        "direction": {
-          "name": "Direction",
-          "description": "The direction to rotate.",
-          "required": true,
-          "selector": {
-            "select": {
-              "options": [
-                {
-                  "label": "Forward",
-                  "value": "forward"
-                },
-                {
-                  "label": "Reverse",
-                  "value": "reverse"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    },
-    "set_percentage": {
-      "name": "Set speed percentage",
-      "description": "Set fan speed percentage.",
-      "fields": {
-        "percentage": {
-          "name": "Percentage",
-          "description": "Percentage speed setting.",
-          "required": true,
-          "selector": {
-            "number": {
-              "min": 0,
-              "max": 100,
-              "unit_of_measurement": "%"
-            }
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    },
-    "set_preset_mode": {
-      "name": "Set preset mode",
-      "description": "Set preset mode for a fan device.",
-      "fields": {
-        "preset_mode": {
-          "name": "Preset mode",
-          "description": "New value of preset mode.",
-          "required": true,
-          "example": "auto",
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "fan"
-        }
-      }
-    }
-  },
   "alarm_control_panel": {
     "alarm_disarm": {
       "name": "Disarm",
@@ -3081,16 +2732,16 @@
       }
     }
   },
-  "select": {
-    "select_option": {
-      "name": "Select",
-      "description": "Select an option of an select entity.",
+  "text": {
+    "set_value": {
+      "name": "Set value",
+      "description": "Set value of a text entity.",
       "fields": {
-        "option": {
-          "name": "Option",
-          "description": "Option to be selected.",
+        "value": {
+          "name": "Value",
+          "description": "Value to set.",
           "required": true,
-          "example": "\u0022Item A\u0022",
+          "example": "Hello world!",
           "selector": {
             "text": null
           }
@@ -3098,19 +2749,80 @@
       },
       "target": {
         "entity": {
-          "domain": "select"
+          "domain": "text"
         }
       }
     }
   },
-  "button": {
-    "press": {
-      "name": "Press",
-      "description": "Press the button entity.",
+  "humidifier": {
+    "turn_on": {
+      "name": "Turn on",
+      "description": "Turn humidifier device on.",
       "fields": {},
       "target": {
         "entity": {
-          "domain": "button"
+          "domain": "humidifier"
+        }
+      }
+    },
+    "turn_off": {
+      "name": "Turn off",
+      "description": "Turn humidifier device off.",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "humidifier"
+        }
+      }
+    },
+    "toggle": {
+      "name": "Toggle",
+      "description": "Toggles a humidifier device.",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "humidifier"
+        }
+      }
+    },
+    "set_mode": {
+      "name": "Set mode",
+      "description": "Set mode for humidifier device.",
+      "fields": {
+        "mode": {
+          "description": "New mode",
+          "required": true,
+          "example": "away",
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "humidifier"
+        }
+      }
+    },
+    "set_humidity": {
+      "name": "Set humidity",
+      "description": "Set target humidity of humidifier device.",
+      "fields": {
+        "humidity": {
+          "description": "New target humidity for humidifier device.",
+          "required": true,
+          "selector": {
+            "number": {
+              "min": 0,
+              "max": 100,
+              "unit_of_measurement": "%"
+            }
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "humidifier"
         }
       }
     }
@@ -3132,65 +2844,6 @@
       "target": {
         "entity": {
           "domain": "number"
-        }
-      }
-    }
-  },
-  "lock": {
-    "unlock": {
-      "name": "Unlock",
-      "description": "Unlock all or specified locks.",
-      "fields": {
-        "code": {
-          "name": "Code",
-          "description": "An optional code to unlock the lock with.",
-          "example": 1234,
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "lock"
-        }
-      }
-    },
-    "lock": {
-      "name": "Lock",
-      "description": "Lock all or specified locks.",
-      "fields": {
-        "code": {
-          "name": "Code",
-          "description": "An optional code to lock the lock with.",
-          "example": 1234,
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "lock"
-        }
-      }
-    },
-    "open": {
-      "name": "Open",
-      "description": "Open all or specified locks.",
-      "fields": {
-        "code": {
-          "name": "Code",
-          "description": "An optional code to open the lock with.",
-          "example": 1234,
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "lock"
         }
       }
     }
@@ -3529,16 +3182,15 @@
       }
     }
   },
-  "text": {
-    "set_value": {
-      "name": "Set value",
-      "description": "Set value of a text entity.",
+  "lock": {
+    "unlock": {
+      "name": "Unlock",
+      "description": "Unlock all or specified locks.",
       "fields": {
-        "value": {
-          "name": "Value",
-          "description": "Value to set.",
-          "required": true,
-          "example": "Hello world!",
+        "code": {
+          "name": "Code",
+          "description": "An optional code to unlock the lock with.",
+          "example": 1234,
           "selector": {
             "text": null
           }
@@ -3546,64 +3198,355 @@
       },
       "target": {
         "entity": {
-          "domain": "text"
+          "domain": "lock"
+        }
+      }
+    },
+    "lock": {
+      "name": "Lock",
+      "description": "Lock all or specified locks.",
+      "fields": {
+        "code": {
+          "name": "Code",
+          "description": "An optional code to lock the lock with.",
+          "example": 1234,
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "lock"
+        }
+      }
+    },
+    "open": {
+      "name": "Open",
+      "description": "Open all or specified locks.",
+      "fields": {
+        "code": {
+          "name": "Code",
+          "description": "An optional code to open the lock with.",
+          "example": 1234,
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "lock"
         }
       }
     }
   },
-  "script": {
-    "tesla_set_charge_limit_soc": {
-      "name": "Tesla Set Limit Away",
-      "description": "",
-      "fields": {}
-    },
-    "tesla_set_limit_50": {
-      "name": "Tesla Set Limit Home",
-      "description": "",
-      "fields": {}
-    },
-    "irrigation_pass": {
-      "name": "Irrigation Pass",
-      "description": "",
-      "fields": {}
-    },
-    "crash_test": {
-      "name": "Crash Test",
-      "description": "",
-      "fields": {}
-    },
-    "reload": {
-      "name": "Reload",
-      "description": "Reload all the available scripts",
-      "fields": {}
-    },
-    "turn_on": {
-      "name": "Turn on",
-      "description": "Turn on script",
-      "fields": {},
+  "select": {
+    "select_option": {
+      "name": "Select",
+      "description": "Select an option of an select entity.",
+      "fields": {
+        "option": {
+          "name": "Option",
+          "description": "Option to be selected.",
+          "required": true,
+          "example": "\u0022Item A\u0022",
+          "selector": {
+            "text": null
+          }
+        }
+      },
       "target": {
         "entity": {
-          "domain": "script"
+          "domain": "select"
+        }
+      }
+    }
+  },
+  "fan": {
+    "turn_on": {
+      "name": "Turn on",
+      "description": "Turn fan on.",
+      "fields": {
+        "speed": {
+          "name": "Speed",
+          "description": "Speed setting.",
+          "example": "high",
+          "selector": {
+            "text": null
+          }
+        },
+        "percentage": {
+          "name": "Percentage",
+          "description": "Percentage speed setting.",
+          "selector": {
+            "number": {
+              "min": 0,
+              "max": 100,
+              "unit_of_measurement": "%"
+            }
+          }
+        },
+        "preset_mode": {
+          "name": "Preset mode",
+          "description": "Preset mode setting.",
+          "example": "auto",
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "fan"
         }
       }
     },
     "turn_off": {
       "name": "Turn off",
-      "description": "Turn off script",
+      "description": "Turn fan off.",
       "fields": {},
       "target": {
         "entity": {
-          "domain": "script"
+          "domain": "fan"
         }
       }
     },
     "toggle": {
       "name": "Toggle",
-      "description": "Toggle script",
+      "description": "Toggle the fan on/off.",
       "fields": {},
       "target": {
         "entity": {
-          "domain": "script"
+          "domain": "fan"
+        }
+      }
+    },
+    "increase_speed": {
+      "name": "Increase speed",
+      "description": "Increase the speed of the fan by one speed or a percentage_step.",
+      "fields": {
+        "percentage_step": {
+          "advanced": true,
+          "required": false,
+          "description": "Increase speed by a percentage.",
+          "selector": {
+            "number": {
+              "min": 0,
+              "max": 100,
+              "unit_of_measurement": "%"
+            }
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "fan"
+        }
+      }
+    },
+    "decrease_speed": {
+      "name": "Decrease speed",
+      "description": "Decrease the speed of the fan by one speed or a percentage_step.",
+      "fields": {
+        "percentage_step": {
+          "advanced": true,
+          "required": false,
+          "description": "Decrease speed by a percentage.",
+          "selector": {
+            "number": {
+              "min": 0,
+              "max": 100,
+              "unit_of_measurement": "%"
+            }
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "fan"
+        }
+      }
+    },
+    "oscillate": {
+      "name": "Oscillate",
+      "description": "Oscillate the fan.",
+      "fields": {
+        "oscillating": {
+          "name": "Oscillating",
+          "description": "Flag to turn on/off oscillation.",
+          "required": true,
+          "selector": {
+            "boolean": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "fan"
+        }
+      }
+    },
+    "set_direction": {
+      "name": "Set direction",
+      "description": "Set the fan rotation.",
+      "fields": {
+        "direction": {
+          "name": "Direction",
+          "description": "The direction to rotate.",
+          "required": true,
+          "selector": {
+            "select": {
+              "options": [
+                {
+                  "label": "Forward",
+                  "value": "forward"
+                },
+                {
+                  "label": "Reverse",
+                  "value": "reverse"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "fan"
+        }
+      }
+    },
+    "set_percentage": {
+      "name": "Set speed percentage",
+      "description": "Set fan speed percentage.",
+      "fields": {
+        "percentage": {
+          "name": "Percentage",
+          "description": "Percentage speed setting.",
+          "required": true,
+          "selector": {
+            "number": {
+              "min": 0,
+              "max": 100,
+              "unit_of_measurement": "%"
+            }
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "fan"
+        }
+      }
+    },
+    "set_preset_mode": {
+      "name": "Set preset mode",
+      "description": "Set preset mode for a fan device.",
+      "fields": {
+        "preset_mode": {
+          "name": "Preset mode",
+          "description": "New value of preset mode.",
+          "required": true,
+          "example": "auto",
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "fan"
+        }
+      }
+    }
+  },
+  "input_datetime": {
+    "reload": {
+      "name": "Reload",
+      "description": "Reload the input_datetime configuration.",
+      "fields": {}
+    },
+    "set_datetime": {
+      "name": "Set",
+      "description": "This can be used to dynamically set the date and/or time.",
+      "fields": {
+        "date": {
+          "name": "Date",
+          "description": "The target date the entity should be set to.",
+          "example": "\u00222019-04-20\u0022",
+          "selector": {
+            "text": null
+          }
+        },
+        "time": {
+          "name": "Time",
+          "description": "The target time the entity should be set to.",
+          "example": "\u002205:04:20\u0022",
+          "selector": {
+            "time": null
+          }
+        },
+        "datetime": {
+          "name": "Date \u0026 Time",
+          "description": "The target date \u0026 time the entity should be set to.",
+          "example": "\u00222019-04-20 05:04:20\u0022",
+          "selector": {
+            "text": null
+          }
+        },
+        "timestamp": {
+          "name": "Timestamp",
+          "description": "The target date \u0026 time the entity should be set to as expressed by a UNIX timestamp.",
+          "selector": {
+            "number": {
+              "min": 0,
+              "max": 9223372036854775807,
+              "mode": "box"
+            }
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "input_datetime"
+        }
+      }
+    }
+  },
+  "input_boolean": {
+    "reload": {
+      "name": "Reload",
+      "description": "Reload the input_boolean configuration",
+      "fields": {}
+    },
+    "turn_on": {
+      "name": "Turn on",
+      "description": "Turn on an input boolean",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "input_boolean"
+        }
+      }
+    },
+    "turn_off": {
+      "name": "Turn off",
+      "description": "Turn off an input boolean",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "input_boolean"
+        }
+      }
+    },
+    "toggle": {
+      "name": "Toggle",
+      "description": "Toggle an input boolean",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "input_boolean"
         }
       }
     }
@@ -3674,6 +3617,63 @@
               "unit_of_measurement": "%"
             }
           }
+        }
+      }
+    }
+  },
+  "script": {
+    "tesla_set_charge_limit_soc": {
+      "name": "Tesla Set Limit Away",
+      "description": "",
+      "fields": {}
+    },
+    "tesla_set_limit_50": {
+      "name": "Tesla Set Limit Home",
+      "description": "",
+      "fields": {}
+    },
+    "irrigation_pass": {
+      "name": "Irrigation Pass",
+      "description": "",
+      "fields": {}
+    },
+    "crash_test": {
+      "name": "Crash Test",
+      "description": "",
+      "fields": {}
+    },
+    "reload": {
+      "name": "Reload",
+      "description": "Reload all the available scripts",
+      "fields": {}
+    },
+    "turn_on": {
+      "name": "Turn on",
+      "description": "Turn on script",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "script"
+        }
+      }
+    },
+    "turn_off": {
+      "name": "Turn off",
+      "description": "Turn off script",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "script"
+        }
+      }
+    },
+    "toggle": {
+      "name": "Toggle",
+      "description": "Toggle script",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "script"
         }
       }
     }
@@ -3792,6 +3792,74 @@
       "name": "Reload",
       "description": "Reload the automation configuration.",
       "fields": {}
+    }
+  },
+  "tesla_custom": {
+    "api": {
+      "name": "",
+      "description": "Run an API command using controller.api. https://teslajsonpy.readthedocs.io/en/latest/teslajsonpy/teslajsonpy.html#teslajsonpy.Controller.api",
+      "fields": {
+        "email": {
+          "description": "Email address (optional if only one account)",
+          "example": "elon@tesla.com",
+          "required": false,
+          "selector": {
+            "text": null
+          }
+        },
+        "command": {
+          "description": "Command to run. See https://github.com/zabuldon/teslajsonpy/blob/master/teslajsonpy/endpoints.json",
+          "example": "WAKE_UP",
+          "required": true,
+          "selector": {
+            "text": null
+          }
+        },
+        "parameters": {
+          "description": "Parameters in a dictionary. \u0060path_vars\u0060 replace variables in endpoints.json path. All others are passed directly to controller.api. For command parameters see https://tesla-api.timdorr.com/vehicle/commands.",
+          "example": "{\u0022path_vars\u0022: {\u0022vehicle_id\u0022:\u00221\u0022}, \u0022wake_if_asleep\u0022:True}",
+          "required": true,
+          "selector": {
+            "object": null
+          }
+        }
+      }
+    },
+    "polling_interval": {
+      "name": "",
+      "description": "Set polling interval for updating fresh data from an awake car",
+      "fields": {
+        "email": {
+          "description": "Email address (optional if only one account)",
+          "example": "elon@tesla.com",
+          "required": false,
+          "selector": {
+            "text": null
+          }
+        },
+        "vin": {
+          "description": "Vehicle VIN (if not provided then default polling interval will be updated)",
+          "example": "5YJSA11111111111",
+          "required": false,
+          "selector": {
+            "text": null
+          }
+        },
+        "scan_interval": {
+          "description": "Number of seconds between each poll.  See https://github.com/alandtse/tesla/wiki/Polling-policy more information.",
+          "example": 660,
+          "required": true,
+          "default": 660,
+          "selector": {
+            "number": {
+              "min": -1,
+              "max": 3600,
+              "step": 30,
+              "unit_of_measurement": "s"
+            }
+          }
+        }
+      }
     }
   },
   "zwave_js": {
@@ -4128,142 +4196,6 @@
       }
     }
   },
-  "tesla_custom": {
-    "api": {
-      "name": "",
-      "description": "Run an API command using controller.api. https://teslajsonpy.readthedocs.io/en/latest/teslajsonpy/teslajsonpy.html#teslajsonpy.Controller.api",
-      "fields": {
-        "email": {
-          "description": "Email address (optional if only one account)",
-          "example": "elon@tesla.com",
-          "required": false,
-          "selector": {
-            "text": null
-          }
-        },
-        "command": {
-          "description": "Command to run. See https://github.com/zabuldon/teslajsonpy/blob/master/teslajsonpy/endpoints.json",
-          "example": "WAKE_UP",
-          "required": true,
-          "selector": {
-            "text": null
-          }
-        },
-        "parameters": {
-          "description": "Parameters in a dictionary. \u0060path_vars\u0060 replace variables in endpoints.json path. All others are passed directly to controller.api. For command parameters see https://tesla-api.timdorr.com/vehicle/commands.",
-          "example": "{\u0022path_vars\u0022: {\u0022vehicle_id\u0022:\u00221\u0022}, \u0022wake_if_asleep\u0022:True}",
-          "required": true,
-          "selector": {
-            "object": null
-          }
-        }
-      }
-    },
-    "polling_interval": {
-      "name": "",
-      "description": "Set polling interval for updating fresh data from an awake car",
-      "fields": {
-        "email": {
-          "description": "Email address (optional if only one account)",
-          "example": "elon@tesla.com",
-          "required": false,
-          "selector": {
-            "text": null
-          }
-        },
-        "vin": {
-          "description": "Vehicle VIN (if not provided then default polling interval will be updated)",
-          "example": "5YJSA11111111111",
-          "required": false,
-          "selector": {
-            "text": null
-          }
-        },
-        "scan_interval": {
-          "description": "Number of seconds between each poll.  See https://github.com/alandtse/tesla/wiki/Polling-policy more information.",
-          "example": 660,
-          "required": true,
-          "default": 660,
-          "selector": {
-            "number": {
-              "min": -1,
-              "max": 3600,
-              "step": 30,
-              "unit_of_measurement": "s"
-            }
-          }
-        }
-      }
-    }
-  },
-  "switch": {
-    "turn_off": {
-      "name": "Turn off",
-      "description": "Turn a switch off",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "switch"
-        }
-      }
-    },
-    "turn_on": {
-      "name": "Turn on",
-      "description": "Turn a switch on",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "switch"
-        }
-      }
-    },
-    "toggle": {
-      "name": "Toggle",
-      "description": "Toggles a switch state",
-      "fields": {},
-      "target": {
-        "entity": {
-          "domain": "switch"
-        }
-      }
-    }
-  },
-  "wake_on_lan": {
-    "send_magic_packet": {
-      "name": "Send magic packet",
-      "description": "Send a \u0027magic packet\u0027 to wake up a device with \u0027Wake-On-LAN\u0027 capabilities.",
-      "fields": {
-        "mac": {
-          "name": "MAC address",
-          "description": "MAC address of the device to wake up.",
-          "required": true,
-          "example": "aa:bb:cc:dd:ee:ff",
-          "selector": {
-            "text": null
-          }
-        },
-        "broadcast_address": {
-          "name": "Broadcast address",
-          "description": "Broadcast IP where to send the magic packet.",
-          "example": "192.168.255.255",
-          "selector": {
-            "text": null
-          }
-        },
-        "broadcast_port": {
-          "name": "Broadcast port",
-          "description": "Port where to send the magic packet.",
-          "default": 9,
-          "selector": {
-            "number": {
-              "min": 1,
-              "max": 65535
-            }
-          }
-        }
-      }
-    }
-  },
   "hue": {
     "activate_scene": {
       "name": "Activate Hue Scene",
@@ -4342,6 +4274,74 @@
           "description": "Enable dynamic mode of the scene (V2 bridges and supported scenes only).",
           "selector": {
             "boolean": null
+          }
+        }
+      }
+    }
+  },
+  "switch": {
+    "turn_off": {
+      "name": "Turn off",
+      "description": "Turn a switch off",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "switch"
+        }
+      }
+    },
+    "turn_on": {
+      "name": "Turn on",
+      "description": "Turn a switch on",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "switch"
+        }
+      }
+    },
+    "toggle": {
+      "name": "Toggle",
+      "description": "Toggles a switch state",
+      "fields": {},
+      "target": {
+        "entity": {
+          "domain": "switch"
+        }
+      }
+    }
+  },
+  "wake_on_lan": {
+    "send_magic_packet": {
+      "name": "Send magic packet",
+      "description": "Send a \u0027magic packet\u0027 to wake up a device with \u0027Wake-On-LAN\u0027 capabilities.",
+      "fields": {
+        "mac": {
+          "name": "MAC address",
+          "description": "MAC address of the device to wake up.",
+          "required": true,
+          "example": "aa:bb:cc:dd:ee:ff",
+          "selector": {
+            "text": null
+          }
+        },
+        "broadcast_address": {
+          "name": "Broadcast address",
+          "description": "Broadcast IP where to send the magic packet.",
+          "example": "192.168.255.255",
+          "selector": {
+            "text": null
+          }
+        },
+        "broadcast_port": {
+          "name": "Broadcast port",
+          "description": "Port where to send the magic packet.",
+          "default": 9,
+          "selector": {
+            "number": {
+              "min": 1,
+              "max": 65535
+            }
           }
         }
       }
@@ -4903,13 +4903,6 @@
       }
     }
   },
-  "circadian_lighting": {
-    "values_update": {
-      "name": "",
-      "description": "Updates values for Circadian Lighting.",
-      "fields": {}
-    }
-  },
   "mysensors": {
     "send_ir_code": {
       "name": "Send IR code",
@@ -4937,7 +4930,107 @@
       }
     }
   },
+  "circadian_lighting": {
+    "values_update": {
+      "name": "",
+      "description": "Updates values for Circadian Lighting.",
+      "fields": {}
+    }
+  },
   "zha": {
+    "set_lock_user_code": {
+      "name": "Set lock user code",
+      "description": "Set a user code on a lock",
+      "fields": {
+        "code_slot": {
+          "name": "Code slot",
+          "description": "Code slot to set the code in",
+          "required": true,
+          "example": 1,
+          "selector": {
+            "text": null
+          }
+        },
+        "user_code": {
+          "name": "Code",
+          "description": "Code to set",
+          "required": true,
+          "example": 1234,
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "lock",
+          "integration": "zha"
+        }
+      }
+    },
+    "enable_lock_user_code": {
+      "name": "Enable lock user",
+      "description": "Enable a user code on a lock",
+      "fields": {
+        "code_slot": {
+          "name": "Code slot",
+          "description": "Code slot to enable",
+          "required": true,
+          "example": 1,
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "lock",
+          "integration": "zha"
+        }
+      }
+    },
+    "disable_lock_user_code": {
+      "name": "Disable lock user",
+      "description": "Disable a user code on a lock",
+      "fields": {
+        "code_slot": {
+          "name": "Code slot",
+          "description": "Code slot to disable",
+          "required": true,
+          "example": 1,
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "lock",
+          "integration": "zha"
+        }
+      }
+    },
+    "clear_lock_user_code": {
+      "name": "Clear lock user",
+      "description": "Clear a user code from a lock",
+      "fields": {
+        "code_slot": {
+          "name": "Code slot",
+          "description": "Code slot to clear code from",
+          "required": true,
+          "example": 1,
+          "selector": {
+            "text": null
+          }
+        }
+      },
+      "target": {
+        "entity": {
+          "domain": "lock",
+          "integration": "zha"
+        }
+      }
+    },
     "permit": {
       "name": "Permit",
       "description": "Allow nodes to join the Zigbee network.",
@@ -5381,99 +5474,6 @@
               "mode": "box"
             }
           }
-        }
-      }
-    },
-    "set_lock_user_code": {
-      "name": "Set lock user code",
-      "description": "Set a user code on a lock",
-      "fields": {
-        "code_slot": {
-          "name": "Code slot",
-          "description": "Code slot to set the code in",
-          "required": true,
-          "example": 1,
-          "selector": {
-            "text": null
-          }
-        },
-        "user_code": {
-          "name": "Code",
-          "description": "Code to set",
-          "required": true,
-          "example": 1234,
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "lock",
-          "integration": "zha"
-        }
-      }
-    },
-    "enable_lock_user_code": {
-      "name": "Enable lock user",
-      "description": "Enable a user code on a lock",
-      "fields": {
-        "code_slot": {
-          "name": "Code slot",
-          "description": "Code slot to enable",
-          "required": true,
-          "example": 1,
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "lock",
-          "integration": "zha"
-        }
-      }
-    },
-    "disable_lock_user_code": {
-      "name": "Disable lock user",
-      "description": "Disable a user code on a lock",
-      "fields": {
-        "code_slot": {
-          "name": "Code slot",
-          "description": "Code slot to disable",
-          "required": true,
-          "example": 1,
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "lock",
-          "integration": "zha"
-        }
-      }
-    },
-    "clear_lock_user_code": {
-      "name": "Clear lock user",
-      "description": "Clear a user code from a lock",
-      "fields": {
-        "code_slot": {
-          "name": "Code slot",
-          "description": "Code slot to clear code from",
-          "required": true,
-          "example": 1,
-          "selector": {
-            "text": null
-          }
-        }
-      },
-      "target": {
-        "entity": {
-          "domain": "lock",
-          "integration": "zha"
         }
       }
     }

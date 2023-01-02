@@ -216,4 +216,22 @@
     <add key="West_Inches" value="0" />
     <add key="Height_Inches" value="0" />
   </light.nightstand_l>
+  <light.end_table_3>
+    <add key="Location_Enabled" value="true" />
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.end_table_3>
+  <light.end_table_1>
+    <add key="Location_Enabled" value="true" />
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.end_table_1>
+  <light.end_table_2>
+    <add key="Location_Enabled" value="true" />
+    <add key="North_Inches" value="0" />
+    <add key="West_Inches" value="0" />
+    <add key="Height_Inches" value="0" />
+  </light.end_table_2>
 </settings>

@@ -141,14 +141,54 @@ namespace NetDaemonWrapper
             return true;
         }
 
-        private Color GetColorFromPosition(int keyframe, float position)
+        private keyframe GetIntermediateKeyframe(float time)
         {
-            colorpoint A = keyframes[keyframe].colorpoints.First();
+            int A = 0;
+            int B = 0;
+
+            for (int kf = 0; kf < keyframes.Count; kf++)
+            {
+                if (keyframes[kf].position <= time)
+                {
+                    A = kf;
+                    B = kf;
+                }
+                else
+                {
+                    B = kf;
+                    break;
+                }
+            }
+            //This condition occurs before or after the extents
+            if (A == B) return keyframes[A];
+
+            keyframe newkf = new keyframe();
+            newkf.position = time;
+            float ratio = Utils.getRatio(keyframes[A].position, keyframes[B].position, time);
+
+            for (int cp = 0; cp < keyframes[A].colorpoints.Count; cp++)
+            {
+                colorpoint newcp = new colorpoint();
+                newcp.position = Utils.lerp(keyframes[A].colorpoints[cp].position, keyframes[B].colorpoints[cp].position, ratio);
+                newcp.color = Color.FromArgb(
+                    (int)Utils.lerp(keyframes[A].colorpoints[cp].color.A, keyframes[B].colorpoints[cp].color.A, ratio),
+                    (int)Utils.lerp(keyframes[A].colorpoints[cp].color.R, keyframes[B].colorpoints[cp].color.R, ratio),
+                    (int)Utils.lerp(keyframes[A].colorpoints[cp].color.G, keyframes[B].colorpoints[cp].color.G, ratio),
+                    (int)Utils.lerp(keyframes[A].colorpoints[cp].color.B, keyframes[B].colorpoints[cp].color.B, ratio));
+                newkf.colorpoints.Add(newcp);
+            }
+
+            return newkf;
+        }
+
+        private Color GetColorFromPosition(keyframe kf, float position)
+        {
+            colorpoint A = kf.colorpoints.First();
             colorpoint B = A.Clone();
 
             //Iterate through each color point until the threshold is met
             //Set A and B to be the nearest points.
-            foreach (colorpoint cp in keyframes[keyframe].colorpoints)
+            foreach (colorpoint cp in kf.colorpoints)
             {
                 if (cp.position <= position)
                 {
@@ -180,34 +220,7 @@ namespace NetDaemonWrapper
 
         public Color GetColor(float position, float time)
         {
-            int A = 0;
-            int B = 0;
-
-            for (int kf = 0; kf < keyframes.Count; kf++)
-            {
-                if (keyframes[kf].position <= time)
-                {
-                    A = kf;
-                    B = kf;
-                }
-                else
-                {
-                    B = kf;
-                    break;
-                }
-            }
-            //This condition occurs before or after the extents
-            if (A == B) return GetColorFromPosition(A, position);
-
-            Color colorA = GetColorFromPosition(A, position);
-            Color colorB = GetColorFromPosition(B, position);
-            float ratio = Utils.getRatio(keyframes[A].position, keyframes[B].position, time);
-
-            return Color.FromArgb(
-                (int)Utils.lerp(colorA.A, colorB.A, ratio),
-                (int)Utils.lerp(colorA.R, colorB.R, ratio),
-                (int)Utils.lerp(colorA.G, colorB.G, ratio),
-                (int)Utils.lerp(colorA.B, colorB.B, ratio));
+            return GetColorFromPosition(GetIntermediateKeyframe(time), position);
         }
     }
 

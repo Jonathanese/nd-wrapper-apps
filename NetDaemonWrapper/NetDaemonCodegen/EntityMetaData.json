@@ -12,6 +12,10 @@
           "friendlyName": "Close Shades On Sunset"
         },
         {
+          "id": "automation.door_window_open_notification",
+          "friendlyName": "Door/Window Open Notification"
+        },
+        {
           "id": "automation.garage_close",
           "friendlyName": "Garage Close"
         },
@@ -36,6 +40,10 @@
           "friendlyName": "Landscape Lights On"
         },
         {
+          "id": "automation.leak_notification",
+          "friendlyName": "Leak Notification"
+        },
+        {
           "id": "automation.limit_ozone",
           "friendlyName": "Limit Ozone"
         },
@@ -54,6 +62,10 @@
         {
           "id": "automation.morning_heat_on",
           "friendlyName": "Morning Heat"
+        },
+        {
+          "id": "automation.open_notification",
+          "friendlyName": "Door/Window Left Open Notification"
         },
         {
           "id": "automation.purifier_return_on_heater_off",
@@ -138,12 +150,48 @@
       "domain": "binary_sensor",
       "entities": [
         {
+          "id": "binary_sensor.back_door",
+          "friendlyName": "Back Door"
+        },
+        {
+          "id": "binary_sensor.basement_window_north",
+          "friendlyName": "Basement Window North"
+        },
+        {
+          "id": "binary_sensor.basement_window_west",
+          "friendlyName": "Basement Window West"
+        },
+        {
+          "id": "binary_sensor.breakfast_window_center",
+          "friendlyName": "Breakfast Window Center"
+        },
+        {
+          "id": "binary_sensor.breakfast_window_left",
+          "friendlyName": "Sensor"
+        },
+        {
+          "id": "binary_sensor.breakfast_window_right",
+          "friendlyName": "Breakfast_Window_Right"
+        },
+        {
           "id": "binary_sensor.cloudflare_dns_1_1_1_1",
           "friendlyName": "Cloudflare DNS 1.1.1.1"
         },
         {
           "id": "binary_sensor.duckdns_domain",
           "friendlyName": "DuckDNS Domain"
+        },
+        {
+          "id": "binary_sensor.front_door",
+          "friendlyName": "Front door"
+        },
+        {
+          "id": "binary_sensor.front_window_1",
+          "friendlyName": "Front Window 1"
+        },
+        {
+          "id": "binary_sensor.front_window_2",
+          "friendlyName": "Front Window 2"
         },
         {
           "id": "binary_sensor.garage_door_myq_gateway",
@@ -160,70 +208,6 @@
         {
           "id": "binary_sensor.hass_dns",
           "friendlyName": "Hass DNS"
-        },
-        {
-          "id": "binary_sensor.homespy_0",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_1",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_10",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_11",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_12",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_13",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_14",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_15",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_2",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_3",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_4",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_5",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_6",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_7",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_8",
-          "friendlyName": "Sensor"
-        },
-        {
-          "id": "binary_sensor.homespy_9",
-          "friendlyName": "Sensor"
         },
         {
           "id": "binary_sensor.jarvis_asleep",
@@ -262,12 +246,24 @@
           "friendlyName": "Jarvis User present"
         },
         {
-          "id": "binary_sensor.lumi_lumi_sensor_wleak_aq1_iaszone",
-          "friendlyName": "LUMI lumi.sensor_wleak.aq1 Iaszone"
+          "id": "binary_sensor.living_room_window_center",
+          "friendlyName": "Living Room Window Center"
+        },
+        {
+          "id": "binary_sensor.living_room_window_left",
+          "friendlyName": "Living Room Window Left"
+        },
+        {
+          "id": "binary_sensor.living_room_window_right",
+          "friendlyName": "Living Room Window Right"
+        },
+        {
+          "id": "binary_sensor.mudroom_door",
+          "friendlyName": "Mudroom Door"
         },
         {
           "id": "binary_sensor.north_window_leak",
-          "friendlyName": "North Window Leak Iaszone"
+          "friendlyName": "North Window Leak Sensor"
         },
         {
           "id": "binary_sensor.pi_hole",
@@ -294,6 +290,18 @@
           "friendlyName": "RPi Power status"
         },
         {
+          "id": "binary_sensor.side_window_1",
+          "friendlyName": "Side Window 1"
+        },
+        {
+          "id": "binary_sensor.side_window_2",
+          "friendlyName": "Side Window 2"
+        },
+        {
+          "id": "binary_sensor.sink_window",
+          "friendlyName": "Sink Window"
+        },
+        {
           "id": "binary_sensor.sm_g973u_is_charging",
           "friendlyName": "SM-G973U Is Charging"
         },
@@ -307,7 +315,7 @@
         },
         {
           "id": "binary_sensor.west_window_leak",
-          "friendlyName": "West Window Leak Iaszone"
+          "friendlyName": "West Window Leak"
         }
       ],
       "attributes": [
@@ -500,6 +508,21 @@
           "jsonName": "supported_features",
           "cSharpName": "SupportedFeatures",
           "clrType": "System.Double"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
+        {
+          "jsonName": "Scheduled charging timestamp",
+          "cSharpName": "Scheduledchargingtimestamp",
+          "clrType": "System.Object"
+        },
+        {
+          "jsonName": "Departure timestamp",
+          "cSharpName": "Departuretimestamp",
+          "clrType": "System.Double"
         }
       ]
     },
@@ -564,7 +587,11 @@
         },
         {
           "id": "button.lumi_lumi_sensor_wleak_aq1_identify",
-          "friendlyName": "LUMI lumi.sensor_wleak.aq1 Identify"
+          "friendlyName": "North Window Leak Identify"
+        },
+        {
+          "id": "button.lumi_lumi_weather_identify",
+          "friendlyName": "Living Room TH Identify"
         },
         {
           "id": "button.node_2_ping",
@@ -577,10 +604,6 @@
         {
           "id": "button.node_5_ping",
           "friendlyName": "Node 5 Ping"
-        },
-        {
-          "id": "button.north_window_leak_identify",
-          "friendlyName": "North Window Leak Identify"
         },
         {
           "id": "button.office_th_identify",
@@ -623,6 +646,11 @@
           "jsonName": "device_class",
           "cSharpName": "DeviceClass",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -684,6 +712,11 @@
           "jsonName": "supported_features",
           "cSharpName": "SupportedFeatures",
           "clrType": "System.Double"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -770,6 +803,11 @@
           "jsonName": "model",
           "cSharpName": "Model",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -847,6 +885,26 @@
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "latitude",
+          "cSharpName": "Latitude",
+          "clrType": "System.Double"
+        },
+        {
+          "jsonName": "longitude",
+          "cSharpName": "Longitude",
+          "clrType": "System.Double"
+        },
+        {
+          "jsonName": "gps_accuracy",
+          "cSharpName": "GpsAccuracy",
+          "clrType": "System.Double"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -1452,6 +1510,11 @@
           "jsonName": "icon",
           "cSharpName": "Icon",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -1563,6 +1626,11 @@
           "jsonName": "icon",
           "cSharpName": "Icon",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -1791,6 +1859,11 @@
           "jsonName": "friendly_name",
           "cSharpName": "FriendlyName",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -2093,6 +2166,11 @@
           "jsonName": "supported_features",
           "cSharpName": "SupportedFeatures",
           "clrType": "System.Double"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -2289,20 +2367,32 @@
           "friendlyName": "Laptop Charger Voltage"
         },
         {
+          "id": "sensor.living_room_h",
+          "friendlyName": "Living Room Humidity"
+        },
+        {
+          "id": "sensor.living_room_pressure",
+          "friendlyName": "Living Room Pressure"
+        },
+        {
           "id": "sensor.living_room_right",
           "friendlyName": "Living Room Right"
+        },
+        {
+          "id": "sensor.living_room_t",
+          "friendlyName": "Living Room Temperature"
+        },
+        {
+          "id": "sensor.living_room_th_battery",
+          "friendlyName": "Living Room TH Battery"
         },
         {
           "id": "sensor.load_15m_pct",
           "friendlyName": "CPU"
         },
         {
-          "id": "sensor.lumi_lumi_sensor_wleak_aq1_battery",
-          "friendlyName": "LUMI lumi.sensor_wleak.aq1 Battery"
-        },
-        {
           "id": "sensor.lumi_lumi_sensor_wleak_aq1_device_temperature",
-          "friendlyName": "LUMI lumi.sensor_wleak.aq1 Device temperature"
+          "friendlyName": "North Window Leak Device temperature"
         },
         {
           "id": "sensor.marion",
@@ -2313,16 +2403,16 @@
           "friendlyName": "Memory use"
         },
         {
+          "id": "sensor.memory_use_percent",
+          "friendlyName": "Memory use (percent)"
+        },
+        {
           "id": "sensor.mold_indicator",
           "friendlyName": "Mold Indicator"
         },
         {
           "id": "sensor.north_window_leak_battery",
           "friendlyName": "North Window Leak Battery"
-        },
-        {
-          "id": "sensor.north_window_leak_temperature",
-          "friendlyName": "North Window Leak Device temperature"
         },
         {
           "id": "sensor.office_h",
@@ -2415,6 +2505,14 @@
         {
           "id": "sensor.pixel_6_pro_battery_temperature",
           "friendlyName": "Pixel 6 Pro Battery Temperature"
+        },
+        {
+          "id": "sensor.processor_temperature",
+          "friendlyName": "Processor temperature"
+        },
+        {
+          "id": "sensor.processor_use",
+          "friendlyName": "Processor use"
         },
         {
           "id": "sensor.rbr20_gateway_b_received",
@@ -2871,6 +2969,11 @@
           "jsonName": "supported_features",
           "cSharpName": "SupportedFeatures",
           "clrType": "System.Double"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -3080,8 +3183,8 @@
           "friendlyName": "Mosquitto broker Update"
         },
         {
-          "id": "update.netdaemon_v3_beta_update",
-          "friendlyName": "NetDaemon V3 - beta Update"
+          "id": "update.netdaemon_v3_1_net_7_update",
+          "friendlyName": "NetDaemon V3.1 (.NET 7) Update"
         },
         {
           "id": "update.network_ups_tools_update",
@@ -3172,6 +3275,11 @@
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -3286,6 +3394,42 @@
         {
           "jsonName": "longitude",
           "cSharpName": "Longitude",
+          "clrType": "System.Double"
+        },
+        {
+          "jsonName": "radius",
+          "cSharpName": "Radius",
+          "clrType": "System.Double"
+        },
+        {
+          "jsonName": "passive",
+          "cSharpName": "Passive",
+          "clrType": "System.Boolean"
+        },
+        {
+          "jsonName": "persons",
+          "cSharpName": "Persons",
+          "clrType": "System.Collections.Generic.IReadOnlyList\u00601[System.Object]"
+        },
+        {
+          "jsonName": "editable",
+          "cSharpName": "Editable",
+          "clrType": "System.Boolean"
+        },
+        {
+          "jsonName": "icon",
+          "cSharpName": "Icon",
+          "clrType": "System.String"
+        },
+        {
+          "jsonName": "friendly_name",
+          "cSharpName": "FriendlyName",
+          "clrType": "System.String"
+        }
+      ]
+    }
+  ]
+}       "cSharpName": "Longitude",
           "clrType": "System.Double"
         },
         {
