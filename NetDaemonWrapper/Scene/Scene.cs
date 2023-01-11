@@ -17,6 +17,9 @@ namespace NetDaemonWrapper.Scene
     public class Scene
     {
         private int _sceneidentifier;
+        private static bool SceneEventSubscribed = false;
+
+        private static Scene NullScene;
 
         public int SceneIdentifier
         { get { return _sceneidentifier; } }
@@ -40,6 +43,21 @@ namespace NetDaemonWrapper.Scene
 
         public Scene(IHaContext _ha, ILogger _logger, string _SceneName, SceneAction _Action)
         {
+            //Check if the scene changer is subscribed. If it isn't, subscribe it.
+            if (!SceneEventSubscribed)
+            {
+                //Build the null scene while we are initializing things
+                if (NullScene == null)
+                {
+                    if (_SceneName != "null")
+                    {
+                        NullScene = new Scene(_ha, _logger, "null", (a, b) => { });
+                    }
+                }
+
+                SubscribeSceneChangeEvent();
+            }
+
             Action = _Action;
             _scenename = "scene." + _SceneName;
             Settings = new SettingsFile(PATHS.SCENES + _SceneName + ".xml");
@@ -72,29 +90,48 @@ namespace NetDaemonWrapper.Scene
                 _sceneidentifier = All.Count - 1;
                 Console.WriteLine("Scene Added At " + _sceneidentifier.ToString() + " : " + SceneName);
             }
-            SubscribeScene();
         }
 
         /// <summary>
         /// Add listener for when scene is called.
         /// </summary>
-        private void SubscribeScene()
+        private void SubscribeSceneChangeEvent()
         {
-            try
-            {
-                //TODO: Currently passes all lights.
-                //Subscribe to this scene service call event
+            //Subscribe the scene change handler to scene.turn_on events
+            IObservable<NetDaemon.HassModel.Event> scene_events = Context.ha.Events;
+            scene_events = scene_events.Where(e => e.EventType == "call_service");
+            scene_events = scene_events.Where(e => Utils.toDataElement(e.DataElement).domain == "scene" && Utils.toDataElement(e.DataElement).service == "turn_on");
 
-                Context.ha.Events
-                    .Where(e => e.EventType == "call_service")
-                    .Where(e => Utils.toDataElement(e.DataElement).domain == "scene")
-                    .Where(e => Utils.toServiceData(Utils.toDataElement(e.DataElement).service_data).entity_id == SceneName)
-                .Subscribe(s => _setScene(this, MLight.All));
-            }
-            catch
+            if (scene_events.Subscribe(s => SceneChangeHandler(s)) != null)
+                SceneEventSubscribed = true;
+        }
+
+        private static void SceneChangeHandler(NetDaemon.HassModel.Event sceneevent)
+        {
+            /*
+             Additional things we could do in here:
+            - Pull a list of lights from the scene that was called
+            - Pull the states of these lights. That way the scene can start with whatever values exist in the scene.
+            - Somehow get area where scene was called and apply only to lights in that area.
+             */
+
+            //Pull service data to string
+            Console.WriteLine(sceneevent.Origin);
+            string servicedata = Utils.toDataElement(sceneevent.DataElement).service_data.ToString();
+
+            Scene matching_scene = NullScene;
+
+            HomeAssistantGenerated.LightEntities le = new HomeAssistantGenerated.LightEntities(Context.ha);
+
+            //Find matching scene
+            foreach (Scene scene in All)
             {
-                Console.WriteLine("Subscribe Failed: " + SceneName);
+                if (servicedata.Contains(scene.SceneName))
+                {
+                    matching_scene = scene;
+                }
             }
+            _setScene(matching_scene, MLight.All);
         }
 
         public Scene(IHaContext _ha, ILogger _logger, string _SceneName, float _UpdateSeconds, SceneAction _Action) : this(_ha, _logger, _SceneName, _Action)

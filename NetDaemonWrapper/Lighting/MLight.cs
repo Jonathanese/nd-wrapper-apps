@@ -154,7 +154,7 @@ namespace NetDaemonWrapper.Lighting
                 transition = activeLayers[0].transition;
                 return activeLayers[0].color.toColorBright();
             }
-
+            HomeAssistantGenerated.LightEntities e;
             //Operations below are performed in linear power space.
             PowerColor colorOut = activeLayers[0].color.powerColor; //Apply bottom layer here
 

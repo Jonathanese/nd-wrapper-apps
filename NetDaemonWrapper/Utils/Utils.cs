@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace NetDaemonWrapper
 {
@@ -51,19 +52,6 @@ namespace NetDaemonWrapper
             try
             {
                 return JsonConvert.DeserializeObject<DataElement>(j.ToString());
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public static ServiceData? toServiceData(object? j)
-        {
-            if (j == null) return null;
-            try
-            {
-                return JsonConvert.DeserializeObject<ServiceData>(j.ToString());
             }
             catch
             {
@@ -118,11 +106,5 @@ namespace NetDaemonWrapper
         public string? service { get; init; }
         [JsonPropertyName("service_data")]
         public object? service_data { get; init; }
-    }
-
-    public record ServiceData
-    {
-        [JsonPropertyName("entity_id")]
-        public string? entity_id { get; init; }
     }
 }

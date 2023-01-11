@@ -16,6 +16,7 @@ namespace NetDaemonWrapper.Scene
                     byte maxbrightness = byte.Parse(Settings.ReadSetDefault("Scene", "MaxBrightness", "64"));
                     double maxheightrel = double.Parse(Settings.ReadSetDefault("Scene", "MaxHeightPct", "80")) / 100.0;
                     byte brightness = 0;
+
                     if (isHeightBased)
                     {
                         foreach (MLight l in Lights)
