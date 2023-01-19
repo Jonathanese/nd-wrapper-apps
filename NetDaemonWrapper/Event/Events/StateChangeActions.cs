@@ -8,7 +8,7 @@ namespace NetDaemonWrapper.Event
         public StateChangeActions(IHaContext _ha)
         {
             var BackDoorOpen = new StateChangeAction(
-                "binary_sensor.homespy_9",
+                "binary_sensor.back_door",
                 true,
                 () =>
                 {
@@ -16,19 +16,19 @@ namespace NetDaemonWrapper.Event
                     MLight.byName("light.breakfast").UpdateNow();
                 });
 
-            var BackDoorClosed = new StateChangeAction("binary_sensor.homespy_9", false, () =>
+            var BackDoorClosed = new StateChangeAction("binary_sensor.back_door", false, () =>
             {
                 MLight.byName("light.breakfast").Anim.isActive = false;
                 MLight.byName("light.breakfast").UpdateNow();
             });
 
-            var FrontDoorOpen = new StateChangeAction("binary_sensor.homespy_4", true, () =>
+            var FrontDoorOpen = new StateChangeAction("binary_sensor.front_door", true, () =>
             {
                 MLight.byName("light.entry").Set(Layer.Anim, FullColor.Red, 1);
                 MLight.byName("light.entry").UpdateNow();
             });
 
-            var FrontDoorClosed = new StateChangeAction("binary_sensor.homespy_4", false, () =>
+            var FrontDoorClosed = new StateChangeAction("binary_sensor.front_door", false, () =>
             {
                 MLight.byName("light.entry").Anim.isActive = false;
                 MLight.byName("light.entry").UpdateNow();

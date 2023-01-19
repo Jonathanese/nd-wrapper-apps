@@ -51,11 +51,23 @@ namespace NetDaemonWrapper.Scene
                 {
                     if (_SceneName != "null")
                     {
-                        NullScene = new Scene(_ha, _logger, "null", (a, b) => { });
+                        NullScene = new Scene(_ha, _logger, "null", (a, b) =>
+                        {
+                            foreach (MLight light in b)
+                            {
+                                //Grab the current light color and basically just hold it there.
+
+                                //Note that if an animation is activated using this method, it will revert to the original color, NOT the scene color.
+                                light.Theme.color = new FullColor(light.currentState, 255);
+                                light.Theme.blendMode = BlendMode.Alpha;
+                            }
+                        });
                     }
                 }
-
-                SubscribeSceneChangeEvent();
+                else
+                {
+                    SubscribeSceneChangeEvent();
+                }
             }
 
             Action = _Action;
@@ -116,7 +128,8 @@ namespace NetDaemonWrapper.Scene
              */
 
             //Pull service data to string
-            Console.WriteLine(sceneevent.Origin);
+            //Console.WriteLine(sceneevent.DataElement.ToString());
+
             string servicedata = Utils.toDataElement(sceneevent.DataElement).service_data.ToString();
 
             Scene matching_scene = NullScene;
@@ -131,6 +144,7 @@ namespace NetDaemonWrapper.Scene
                     matching_scene = scene;
                 }
             }
+
             _setScene(matching_scene, MLight.All);
         }
 

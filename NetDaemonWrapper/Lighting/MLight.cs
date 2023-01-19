@@ -16,7 +16,7 @@ namespace NetDaemonWrapper.Lighting
         public LightEntity entity
         { get { return _entity as LightEntity; } } //Keep this possible null value warning in place. A null reference exception indicates nd-codegen didn't run properly
 
-        private ColorBright currentState = new ColorBright();
+        public ColorBright currentState = new ColorBright();
         private bool isChanged = false;
         public float transition = 1;
         public int SceneIdentifier = 0;

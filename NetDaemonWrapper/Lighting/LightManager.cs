@@ -122,12 +122,6 @@ namespace NetDaemonWrapper.Lighting
                         Sunset_Minute = Sunset.Minute + (60 * Sunset.Hour);
                         Sunrise_Minute = Sunrise.Minute + (60 * Sunrise.Hour);
                         Now_Minute = DateTime.Now.Minute + (60 * DateTime.Now.Hour);
-
-                        /*
-                        Logger.LogInformation("Sunrise: " + Sunrise_Minute);
-                        Logger.LogInformation("Sunset: " + Sunset_Minute);
-                        Logger.LogInformation("Now: " + Now_Minute);
-                        */
                     }
                 }
             }
