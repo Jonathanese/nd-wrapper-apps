@@ -9,6 +9,8 @@ namespace NDWConfigurator
     public class SettingsFile : ISettings
     {
         private readonly string _path;
+        public string Path
+        { get { return _path; } }
 
         public SettingsFile(string configpath, string relativepath)
         {
@@ -257,7 +259,7 @@ namespace NDWConfigurator
 
         private void Save(XDocument document)
         {
-                document.Save(_path);
+            document.Save(_path);
         }
 
         private XDocument GetDocument(bool createIfNotExists = true)

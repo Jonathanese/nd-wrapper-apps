@@ -37,6 +37,7 @@
             this.l_RootDirectory = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tp_Entities = new System.Windows.Forms.TabPage();
+            this.cb_ControlEnabled = new System.Windows.Forms.CheckBox();
             this.cb_LocationEnabled = new System.Windows.Forms.CheckBox();
             this.lb_EntityList = new System.Windows.Forms.ListBox();
             this.b_SaveAllEntities = new System.Windows.Forms.Button();
@@ -77,6 +78,8 @@
             this.ch_Value = new System.Windows.Forms.ColumnHeader();
             this.lb_ScenesList = new System.Windows.Forms.ListBox();
             this.tp_VisualAssistant = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.lb_GradientList = new System.Windows.Forms.ListBox();
             this.b_GradientLoad = new System.Windows.Forms.Button();
             this.tb_GradientName = new System.Windows.Forms.TextBox();
@@ -92,8 +95,6 @@
             this.gcp_1 = new System.Windows.Forms.GradientColorPicker();
             this.tt_ToolTips = new System.Windows.Forms.ToolTip(this.components);
             this.gradientanimtimer = new System.Windows.Forms.Timer(this.components);
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tp_General.SuspendLayout();
             this.tp_Entities.SuspendLayout();
@@ -165,6 +166,7 @@
             // 
             // tp_Entities
             // 
+            this.tp_Entities.Controls.Add(this.cb_ControlEnabled);
             this.tp_Entities.Controls.Add(this.cb_LocationEnabled);
             this.tp_Entities.Controls.Add(this.lb_EntityList);
             this.tp_Entities.Controls.Add(this.b_SaveAllEntities);
@@ -176,10 +178,21 @@
             this.tp_Entities.Text = "Entities";
             this.tp_Entities.UseVisualStyleBackColor = true;
             // 
+            // cb_ControlEnabled
+            // 
+            this.cb_ControlEnabled.AutoSize = true;
+            this.cb_ControlEnabled.Location = new System.Drawing.Point(195, 86);
+            this.cb_ControlEnabled.Name = "cb_ControlEnabled";
+            this.cb_ControlEnabled.Size = new System.Drawing.Size(111, 19);
+            this.cb_ControlEnabled.TabIndex = 5;
+            this.cb_ControlEnabled.Text = "Control Enabled";
+            this.cb_ControlEnabled.UseVisualStyleBackColor = true;
+            this.cb_ControlEnabled.CheckedChanged += new System.EventHandler(this.cb_ControlEnabled_CheckedChanged);
+            // 
             // cb_LocationEnabled
             // 
             this.cb_LocationEnabled.AutoSize = true;
-            this.cb_LocationEnabled.Location = new System.Drawing.Point(195, 81);
+            this.cb_LocationEnabled.Location = new System.Drawing.Point(195, 61);
             this.cb_LocationEnabled.Name = "cb_LocationEnabled";
             this.cb_LocationEnabled.Size = new System.Drawing.Size(117, 19);
             this.cb_LocationEnabled.TabIndex = 4;
@@ -514,9 +527,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_LocationEntities.FormattingEnabled = true;
             this.lb_LocationEntities.ItemHeight = 15;
-            this.lb_LocationEntities.Location = new System.Drawing.Point(665, 6);
+            this.lb_LocationEntities.Location = new System.Drawing.Point(618, 6);
             this.lb_LocationEntities.Name = "lb_LocationEntities";
-            this.lb_LocationEntities.Size = new System.Drawing.Size(120, 304);
+            this.lb_LocationEntities.Size = new System.Drawing.Size(167, 319);
             this.lb_LocationEntities.TabIndex = 5;
             this.lb_LocationEntities.SelectedIndexChanged += new System.EventHandler(this.lb_Entities_SelectedIndexChanged);
             // 
@@ -589,7 +602,7 @@
             this.pb_Floorplan.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pb_Floorplan.Location = new System.Drawing.Point(169, 6);
             this.pb_Floorplan.Name = "pb_Floorplan";
-            this.pb_Floorplan.Size = new System.Drawing.Size(490, 316);
+            this.pb_Floorplan.Size = new System.Drawing.Size(443, 316);
             this.pb_Floorplan.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_Floorplan.TabIndex = 0;
             this.pb_Floorplan.TabStop = false;
@@ -688,6 +701,26 @@
             this.tp_VisualAssistant.TabIndex = 5;
             this.tp_VisualAssistant.Text = "Visual Assistant";
             this.tp_VisualAssistant.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(112, 300);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 15);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Colors";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 300);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(62, 15);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "Keyframes";
             // 
             // lb_GradientList
             // 
@@ -848,26 +881,6 @@
             // 
             this.gradientanimtimer.Tick += new System.EventHandler(this.gradientanimtimer_Tick);
             // 
-            // label9
-            // 
-            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 300);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(62, 15);
-            this.label9.TabIndex = 16;
-            this.label9.Text = "Keyframes";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(112, 300);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 15);
-            this.label10.TabIndex = 17;
-            this.label10.Text = "Colors";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -967,5 +980,6 @@
         private ListBox lb_GradientList;
         private Label label10;
         private Label label9;
+        private CheckBox cb_ControlEnabled;
     }
 }

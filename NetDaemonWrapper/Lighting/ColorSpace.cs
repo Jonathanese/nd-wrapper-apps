@@ -68,6 +68,11 @@ namespace NetDaemonWrapper.Lighting
             return (int)powerOut;
         }
 
+        /// <summary>
+        /// Convert from Linear Visual space to Linear Power space using LUT
+        /// </summary>
+        /// <param name="PerceptionValue"></param>
+        /// <returns></returns>
         public static int ToPowerFast(int PerceptionValue)
         {
             return PowerLUT[Math.Clamp(PerceptionValue, 0, 65535)];
@@ -86,6 +91,11 @@ namespace NetDaemonWrapper.Lighting
             return (int)powerOut;
         }
 
+        /// <summary>
+        /// Convert from Linear Power space to Linear Visual space using LUT
+        /// </summary>
+        /// <param name="Power"></param>
+        /// <returns></returns>
         public static int ToVisualFast(int Power)
         {
             return VisualLUT[Math.Clamp(Power, 0, 65535)];

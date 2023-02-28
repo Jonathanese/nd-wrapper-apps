@@ -9,7 +9,7 @@ using NetDaemonWrapper;
 
 namespace NetDaemonWrapper.Lighting
 {
-    public class MLight : PositionedEntity
+    public class MLight : ConfiguredEntity
     {
         public static List<MLight> All = new List<MLight>();
 
@@ -17,7 +17,7 @@ namespace NetDaemonWrapper.Lighting
         { get { return _entity as LightEntity; } } //Keep this possible null value warning in place. A null reference exception indicates nd-codegen didn't run properly
 
         public ColorBright currentState = new ColorBright();
-        private bool isChanged = false;
+        public bool isChanged = false;
         public float transition = 1;
         public int SceneIdentifier = 0;
 
@@ -81,10 +81,22 @@ namespace NetDaemonWrapper.Lighting
             currentState = newState;
         }
 
+        /// <summary>
+        /// Force update to occur now
+        /// </summary>
         public void UpdateNow()
         {
             ProcessState();
             Show();
+        }
+
+        /// <summary>
+        /// Update state, but skip this change
+        /// </summary>
+        public void UpdateLater()
+        {
+            ProcessState();
+            isChanged = false;
         }
 
         public void Set(Layer _layer, FullColor _color, float transition)

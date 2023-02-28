@@ -11,6 +11,7 @@ using System.Drawing;
 using Newtonsoft.Json;
 using NetDaemon.HassModel;
 using System.Runtime.CompilerServices;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace NetDaemonWrapper.Scene
 {
@@ -46,28 +47,11 @@ namespace NetDaemonWrapper.Scene
             //Check if the scene changer is subscribed. If it isn't, subscribe it.
             if (!SceneEventSubscribed)
             {
-                //Build the null scene while we are initializing things
-                if (NullScene == null)
+                SubscribeSceneChangeEvent();
+                NullScene = new Scene(_ha, _logger, "NullScene", (Settings, Lights) =>
                 {
-                    if (_SceneName != "null")
-                    {
-                        NullScene = new Scene(_ha, _logger, "null", (a, b) =>
-                        {
-                            foreach (MLight light in b)
-                            {
-                                //Grab the current light color and basically just hold it there.
-
-                                //Note that if an animation is activated using this method, it will revert to the original color, NOT the scene color.
-                                light.Theme.color = new FullColor(light.currentState, 255);
-                                light.Theme.blendMode = BlendMode.Alpha;
-                            }
-                        });
-                    }
-                }
-                else
-                {
-                    SubscribeSceneChangeEvent();
-                }
+                    LightManager.CircadianPause = true;
+                });
             }
 
             Action = _Action;
@@ -132,20 +116,31 @@ namespace NetDaemonWrapper.Scene
 
             string servicedata = Utils.toDataElement(sceneevent.DataElement).service_data.ToString();
 
-            Scene matching_scene = NullScene;
-
             HomeAssistantGenerated.LightEntities le = new HomeAssistantGenerated.LightEntities(Context.ha);
+
+            Scene MatchingScene = NullScene;
 
             //Find matching scene
             foreach (Scene scene in All)
             {
                 if (servicedata.Contains(scene.SceneName))
                 {
-                    matching_scene = scene;
+                    MatchingScene = scene;
+                    break;
                 }
             }
 
-            _setScene(matching_scene, MLight.All);
+            _setScene(MatchingScene, MLight.All);
+
+            //If no matching scene exists, do this instead.
+            if (MatchingScene == NullScene)
+            {
+                Task.Run(() =>
+                {
+                    Thread.Sleep(5000);
+                    StoreCurrentLightsInLayer(MLight.All, Layer.Theme);
+                });
+            }
         }
 
         public Scene(IHaContext _ha, ILogger _logger, string _SceneName, float _UpdateSeconds, SceneAction _Action) : this(_ha, _logger, _SceneName, _Action)
@@ -177,6 +172,29 @@ namespace NetDaemonWrapper.Scene
             else
             {
                 s.UpdateTimer.Change(-1, -1);
+            }
+        }
+
+        public static void StoreCurrentLightsInLayer(List<MLight> lightlist, Layer layer)
+        {
+            foreach (MLight L in lightlist)
+            {
+                byte r = 255, g = 255, b = 255, bright = 0;
+                if (L.entity.Attributes != null)
+                {
+                    if (L.entity.Attributes.Brightness != null)
+                    {
+                        bright = (byte)L.entity.Attributes.Brightness;
+                    }
+                    if (L.entity.Attributes.RgbColor != null)
+                    {
+                        r = (byte)L.entity.Attributes.RgbColor[0];
+                        g = (byte)L.entity.Attributes.RgbColor[1];
+                        b = (byte)L.entity.Attributes.RgbColor[2];
+                    }
+                    L.Set(layer, new FullColor(r, g, b, bright, 255));
+                    L.UpdateLater();
+                }
             }
         }
 

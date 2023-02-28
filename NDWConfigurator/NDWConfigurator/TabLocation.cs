@@ -61,9 +61,8 @@ namespace NDWConfigurator
         /// </summary>
         protected void FillEntityLocationsList()
         {
-            if (EntityLocationsFile == null) return;
             LocationEntityItems.Clear();
-            foreach (EntityItem entity in EntityItems)
+            foreach (EntityItem entity in EntityItem.EntityItems)
             {
                 if (entity.LocationEnabled)
                 {
@@ -78,7 +77,7 @@ namespace NDWConfigurator
         /// </summary>
         protected void FillFloorItems()
         {
-            if (EntityLocationsFile == null || LocationSettingsFile == null) return;
+            if (LocationSettingsFile == null) return;
             FloorItems.Clear();
             for (int i = 0; i < lb_Floors.Items.Count; i++)
             {
@@ -505,9 +504,7 @@ namespace NDWConfigurator
         {
             foreach (EntityItem l in LocationEntityItems)
             {
-                EntityLocationsFile.SetValue(l.name, "North_Inches", l.N.ToString());
-                EntityLocationsFile.SetValue(l.name, "West_Inches", l.W.ToString());
-                EntityLocationsFile.SetValue(l.name, "Height_Inches", l.H.ToString());
+                l.SaveValues();
             }
         }
 

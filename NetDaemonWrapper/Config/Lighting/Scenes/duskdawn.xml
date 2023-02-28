@@ -3,11 +3,4 @@
   <Settings>
     <add key="UpdateSeconds" value="10" />
   </Settings>
-  <Scene>
-    <add key="Sunrise_pct" value="20" />
-    <add key="Sunset_pct" value="80" />
-    <add key="Gradient" value="DuskDawn" />
-    <add key="Sunrise_kf" value="0.20" />
-    <add key="Sunset_kf" value=".80" />
-  </Scene>
 </settings>

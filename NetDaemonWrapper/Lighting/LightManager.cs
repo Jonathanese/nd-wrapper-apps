@@ -23,6 +23,7 @@ namespace NetDaemonWrapper.Lighting
         private SettingsFile LocalSettings;
         public int CircadianUpdateMilliseconds;
         public int LightUpdateMilliseconds;
+        public static bool CircadianPause = false;
 
         public static DateTime Sunrise;
         public static DateTime Sunset;
@@ -85,21 +86,27 @@ namespace NetDaemonWrapper.Lighting
             //Light blending and conversion running in parallel
             Parallel.ForEach(MLight.All, currentLight =>
             {
-                currentLight.ProcessState();
+                if (currentLight.ControlEnabled)
+                {
+                    currentLight.ProcessState();
+                    currentLight.Show();
+                }
             });
 
+            /*
             //Actual display handled in series to reduce potential unsafe conflicts.
             //TODO: See if light states can be aggregated and updated in a single command.
             foreach (MLight currentLight in MLight.All)
             {
                 currentLight.Show();
             }
+            */
         }
 
         private void CircadianSet(object? sender)
         {
             UpdateSunriseSunset();
-
+            if (CircadianPause) return;
             FullColor kColor = new FullColor(getCircadianColor(), 255);
             foreach (MLight light in MLight.All)
             {
@@ -130,7 +137,14 @@ namespace NetDaemonWrapper.Lighting
         private Color getCircadianColor()
         {
             Color kColor = Color.White;
+            HomeAssistantGenerated.Entities ent;
+
             var attr = ha.Entity(CircadianEntityName).WithAttributesAs<CircadianAttributes>().Attributes;
+            if (attr == null)
+            {
+                Logger.LogInformation("Cannot find circadian entity: " + CircadianEntityName);
+                return kColor;
+            }
             var cValues = attr.rgb_color;
             if (cValues != null)
             {

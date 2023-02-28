@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<settings>
-  <Scene>
-    <add key="IsHeightBased" value="true" />
-    <add key="MaxBrightness" value="64" />
-    <add key="MaxHeightPct" value="80" />
-  </Scene>
-</settings>

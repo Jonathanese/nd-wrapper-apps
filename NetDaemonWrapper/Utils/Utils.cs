@@ -17,6 +17,7 @@ namespace NetDaemonWrapper
         public const string GRADIENTS = LIGHTING + "Gradients/";
         public const string SCENES = LIGHTING + "Scenes/";
         public const string LOCATION = "Location/";
+        public const string ENTITIES = "Entities/";
     }
 
     public static class Utils

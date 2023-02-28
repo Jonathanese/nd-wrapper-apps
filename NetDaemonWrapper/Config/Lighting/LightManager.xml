@@ -5,7 +5,7 @@
     <add key="SunEntity" value="sun.sun" />
   </General>
   <Timers>
-    <add key="LightUpdateSeconds" value="1" />
+    <add key="LightUpdateSeconds" value="0.25" />
     <add key="CircadianUpdateSeconds" value="60.0" />
   </Timers>
 </settings>

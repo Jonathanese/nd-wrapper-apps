@@ -17,14 +17,14 @@ ForEach ($file in get-childitem . -recurse | where { $_.extension -like "*proj" 
     }
 }
 
-
+echo "Clear CodeGen folder"
+rm -r -fo NetDaemonCodegen
 
 # Update the codegen
 echo "Update Codegen"
 dotnet tool update -g joysoftware.netdaemon.hassmodel.codegen
 echo "Run Codegen"
 nd-codegen -host 192.168.1.20
-
 echo "-----------------------------------------------------------------"
 
 echo "Replace Transition from long to float"
@@ -33,6 +33,7 @@ $location = "$base\HomeAssistantGenerated.cs"
 echo "$location"
 $content = [System.IO.File]::ReadAllText("$location")
 $content = $content.Replace("long? Transition","float? Transition")
+$content = $content.Replace("long? transition","float? transition")
 $content = $content.Replace("long? @transition","float? @transition")
 [System.IO.File]::WriteAllText("$location", $content)
 
