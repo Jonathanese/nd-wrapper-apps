@@ -16,8 +16,8 @@ namespace NetDaemonWrapper.Lighting
     [NetDaemonApp]
     internal class LightManager
     {
-        private Timer CircadianTimer;
-        private Timer LightUpdateTimer;
+        private System.Threading.Timer CircadianTimer;
+        private System.Threading.Timer LightUpdateTimer;
         private readonly ILogger Logger;
         private readonly IHaContext ha;
         private SettingsFile LocalSettings;
@@ -55,10 +55,10 @@ namespace NetDaemonWrapper.Lighting
 
         private void InitTimers()
         {
-            LightUpdateTimer = new Timer(UpdateLights);
+            LightUpdateTimer = new System.Threading.Timer(UpdateLights);
             LightUpdateTimer.Change(0, LightUpdateMilliseconds);
 
-            CircadianTimer = new Timer(CircadianSet);
+            CircadianTimer = new System.Threading.Timer(CircadianSet);
             CircadianTimer.Change(0, CircadianUpdateMilliseconds);
         }
 
@@ -72,10 +72,7 @@ namespace NetDaemonWrapper.Lighting
                 {
                     if (_entity.EntityId.StartsWith("light."))
                     {
-                        if (!_entity.EntityId.StartsWith("light.theme."))
-                        {
-                            new MLight(ha, new LightEntity(_entity));
-                        }
+                        new MLight(ha, new LightEntity(_entity));
                     }
                 }
             }
@@ -92,15 +89,6 @@ namespace NetDaemonWrapper.Lighting
                     currentLight.Show();
                 }
             });
-
-            /*
-            //Actual display handled in series to reduce potential unsafe conflicts.
-            //TODO: See if light states can be aggregated and updated in a single command.
-            foreach (MLight currentLight in MLight.All)
-            {
-                currentLight.Show();
-            }
-            */
         }
 
         private void CircadianSet(object? sender)
@@ -137,7 +125,6 @@ namespace NetDaemonWrapper.Lighting
         private Color getCircadianColor()
         {
             Color kColor = Color.White;
-            HomeAssistantGenerated.Entities ent;
 
             var attr = ha.Entity(CircadianEntityName).WithAttributesAs<CircadianAttributes>().Attributes;
             if (attr == null)

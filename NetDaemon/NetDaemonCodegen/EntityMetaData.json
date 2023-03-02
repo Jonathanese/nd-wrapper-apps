@@ -52,6 +52,11 @@
           "id": "automation.sunset_events",
           "friendlyName": "Sunset",
           "cSharpName": "SunsetEvents"
+        },
+        {
+          "id": "automation.work_leave",
+          "friendlyName": "Work Leave",
+          "cSharpName": "WorkLeave"
         }
       ],
       "attributes": [
@@ -323,6 +328,11 @@
           "clrType": "System.Object"
         },
         {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
+        {
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
@@ -520,6 +530,11 @@
       ],
       "attributes": [
         {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
+        {
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
@@ -580,6 +595,11 @@
           "jsonName": "preset_mode",
           "cSharpName": "PresetMode",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         },
         {
           "jsonName": "attribution",
@@ -719,6 +739,11 @@
           "clrType": "System.Boolean"
         },
         {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
+        {
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
@@ -794,6 +819,11 @@
           "jsonName": "speed",
           "cSharpName": "Speed",
           "clrType": "System.Object"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         },
         {
           "jsonName": "attribution",
@@ -1092,6 +1122,11 @@
           "clrType": "System.String"
         },
         {
+          "jsonName": "icon",
+          "cSharpName": "Icon",
+          "clrType": "System.String"
+        },
+        {
           "jsonName": "friendly_name",
           "cSharpName": "FriendlyName",
           "clrType": "System.String"
@@ -1188,6 +1223,11 @@
         }
       ],
       "attributes": [
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
         {
           "jsonName": "attribution",
           "cSharpName": "Attribution",
@@ -1287,6 +1327,11 @@
           "jsonName": "unit_of_measurement",
           "cSharpName": "UnitOfMeasurement",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
         },
         {
           "jsonName": "attribution",
@@ -1600,6 +1645,11 @@
           "clrType": "System.String"
         },
         {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
+        {
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
@@ -1618,6 +1668,11 @@
           "id": "sensor.jarvis_time_charge_complete",
           "friendlyName": "Jarvis Time charge complete",
           "cSharpName": "JarvisTimeChargeComplete"
+        },
+        {
+          "id": "sensor.kitchen_controller_action",
+          "friendlyName": "Kitchen Controller action",
+          "cSharpName": "KitchenControllerAction"
         },
         {
           "id": "sensor.leak_mains_power_outage_count",
@@ -1722,6 +1777,11 @@
           "clrType": "System.Double"
         },
         {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
+        {
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
@@ -1745,6 +1805,21 @@
           "jsonName": "Destination",
           "cSharpName": "Destination",
           "clrType": "System.Object"
+        },
+        {
+          "jsonName": "action",
+          "cSharpName": "Action",
+          "clrType": "System.Object"
+        },
+        {
+          "jsonName": "update",
+          "cSharpName": "Update",
+          "clrType": "System.Object"
+        },
+        {
+          "jsonName": "update_available",
+          "cSharpName": "UpdateAvailable",
+          "clrType": "System.Boolean"
         }
       ]
     },
@@ -1856,6 +1931,11 @@
           "id": "sensor.jarvis_tpms_rear_right",
           "friendlyName": "Jarvis Tpms rear right",
           "cSharpName": "JarvisTpmsRearRight"
+        },
+        {
+          "id": "sensor.kitchen_controller_battery",
+          "friendlyName": "Kitchen Controller battery",
+          "cSharpName": "KitchenControllerBattery"
         },
         {
           "id": "sensor.leak_mains_battery",
@@ -2275,6 +2355,11 @@
           "clrType": "System.Double"
         },
         {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
+        {
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
@@ -2302,7 +2387,7 @@
         {
           "jsonName": "charger_phases",
           "cSharpName": "ChargerPhases",
-          "clrType": "System.Double"
+          "clrType": "System.Object"
         },
         {
           "jsonName": "est_battery_range_miles",
@@ -2317,12 +2402,17 @@
         {
           "jsonName": "tpms_last_seen_pressure_timestamp",
           "cSharpName": "TpmsLastSeenPressureTimestamp",
-          "clrType": "System.Double"
+          "clrType": "System.Object"
         },
         {
           "jsonName": "raw_soc",
           "cSharpName": "RawSoc",
           "clrType": "System.Double"
+        },
+        {
+          "jsonName": "action",
+          "cSharpName": "Action",
+          "clrType": "System.Object"
         }
       ]
     },
@@ -2594,6 +2684,11 @@
           "cSharpName": "JarvisSoftwareUpdate"
         },
         {
+          "id": "update.kitchen_controller",
+          "friendlyName": "Kitchen Controller",
+          "cSharpName": "KitchenController"
+        },
+        {
           "id": "update.kitchen_sink",
           "friendlyName": "Kitchen Sink",
           "cSharpName": "KitchenSink"
@@ -2811,9 +2906,19 @@
           "clrType": "System.Double"
         },
         {
+          "jsonName": "assumed_state",
+          "cSharpName": "AssumedState",
+          "clrType": "System.Boolean"
+        },
+        {
           "jsonName": "attribution",
           "cSharpName": "Attribution",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "action",
+          "cSharpName": "Action",
+          "clrType": "System.Object"
         }
       ]
     },
