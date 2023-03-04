@@ -1,10 +1,11 @@
-﻿using NetDaemonWrapper.Lighting;
+﻿using HomeAssistantGenerated;
+using NetDaemonWrapper.Lighting;
 using System.Drawing;
 
 namespace NetDaemonWrapper.Scene
 {
     [NetDaemonApp]
-    public partial class BasicScenes
+    internal class BasicScenes
     {
         public BasicScenes(IHaContext _ha, ILogger<BasicScenes> _logger)
         {
@@ -135,6 +136,31 @@ namespace NetDaemonWrapper.Scene
 
                         FullColor color = new FullColor(g.GetColor((float)l.Location.W_rel, keytime), 255);
                         l.Set(Layer.Theme, color, updateseconds);
+                    }
+                });
+            Scene GPSFollower = new Scene(_ha, _logger,
+                "gps_follower", 1, (Settings, Lights) =>
+                {
+                    Entities e = new Entities(_ha);
+                    double lat = (double)e.DeviceTracker.Pixel6Pro.EntityState.Attributes.Latitude;
+                    double lon = (double)e.DeviceTracker.Pixel6Pro.EntityState.Attributes.Longitude;
+                    double acc = (double)e.DeviceTracker.Pixel6Pro.EntityState.Attributes.GpsAccuracy;
+                    acc *= 0.25;
+
+                    EntityCoords localPos = EntityCoords.GPStoLocal(new GeoCoordinatePortable.GeoCoordinate(lat, lon));
+
+                    double brightness = 255;
+
+                    foreach (var l in Lights)
+                    {
+                        if (l.Location != null)
+                        {
+                            l.Theme.blendMode = BlendMode.Multiply;
+                            brightness = EntityCoords.distance(localPos, l.Location);
+                            brightness = 300.0 - (brightness / acc);
+                            brightness = Math.Clamp(brightness, 0, 255);
+                            l.Set(Layer.Theme, new FullColor(255, 255, 255, (byte)brightness, 255), 5);
+                        }
                     }
                 });
         }

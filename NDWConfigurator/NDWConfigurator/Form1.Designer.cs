@@ -30,19 +30,24 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem1 = new System.Windows.Forms.GradientColorPickerItem();
-            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem2 = new System.Windows.Forms.GradientColorPickerItem();
+            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem3 = new System.Windows.Forms.GradientColorPickerItem();
+            System.Windows.Forms.GradientColorPickerItem gradientColorPickerItem4 = new System.Windows.Forms.GradientColorPickerItem();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tp_General = new System.Windows.Forms.TabPage();
             this.l_RootDirectory = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tp_Entities = new System.Windows.Forms.TabPage();
+            this.cb_EntityIsGroup = new System.Windows.Forms.CheckBox();
             this.cb_ControlEnabled = new System.Windows.Forms.CheckBox();
             this.cb_LocationEnabled = new System.Windows.Forms.CheckBox();
             this.lb_EntityList = new System.Windows.Forms.ListBox();
             this.b_SaveAllEntities = new System.Windows.Forms.Button();
             this.b_SaveEntity = new System.Windows.Forms.Button();
             this.tp_Locations = new System.Windows.Forms.TabPage();
+            this.b_SaveGPS = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tb_GPS_REF_E = new System.Windows.Forms.TextBox();
+            this.tb_GPS_REF_N = new System.Windows.Forms.TextBox();
             this.pb_Entity = new System.Windows.Forms.PictureBox();
             this.pb_Ref = new System.Windows.Forms.PictureBox();
             this.b_PlaceEntity = new System.Windows.Forms.Button();
@@ -166,6 +171,7 @@
             // 
             // tp_Entities
             // 
+            this.tp_Entities.Controls.Add(this.cb_EntityIsGroup);
             this.tp_Entities.Controls.Add(this.cb_ControlEnabled);
             this.tp_Entities.Controls.Add(this.cb_LocationEnabled);
             this.tp_Entities.Controls.Add(this.lb_EntityList);
@@ -178,10 +184,22 @@
             this.tp_Entities.Text = "Entities";
             this.tp_Entities.UseVisualStyleBackColor = true;
             // 
+            // cb_EntityIsGroup
+            // 
+            this.cb_EntityIsGroup.AutoSize = true;
+            this.cb_EntityIsGroup.Location = new System.Drawing.Point(195, 65);
+            this.cb_EntityIsGroup.Name = "cb_EntityIsGroup";
+            this.cb_EntityIsGroup.Size = new System.Drawing.Size(79, 19);
+            this.cb_EntityIsGroup.TabIndex = 6;
+            this.cb_EntityIsGroup.Text = "Is a Group";
+            this.cb_EntityIsGroup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.cb_EntityIsGroup.UseVisualStyleBackColor = true;
+            this.cb_EntityIsGroup.CheckedChanged += new System.EventHandler(this.cb_EntityIsGroup_CheckedChanged);
+            // 
             // cb_ControlEnabled
             // 
             this.cb_ControlEnabled.AutoSize = true;
-            this.cb_ControlEnabled.Location = new System.Drawing.Point(195, 86);
+            this.cb_ControlEnabled.Location = new System.Drawing.Point(195, 40);
             this.cb_ControlEnabled.Name = "cb_ControlEnabled";
             this.cb_ControlEnabled.Size = new System.Drawing.Size(111, 19);
             this.cb_ControlEnabled.TabIndex = 5;
@@ -192,7 +210,7 @@
             // cb_LocationEnabled
             // 
             this.cb_LocationEnabled.AutoSize = true;
-            this.cb_LocationEnabled.Location = new System.Drawing.Point(195, 61);
+            this.cb_LocationEnabled.Location = new System.Drawing.Point(195, 15);
             this.cb_LocationEnabled.Name = "cb_LocationEnabled";
             this.cb_LocationEnabled.Size = new System.Drawing.Size(117, 19);
             this.cb_LocationEnabled.TabIndex = 4;
@@ -234,6 +252,10 @@
             // 
             // tp_Locations
             // 
+            this.tp_Locations.Controls.Add(this.b_SaveGPS);
+            this.tp_Locations.Controls.Add(this.label11);
+            this.tp_Locations.Controls.Add(this.tb_GPS_REF_E);
+            this.tp_Locations.Controls.Add(this.tb_GPS_REF_N);
             this.tp_Locations.Controls.Add(this.pb_Entity);
             this.tp_Locations.Controls.Add(this.pb_Ref);
             this.tp_Locations.Controls.Add(this.b_PlaceEntity);
@@ -267,6 +289,41 @@
             this.tp_Locations.TabIndex = 1;
             this.tp_Locations.Text = "Locations";
             this.tp_Locations.UseVisualStyleBackColor = true;
+            // 
+            // b_SaveGPS
+            // 
+            this.b_SaveGPS.Location = new System.Drawing.Point(8, 326);
+            this.b_SaveGPS.Name = "b_SaveGPS";
+            this.b_SaveGPS.Size = new System.Drawing.Size(155, 23);
+            this.b_SaveGPS.TabIndex = 30;
+            this.b_SaveGPS.Text = "Save GPS Coords";
+            this.b_SaveGPS.UseVisualStyleBackColor = true;
+            this.b_SaveGPS.Click += new System.EventHandler(this.b_SaveGPS_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(8, 250);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(150, 15);
+            this.label11.TabIndex = 29;
+            this.label11.Text = "Reference GPS Coordinates";
+            // 
+            // tb_GPS_REF_E
+            // 
+            this.tb_GPS_REF_E.Location = new System.Drawing.Point(8, 297);
+            this.tb_GPS_REF_E.Name = "tb_GPS_REF_E";
+            this.tb_GPS_REF_E.Size = new System.Drawing.Size(155, 23);
+            this.tb_GPS_REF_E.TabIndex = 28;
+            this.tb_GPS_REF_E.TextChanged += new System.EventHandler(this.tb_GPS_REF_E_TextChanged);
+            // 
+            // tb_GPS_REF_N
+            // 
+            this.tb_GPS_REF_N.Location = new System.Drawing.Point(8, 268);
+            this.tb_GPS_REF_N.Name = "tb_GPS_REF_N";
+            this.tb_GPS_REF_N.Size = new System.Drawing.Size(155, 23);
+            this.tb_GPS_REF_N.TabIndex = 27;
+            this.tb_GPS_REF_N.TextChanged += new System.EventHandler(this.tb_GPS_REF_N_TextChanged);
             // 
             // pb_Entity
             // 
@@ -412,9 +469,9 @@
             // 
             // b_SaveFloor
             // 
-            this.b_SaveFloor.Location = new System.Drawing.Point(8, 277);
+            this.b_SaveFloor.Location = new System.Drawing.Point(8, 219);
             this.b_SaveFloor.Name = "b_SaveFloor";
-            this.b_SaveFloor.Size = new System.Drawing.Size(75, 23);
+            this.b_SaveFloor.Size = new System.Drawing.Size(155, 23);
             this.b_SaveFloor.TabIndex = 14;
             this.b_SaveFloor.Text = "Save Floor";
             this.b_SaveFloor.UseVisualStyleBackColor = true;
@@ -863,10 +920,10 @@
             this.gcp_1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.gcp_1.ColorItemBorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gcp_1.ColorItemWidth = 6;
-            gradientColorPickerItem1.Position = 0F;
-            gradientColorPickerItem2.Position = 1F;
-            this.gcp_1.Colors.Add(gradientColorPickerItem1);
-            this.gcp_1.Colors.Add(gradientColorPickerItem2);
+            gradientColorPickerItem3.Position = 0F;
+            gradientColorPickerItem4.Position = 1F;
+            this.gcp_1.Colors.Add(gradientColorPickerItem3);
+            this.gcp_1.Colors.Add(gradientColorPickerItem4);
             this.gcp_1.GradientLayout = System.Windows.Forms.GradientColorPickerLayout.Percent;
             this.gcp_1.GradientLayoutSize = 75;
             this.gcp_1.Location = new System.Drawing.Point(6, 6);
@@ -981,5 +1038,10 @@
         private Label label10;
         private Label label9;
         private CheckBox cb_ControlEnabled;
+        private CheckBox cb_EntityIsGroup;
+        private Label label11;
+        private TextBox tb_GPS_REF_E;
+        private TextBox tb_GPS_REF_N;
+        private Button b_SaveGPS;
     }
 }

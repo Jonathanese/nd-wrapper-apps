@@ -1,9 +1,17 @@
 
+$config = $args[0]
 
-# Update all nugets to latest versions
-$regex = 'PackageReference Include="([^"]*)" Version="([^"]*)"'
+if($config -eq "Fast Remote Debug")
+{
+    echo "Fast Remote Debug"
+}
+else
+{
 
-ForEach ($file in get-childitem . -recurse | where { $_.extension -like "*proj" }) {
+    # Update all nugets to latest versions
+    $regex = 'PackageReference Include="([^"]*)" Version="([^"]*)"'
+    
+    ForEach ($file in get-childitem . -recurse | where { $_.extension -like "*proj" }) {
     $packages = Get-Content $file.FullName |
     select-string -pattern $regex -AllMatches | 
     ForEach-Object { $_.Matches } | 
@@ -15,29 +23,28 @@ ForEach ($file in get-childitem . -recurse | where { $_.extension -like "*proj" 
         $fullName = $file.FullName
         iex "dotnet add $fullName package $package"
     }
+    }
+    
+    echo "Clear CodeGen folder"
+    rm -r -fo NetDaemonCodegen
+    
+    # Update the codegen
+    echo "Update Codegen"
+    dotnet tool update -g joysoftware.netdaemon.hassmodel.codegen
+    echo "Run Codegen"
+    nd-codegen -host 192.168.1.20
+    echo "-----------------------------------------------------------------"
+    
+    echo "Replace Transition from long to float"
+    $base = Get-Location
+    $location = "$base\HomeAssistantGenerated.cs"
+    echo "$location"
+    $content = [System.IO.File]::ReadAllText("$location")
+    $content = $content.Replace("long? Transition","float? Transition")
+    $content = $content.Replace("long? transition","float? transition")
+    $content = $content.Replace("long? @transition","float? @transition")
+    [System.IO.File]::WriteAllText("$location", $content)
 }
-
-echo "Clear CodeGen folder"
-rm -r -fo NetDaemonCodegen
-
-# Update the codegen
-echo "Update Codegen"
-dotnet tool update -g joysoftware.netdaemon.hassmodel.codegen
-echo "Run Codegen"
-nd-codegen -host 192.168.1.20
-echo "-----------------------------------------------------------------"
-
-echo "Replace Transition from long to float"
-$base = Get-Location
-$location = "$base\HomeAssistantGenerated.cs"
-echo "$location"
-$content = [System.IO.File]::ReadAllText("$location")
-$content = $content.Replace("long? Transition","float? Transition")
-$content = $content.Replace("long? transition","float? transition")
-$content = $content.Replace("long? @transition","float? @transition")
-[System.IO.File]::WriteAllText("$location", $content)
-
-$config = $args[0]
 
 if($config -eq "Publish"){
     echo "PUBLISH FOR SERVER ----------------------------------------------------------"

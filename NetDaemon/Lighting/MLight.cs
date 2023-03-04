@@ -4,16 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HomeAssistantGenerated;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NetDaemon.HassModel.Entities;
 using NetDaemonWrapper;
 
 namespace NetDaemonWrapper.Lighting
 {
-    public class MLight : ConfiguredEntity
+    public class MLight : ManagedEntity
     {
+        public new static readonly string prefix = "light.";
+
         public static List<MLight> All = new List<MLight>();
 
-        public LightEntity entity
+        public static int Count
+        { get { return All.Count; } }
+
+        public new LightEntity entity
         { get { return _entity as LightEntity; } } //Keep this possible null value warning in place. A null reference exception indicates nd-codegen didn't run properly
 
         public ColorBright currentState = new ColorBright();
@@ -27,7 +33,7 @@ namespace NetDaemonWrapper.Lighting
         public MLightLayer Anim = new MLightLayer();
         public readonly List<MLightLayer> Layers;
 
-        public MLight(IHaContext _ha, LightEntity _entity) : base(_ha, _entity)
+        public MLight(IHaContext _ha, Entity _entity) : base(_ha, _entity, true, false, true)
         {
             Layers = new List<MLightLayer>()
             {
@@ -38,11 +44,30 @@ namespace NetDaemonWrapper.Lighting
             };
 
             All.Add(this);
+            AllManagedEntities.Add(this);
         }
 
-        public static MLight byName(string name)
+        //It might say zero references here. But this method is accessed through assembly reflection
+        public new static int BuildList(IHaContext ha)
         {
-            return MLight.All.First(l => l.entity.EntityId == name);
+            All.Clear();
+            var entitylist = ha.GetAllEntities();
+            foreach (Entity _entity in entitylist)
+            {
+                if (_entity.EntityId != null)
+                {
+                    if (_entity.EntityId.StartsWith(prefix))
+                    {
+                        new MLight(ha, new LightEntity(_entity));
+                    }
+                }
+            }
+            return All.Count;
+        }
+
+        public new static MLight? byName(string name)
+        {
+            return MLight.All.FirstOrDefault(l => l.entity.EntityId == name);
         }
 
         /// <summary>

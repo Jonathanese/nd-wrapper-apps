@@ -15,6 +15,7 @@ namespace NDWConfigurator
         public int H;
         public bool LocationEnabled;
         public bool ControlEnabled;
+        public bool IsGroup;
         public SettingsFile Settings;
 
         public EntityItem(SettingsFile _settings)
@@ -43,6 +44,7 @@ namespace NDWConfigurator
         {
             ControlEnabled = bool.Parse(Settings.GetValue("General", "ControlEnabled"));
             LocationEnabled = bool.Parse(Settings.GetValue("Location", "LocationEnabled"));
+            IsGroup = bool.Parse(Settings.GetValue("General", "IsGroupEntity"));
             N = int.Parse(Settings.GetValue("Location", "North"));
             W = int.Parse(Settings.GetValue("Location", "West"));
             H = int.Parse(Settings.GetValue("Location", "Height"));
@@ -51,10 +53,14 @@ namespace NDWConfigurator
         public void SaveValues()
         {
             Settings.SetValue("General", "ControlEnabled", ControlEnabled.ToString());
+            Settings.SetValue("General", "IsGroupEntity", LocationEnabled.ToString());
             Settings.SetValue("Location", "LocationEnabled", LocationEnabled.ToString());
-            Settings.SetValue("Location", "North", N.ToString());
-            Settings.SetValue("Location", "West", W.ToString());
-            Settings.SetValue("Location", "Height", H.ToString());
+            if (LocationEnabled)
+            {
+                Settings.SetValue("Location", "North", N.ToString());
+                Settings.SetValue("Location", "West", W.ToString());
+                Settings.SetValue("Location", "Height", H.ToString());
+            }
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <settings>
   <General>
-    <add key="ControlEnabled" value="true" />
+    <add key="ControlEnabled" value="True" />
+    <add key="IsGroupEntity" value="False" />
   </General>
   <Location>
-    <add key="LocationEnabled" value="true" />
-    <add key="North" value="0" />
-    <add key="West" value="0" />
-    <add key="Height" value="0" />
+    <add key="LocationEnabled" value="True" />
+    <add key="North" value="50" />
+    <add key="West" value="297" />
+    <add key="Height" value="84" />
+    <add key="SharesCoords" value="false" />
   </Location>
 </settings>

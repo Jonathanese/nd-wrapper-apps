@@ -39,8 +39,6 @@ namespace NetDaemonWrapper.Lighting
             InitSettings();
             ha = _ha;
             Logger = _logger;
-            Logger.LogInformation("Build Light List");
-            BuildList();
             InitTimers();
         }
 
@@ -60,22 +58,6 @@ namespace NetDaemonWrapper.Lighting
 
             CircadianTimer = new System.Threading.Timer(CircadianSet);
             CircadianTimer.Change(0, CircadianUpdateMilliseconds);
-        }
-
-        private void BuildList()
-        {
-            MLight.All.Clear();
-            var entitylist = ha.GetAllEntities();
-            foreach (Entity _entity in entitylist)
-            {
-                if (_entity.EntityId != null)
-                {
-                    if (_entity.EntityId.StartsWith("light."))
-                    {
-                        new MLight(ha, new LightEntity(_entity));
-                    }
-                }
-            }
         }
 
         private void UpdateLights(object? sender)

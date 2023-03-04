@@ -3,4 +3,7 @@
   <Settings>
     <add key="UpdateSeconds" value="5" />
   </Settings>
+  <Scene>
+    <add key="Gradient" value="Test" />
+  </Scene>
 </settings>

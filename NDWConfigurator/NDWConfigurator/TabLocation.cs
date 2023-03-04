@@ -11,6 +11,9 @@ namespace NDWConfigurator
         public List<EntityItem> LocationEntityItems = new List<EntityItem>();
         public List<FloorItem> FloorItems = new List<FloorItem>();
 
+        public double GPS_N;
+        public double GPS_E;
+
         public enum _placemode
         { Entity, Reference, None };
 
@@ -53,6 +56,7 @@ namespace NDWConfigurator
         {
             FillEntityLocationsList();
             FillFloorItems();
+            FillGPS();
             lb_Floors.SelectedIndex = 1;
         }
 
@@ -99,6 +103,23 @@ namespace NDWConfigurator
                 FloorItems[i].ReferencePixel = new Point(refx, refy);
             }
             ShowSelectedFloor();
+        }
+
+        private void FillGPS()
+        {
+            if (LocationSettingsFile == null) return;
+            GPS_N = double.Parse(LocationSettingsFile.ReadSetDefault("General", "GPS_N", "0.00"));
+            GPS_E = double.Parse(LocationSettingsFile.ReadSetDefault("General", "GPS_E", "0.00"));
+
+            tb_GPS_REF_N.Text = GPS_N.ToString();
+            tb_GPS_REF_E.Text = GPS_E.ToString();
+        }
+
+        private void SaveGPS()
+        {
+            if (LocationSettingsFile == null) return;
+            LocationSettingsFile.SetValue("General", "GPS_N", GPS_N.ToString());
+            LocationSettingsFile.SetValue("General", "GPS_E", GPS_E.ToString());
         }
 
         /// <summary>
@@ -633,6 +654,26 @@ namespace NDWConfigurator
         {
             SetItemByPixel(pb_Ref, new Point((int)nud_RefX.Value, (int)nud_RefY.Value));
             PlaceSelectedEntityImage();
+        }
+
+        private void tb_GPS_REF_N_TextChanged(object sender, EventArgs e)
+        {
+            tb_GPS_REF_N.ForeColor = Color.Gray;
+        }
+
+        private void tb_GPS_REF_E_TextChanged(object sender, EventArgs e)
+        {
+            tb_GPS_REF_E.ForeColor = Color.Gray;
+        }
+
+        private void b_SaveGPS_Click(object sender, EventArgs e)
+        {
+            tb_GPS_REF_N.ForeColor = Color.Black;
+            tb_GPS_REF_E.ForeColor = Color.Black;
+            GPS_N = double.Parse(tb_GPS_REF_N.Text);
+            GPS_E = double.Parse(tb_GPS_REF_E.Text);
+
+            SaveGPS();
         }
 
         #endregion GUI

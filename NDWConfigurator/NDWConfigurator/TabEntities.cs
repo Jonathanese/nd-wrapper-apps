@@ -65,6 +65,12 @@ namespace NDWConfigurator
             SelectedEntity.ControlEnabled = cb_ControlEnabled.Checked;
         }
 
+        private void cb_EntityIsGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            if (lb_EntityList.SelectedIndex == -1) return;
+            SelectedEntity.IsGroup = cb_EntityIsGroup.Checked;
+        }
+
         private void b_SaveEntity_Click(object sender, EventArgs e)
         {
             SelectedEntity.SaveValues();

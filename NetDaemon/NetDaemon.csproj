@@ -6,9 +6,15 @@
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
         <RootNamespace>NetDaemon</RootNamespace>
-        <Configurations>Debug;Release;Publish</Configurations>
+        <Configurations>Debug;Release;Publish;Fast Remote Debug</Configurations>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Config\**" />
+      <EmbeddedResource Remove="Config\**" />
+      <None Remove="Config\**" />
+    </ItemGroup>
     
     <ItemGroup>
         <None Update="$(MSBuildProjectDir)appsettings.Development.json">
@@ -28,6 +34,7 @@
     </Target>
         
     <ItemGroup>
+        <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
         <PackageReference Include="JoySoftware.NetDaemon.AppModel" Version="23.5.0" />
         <PackageReference Include="JoySoftware.NetDaemon.Runtime" Version="23.5.0" />
         <PackageReference Include="JoySoftware.NetDaemon.HassModel" Version="23.5.0" />
