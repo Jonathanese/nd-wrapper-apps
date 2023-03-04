@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/NetDaemon/NetDaemonCodegen/EntityMetaData.json
+/NetDaemon/NetDaemonCodegen/ServicesMetaData.json
+/NetDaemon/Dockerfile
